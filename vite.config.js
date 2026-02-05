@@ -15,8 +15,8 @@ export default defineConfig({
         theme_color: '#4A90E2',
         background_color: '#ffffff',
         display: 'standalone',
-        scope: '/',
-        start_url: '/',
+        scope: '/ITIApp/',
+        start_url: '/ITIApp/',
         icons: [
           {
             src: 'icons/icon-192x192.png',
