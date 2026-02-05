@@ -7,7 +7,7 @@ import '../styles/Home.css';
 /**
  * Home/Welcome screen component
  */
-const Home = ({ onStartOrder, onStartComplete }) => {
+const Home = ({ onStartOrder, onStartComplete, onStartCovenants }) => {
   const { stats } = useStats();
   const { t } = useI18n();
 
@@ -43,18 +43,32 @@ const Home = ({ onStartOrder, onStartComplete }) => {
 
           <h3 className="quiz-type-title">{t('home.selectQuizType')}</h3>
 
-          <div className="quiz-types">
-            <button className="quiz-type-card" onClick={onStartOrder}>
-              <span className="quiz-type-icon">{t('home.quizTypes.order.icon')}</span>
-              <span className="quiz-type-name">{t('home.quizTypes.order.title')}</span>
-              <span className="quiz-type-desc">{t('home.quizTypes.order.description')}</span>
-            </button>
+          <div className="quiz-category">
+            <h4 className="quiz-category-title">{t('home.oldTestament')}</h4>
+            <div className="quiz-types">
+              <button className="quiz-type-card" onClick={onStartOrder}>
+                <span className="quiz-type-icon">{t('home.quizTypes.order.icon')}</span>
+                <span className="quiz-type-name">{t('home.quizTypes.order.title')}</span>
+                <span className="quiz-type-desc">{t('home.quizTypes.order.description')}</span>
+              </button>
 
-            <button className="quiz-type-card" onClick={onStartComplete}>
-              <span className="quiz-type-icon">{t('home.quizTypes.complete.icon')}</span>
-              <span className="quiz-type-name">{t('home.quizTypes.complete.title')}</span>
-              <span className="quiz-type-desc">{t('home.quizTypes.complete.description')}</span>
-            </button>
+              <button className="quiz-type-card" onClick={onStartComplete}>
+                <span className="quiz-type-icon">{t('home.quizTypes.complete.icon')}</span>
+                <span className="quiz-type-name">{t('home.quizTypes.complete.title')}</span>
+                <span className="quiz-type-desc">{t('home.quizTypes.complete.description')}</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="quiz-category">
+            <h4 className="quiz-category-title">{t('home.knowledge')}</h4>
+            <div className="quiz-types">
+              <button className="quiz-type-card" onClick={onStartCovenants}>
+                <span className="quiz-type-icon">{t('home.quizTypes.covenants.icon')}</span>
+                <span className="quiz-type-name">{t('home.quizTypes.covenants.title')}</span>
+                <span className="quiz-type-desc">{t('home.quizTypes.covenants.description')}</span>
+              </button>
+            </div>
           </div>
         </Card>
 

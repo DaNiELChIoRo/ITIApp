@@ -110,6 +110,23 @@
   font-weight: 600;
 }
 
+.quiz-category {
+  margin-bottom: var(--spacing-lg);
+}
+
+.quiz-category:last-child {
+  margin-bottom: 0;
+}
+
+.quiz-category-title {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+}
+
 .quiz-types {
   display: flex;
   flex-direction: column;

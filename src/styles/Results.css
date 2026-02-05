@@ -164,6 +164,21 @@
   font-weight: 600;
 }
 
+.answer-question {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  font-weight: 500;
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.4;
+}
+
+.answer-reference {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  font-style: italic;
+  margin-top: var(--spacing-xs);
+}
+
 .answer-status {
   flex-shrink: 0;
 }

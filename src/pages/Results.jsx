@@ -30,10 +30,11 @@ const Results = ({ score, onRetry, onHome }) => {
     );
   }
 
-  const { correct, total, percentage, selections, answers, quizType } = score;
+  const { correct, total, percentage, selections, answers, questions, quizType } = score;
   const scoreMessage = getScoreMessage(percentage);
   const scoreColor = getScoreColor(percentage);
   const isCompleteQuiz = quizType === 'complete';
+  const isCovenantsQuiz = quizType === 'covenants';
 
   return (
     <div className="results-container">
@@ -70,7 +71,49 @@ const Results = ({ score, onRetry, onHome }) => {
         <Card className="details-card">
           <h2 className="details-title">{t('results.yourAnswers')}</h2>
           <div className="answers-list">
-            {isCompleteQuiz ? (
+            {isCovenantsQuiz ? (
+              // Covenants Quiz Results (Multiple Choice)
+              answers?.map((answer, index) => {
+                const question = questions?.[index];
+                const isCorrect = answer?.correct;
+                const userAnswer = question?.options?.[answer?.selectedIndex] || t('multipleChoice.skipped');
+                const correctAnswer = question?.options?.[question?.correctIndex];
+
+                return (
+                  <div
+                    key={index}
+                    className={`answer-item ${isCorrect ? 'correct' : 'incorrect'}`}
+                  >
+                    <div className="answer-position">{index + 1}</div>
+                    <div className="answer-content">
+                      <div className="answer-question">
+                        {question?.question}
+                      </div>
+                      <div className="answer-your-choice">
+                        <span className="answer-label">{t('results.yourAnswer')}</span>
+                        <span className="answer-book">{userAnswer}</span>
+                      </div>
+                      {!isCorrect && (
+                        <div className="answer-correct-choice">
+                          <span className="answer-label">{t('results.correctAnswer')}</span>
+                          <span className="answer-book">{correctAnswer}</span>
+                        </div>
+                      )}
+                      <div className="answer-reference">
+                        {question?.reference}
+                      </div>
+                    </div>
+                    <div className="answer-status">
+                      {isCorrect ? (
+                        <span className="status-icon correct">✓</span>
+                      ) : (
+                        <span className="status-icon incorrect">✗</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })
+            ) : isCompleteQuiz ? (
               // Complete Quiz Results
               answers?.map((answer, index) => {
                 const correctBook = OLD_TESTAMENT_BOOKS[index];

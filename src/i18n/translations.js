@@ -32,8 +32,15 @@ export const translations = {
           title: 'Complete the Names',
           description: 'Books shown in order - type the full name from the first letters',
           icon: '✏️'
+        },
+        covenants: {
+          title: 'Genesis Covenants',
+          description: 'Multiple choice questions about the covenants in Genesis',
+          icon: '📜'
         }
-      }
+      },
+      oldTestament: 'Old Testament',
+      knowledge: 'Knowledge'
     },
 
     // Quiz page (Order mode)
@@ -66,6 +73,22 @@ export const translations = {
       confirmTitle: 'Submit Your Answers?',
       confirmText: 'You have completed {completed} of {total} books. Submit now?',
       hint: 'Hint: {hint}'
+    },
+
+    // Quiz page (Multiple Choice mode)
+    multipleChoice: {
+      title: 'Genesis Covenants',
+      instruction: 'Select the correct answer for each question',
+      question: 'Question {current} of {total}',
+      selectAnswer: 'Select your answer',
+      next: 'Next',
+      finish: 'Finish',
+      correct: 'Correct!',
+      incorrect: 'Incorrect',
+      correctAnswerWas: 'The correct answer was:',
+      reference: 'Reference:',
+      yourAnswer: 'Your answer:',
+      skipped: 'Skipped'
     },
 
     // Results page
@@ -174,8 +197,15 @@ export const translations = {
           title: 'Completar los Nombres',
           description: 'Libros en orden - escribe el nombre completo desde las primeras letras',
           icon: '✏️'
+        },
+        covenants: {
+          title: 'Pactos de Génesis',
+          description: 'Preguntas de opción múltiple sobre los pactos en Génesis',
+          icon: '📜'
         }
-      }
+      },
+      oldTestament: 'Antiguo Testamento',
+      knowledge: 'Conocimiento'
     },
 
     // Quiz page (Order mode)
@@ -208,6 +238,22 @@ export const translations = {
       confirmTitle: '¿Enviar tus Respuestas?',
       confirmText: 'Has completado {completed} de {total} libros. ¿Enviar ahora?',
       hint: 'Pista: {hint}'
+    },
+
+    // Quiz page (Multiple Choice mode)
+    multipleChoice: {
+      title: 'Pactos de Génesis',
+      instruction: 'Selecciona la respuesta correcta para cada pregunta',
+      question: 'Pregunta {current} de {total}',
+      selectAnswer: 'Selecciona tu respuesta',
+      next: 'Siguiente',
+      finish: 'Finalizar',
+      correct: '¡Correcto!',
+      incorrect: 'Incorrecto',
+      correctAnswerWas: 'La respuesta correcta era:',
+      reference: 'Referencia:',
+      yourAnswer: 'Tu respuesta:',
+      skipped: 'Omitida'
     },
 
     // Results page

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import CompleteQuiz from './pages/CompleteQuiz';
+import MultipleChoiceQuiz from './pages/MultipleChoiceQuiz';
 import Results from './pages/Results';
 import { QuizProvider } from './contexts/QuizContext';
 import { I18nProvider } from './i18n/I18nContext';
@@ -28,8 +29,14 @@ function App() {
     setQuizScore(null);
   };
 
+  const navigateToCovenantsQuiz = () => {
+    setQuizType('covenants');
+    setCurrentScreen('covenantsQuiz');
+    setQuizScore(null);
+  };
+
   const navigateToResults = (score) => {
-    setQuizScore({ ...score, quizType });
+    setQuizScore({ ...score, quizType: score.quizType || quizType });
     setCurrentScreen('results');
   };
 
@@ -41,6 +48,8 @@ function App() {
   const handleRetry = () => {
     if (quizType === 'complete') {
       navigateToCompleteQuiz();
+    } else if (quizType === 'covenants') {
+      navigateToCovenantsQuiz();
     } else {
       navigateToOrderQuiz();
     }
@@ -57,10 +66,12 @@ function App() {
             <Home
               onStartOrder={navigateToOrderQuiz}
               onStartComplete={navigateToCompleteQuiz}
+              onStartCovenants={navigateToCovenantsQuiz}
             />
           )}
           {currentScreen === 'quiz' && <Quiz onComplete={navigateToResults} />}
           {currentScreen === 'completeQuiz' && <CompleteQuiz onComplete={navigateToResults} />}
+          {currentScreen === 'covenantsQuiz' && <MultipleChoiceQuiz onComplete={navigateToResults} />}
           {currentScreen === 'results' && (
             <Results
               score={quizScore}
