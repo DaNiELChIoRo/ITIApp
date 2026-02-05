@@ -34,7 +34,7 @@ export const translations = {
           icon: '✏️'
         },
         covenants: {
-          title: 'Genesis Covenants',
+          title: "Jacob's Covenants",
           description: 'Multiple choice questions about the covenants in Genesis',
           icon: '📜'
         }
@@ -77,7 +77,7 @@ export const translations = {
 
     // Quiz page (Multiple Choice mode)
     multipleChoice: {
-      title: 'Genesis Covenants',
+      title: "Jacob's Covenants",
       instruction: 'Select the correct answer for each question',
       question: 'Question {current} of {total}',
       selectAnswer: 'Select your answer',
@@ -199,7 +199,7 @@ export const translations = {
           icon: '✏️'
         },
         covenants: {
-          title: 'Pactos de Génesis',
+          title: 'Pactos de Jacob',
           description: 'Preguntas de opción múltiple sobre los pactos en Génesis',
           icon: '📜'
         }
@@ -242,7 +242,7 @@ export const translations = {
 
     // Quiz page (Multiple Choice mode)
     multipleChoice: {
-      title: 'Pactos de Génesis',
+      title: 'Pactos de Jacob',
       instruction: 'Selecciona la respuesta correcta para cada pregunta',
       question: 'Pregunta {current} de {total}',
       selectAnswer: 'Selecciona tu respuesta',
