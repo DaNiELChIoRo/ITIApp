@@ -30,9 +30,10 @@ const Results = ({ score, onRetry, onHome }) => {
     );
   }
 
-  const { correct, total, percentage, selections } = score;
+  const { correct, total, percentage, selections, answers, quizType } = score;
   const scoreMessage = getScoreMessage(percentage);
   const scoreColor = getScoreColor(percentage);
+  const isCompleteQuiz = quizType === 'complete';
 
   return (
     <div className="results-container">
@@ -69,38 +70,76 @@ const Results = ({ score, onRetry, onHome }) => {
         <Card className="details-card">
           <h2 className="details-title">{t('results.yourAnswers')}</h2>
           <div className="answers-list">
-            {selections.map((selectedBook, index) => {
-              const correctBook = OLD_TESTAMENT_BOOKS[index];
-              const isCorrect = selectedBook === correctBook;
+            {isCompleteQuiz ? (
+              // Complete Quiz Results
+              answers?.map((answer, index) => {
+                const correctBook = OLD_TESTAMENT_BOOKS[index];
+                const isCorrect = answer?.correct;
+                const userAnswer = answer?.input || '-';
 
-              return (
-                <div
-                  key={index}
-                  className={`answer-item ${isCorrect ? 'correct' : 'incorrect'}`}
-                >
-                  <div className="answer-position">{index + 1}</div>
-                  <div className="answer-content">
-                    <div className="answer-your-choice">
-                      <span className="answer-label">{t('results.yourAnswer')}</span>
-                      <span className="answer-book">{translateBook(selectedBook)}</span>
-                    </div>
-                    {!isCorrect && (
-                      <div className="answer-correct-choice">
-                        <span className="answer-label">{t('results.correctAnswer')}</span>
-                        <span className="answer-book">{translateBook(correctBook)}</span>
+                return (
+                  <div
+                    key={index}
+                    className={`answer-item ${isCorrect ? 'correct' : 'incorrect'}`}
+                  >
+                    <div className="answer-position">{index + 1}</div>
+                    <div className="answer-content">
+                      <div className="answer-your-choice">
+                        <span className="answer-label">{t('results.yourAnswer')}</span>
+                        <span className="answer-book">{userAnswer || (answer?.skipped ? '(skipped)' : '-')}</span>
                       </div>
-                    )}
+                      {!isCorrect && (
+                        <div className="answer-correct-choice">
+                          <span className="answer-label">{t('results.correctAnswer')}</span>
+                          <span className="answer-book">{translateBook(correctBook)}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="answer-status">
+                      {isCorrect ? (
+                        <span className="status-icon correct">✓</span>
+                      ) : (
+                        <span className="status-icon incorrect">✗</span>
+                      )}
+                    </div>
                   </div>
-                  <div className="answer-status">
-                    {isCorrect ? (
-                      <span className="status-icon correct">✓</span>
-                    ) : (
-                      <span className="status-icon incorrect">✗</span>
-                    )}
+                );
+              })
+            ) : (
+              // Order Quiz Results
+              selections?.map((selectedBook, index) => {
+                const correctBook = OLD_TESTAMENT_BOOKS[index];
+                const isCorrect = selectedBook === correctBook;
+
+                return (
+                  <div
+                    key={index}
+                    className={`answer-item ${isCorrect ? 'correct' : 'incorrect'}`}
+                  >
+                    <div className="answer-position">{index + 1}</div>
+                    <div className="answer-content">
+                      <div className="answer-your-choice">
+                        <span className="answer-label">{t('results.yourAnswer')}</span>
+                        <span className="answer-book">{translateBook(selectedBook)}</span>
+                      </div>
+                      {!isCorrect && (
+                        <div className="answer-correct-choice">
+                          <span className="answer-label">{t('results.correctAnswer')}</span>
+                          <span className="answer-book">{translateBook(correctBook)}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="answer-status">
+                      {isCorrect ? (
+                        <span className="status-icon correct">✓</span>
+                      ) : (
+                        <span className="status-icon incorrect">✗</span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </Card>
 

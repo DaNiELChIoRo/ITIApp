@@ -125,4 +125,4 @@ export const useI18n = () => {
   return context;
 };
 
-export default I18nContext;
+// Note: Using named exports only for Fast Refresh compatibility

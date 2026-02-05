@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../components/common/Button';
 import Card from '../components/common/Card';
 import { useStats } from '../hooks/useStats';
 import { useI18n } from '../i18n/I18nContext';
@@ -8,7 +7,7 @@ import '../styles/Home.css';
 /**
  * Home/Welcome screen component
  */
-const Home = ({ onStart }) => {
+const Home = ({ onStartOrder, onStartComplete }) => {
   const { stats } = useStats();
   const { t } = useI18n();
 
@@ -40,20 +39,23 @@ const Home = ({ onStart }) => {
               <span className="info-icon">⏱️</span>
               <span className="info-text">{t('home.unlimitedTime')}</span>
             </div>
-            <div className="info-item">
-              <span className="info-icon">🎯</span>
-              <span className="info-text">{t('home.orderChallenge')}</span>
-            </div>
           </div>
 
-          <Button
-            onClick={onStart}
-            variant="primary"
-            size="large"
-            className="start-button"
-          >
-            {t('home.startQuiz')}
-          </Button>
+          <h3 className="quiz-type-title">{t('home.selectQuizType')}</h3>
+
+          <div className="quiz-types">
+            <button className="quiz-type-card" onClick={onStartOrder}>
+              <span className="quiz-type-icon">{t('home.quizTypes.order.icon')}</span>
+              <span className="quiz-type-name">{t('home.quizTypes.order.title')}</span>
+              <span className="quiz-type-desc">{t('home.quizTypes.order.description')}</span>
+            </button>
+
+            <button className="quiz-type-card" onClick={onStartComplete}>
+              <span className="quiz-type-icon">{t('home.quizTypes.complete.icon')}</span>
+              <span className="quiz-type-name">{t('home.quizTypes.complete.title')}</span>
+              <span className="quiz-type-desc">{t('home.quizTypes.complete.description')}</span>
+            </button>
+          </div>
         </Card>
 
         {stats.totalAttempts > 0 && (

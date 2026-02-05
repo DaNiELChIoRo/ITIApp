@@ -11,7 +11,7 @@ export const translations = {
     // Home page
     home: {
       welcomeTitle: 'Old Testament Books',
-      welcomeDescription: 'Test your knowledge of the Old Testament! Can you arrange all 39 books in their correct biblical order?',
+      welcomeDescription: 'Test your knowledge of the Old Testament! Choose a quiz mode below.',
       booksCount: '39 Books',
       unlimitedTime: 'Unlimited Time',
       orderChallenge: 'Order Challenge',
@@ -20,10 +20,23 @@ export const translations = {
       attempts: 'Attempts',
       bestScore: 'Best Score',
       average: 'Average',
-      footerText: 'Learn the Bible one quiz at a time'
+      footerText: 'Learn the Bible one quiz at a time',
+      selectQuizType: 'Select Quiz Type',
+      quizTypes: {
+        order: {
+          title: 'Order the Books',
+          description: 'Arrange all 39 books in their correct biblical order',
+          icon: '📚'
+        },
+        complete: {
+          title: 'Complete the Names',
+          description: 'Books shown in order - type the full name from the first letters',
+          icon: '✏️'
+        }
+      }
     },
 
-    // Quiz page
+    // Quiz page (Order mode)
     quiz: {
       title: 'Order the Books',
       instruction: 'Click the books in their correct biblical order',
@@ -35,6 +48,24 @@ export const translations = {
       confirmText: 'Are you sure you want to submit? You have selected all {count} books.',
       goBack: 'Go Back',
       yesSubmit: 'Yes, Submit'
+    },
+
+    // Quiz page (Complete mode)
+    completeQuiz: {
+      title: 'Complete the Names',
+      instruction: 'Type the full book name for each hint',
+      progress: '{completed} of {total} completed',
+      placeholder: 'Type book name...',
+      skip: 'Skip',
+      check: 'Check',
+      next: 'Next',
+      correct: 'Correct!',
+      incorrect: 'Incorrect',
+      correctAnswer: 'The answer was: {answer}',
+      submitAll: 'Submit Quiz',
+      confirmTitle: 'Submit Your Answers?',
+      confirmText: 'You have completed {completed} of {total} books. Submit now?',
+      hint: 'Hint: {hint}'
     },
 
     // Results page
@@ -122,7 +153,7 @@ export const translations = {
     // Home page
     home: {
       welcomeTitle: 'Libros del Antiguo Testamento',
-      welcomeDescription: '¡Pon a prueba tu conocimiento del Antiguo Testamento! ¿Puedes ordenar los 39 libros en su orden bíblico correcto?',
+      welcomeDescription: '¡Pon a prueba tu conocimiento del Antiguo Testamento! Elige un modo de quiz abajo.',
       booksCount: '39 Libros',
       unlimitedTime: 'Tiempo Ilimitado',
       orderChallenge: 'Desafío de Orden',
@@ -131,10 +162,23 @@ export const translations = {
       attempts: 'Intentos',
       bestScore: 'Mejor Puntaje',
       average: 'Promedio',
-      footerText: 'Aprende la Biblia un quiz a la vez'
+      footerText: 'Aprende la Biblia un quiz a la vez',
+      selectQuizType: 'Selecciona el Tipo de Quiz',
+      quizTypes: {
+        order: {
+          title: 'Ordenar los Libros',
+          description: 'Ordena los 39 libros en su orden bíblico correcto',
+          icon: '📚'
+        },
+        complete: {
+          title: 'Completar los Nombres',
+          description: 'Libros en orden - escribe el nombre completo desde las primeras letras',
+          icon: '✏️'
+        }
+      }
     },
 
-    // Quiz page
+    // Quiz page (Order mode)
     quiz: {
       title: 'Ordena los Libros',
       instruction: 'Haz clic en los libros en su orden bíblico correcto',
@@ -146,6 +190,24 @@ export const translations = {
       confirmText: '¿Estás seguro de que quieres enviar? Has seleccionado los {count} libros.',
       goBack: 'Volver',
       yesSubmit: 'Sí, Enviar'
+    },
+
+    // Quiz page (Complete mode)
+    completeQuiz: {
+      title: 'Completar los Nombres',
+      instruction: 'Escribe el nombre completo del libro para cada pista',
+      progress: '{completed} de {total} completados',
+      placeholder: 'Escribe el nombre...',
+      skip: 'Saltar',
+      check: 'Verificar',
+      next: 'Siguiente',
+      correct: '¡Correcto!',
+      incorrect: 'Incorrecto',
+      correctAnswer: 'La respuesta era: {answer}',
+      submitAll: 'Enviar Quiz',
+      confirmTitle: '¿Enviar tus Respuestas?',
+      confirmText: 'Has completado {completed} de {total} libros. ¿Enviar ahora?',
+      hint: 'Pista: {hint}'
     },
 
     // Results page
