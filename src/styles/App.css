@@ -1,0 +1,26 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+.app-language-selector {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .app {
+    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .app-language-selector {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+}

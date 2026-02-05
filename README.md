@@ -13,10 +13,22 @@ A progressive web application (PWA) for learning the Old Testament books through
 
 ## Tech Stack
 
+| Package | Version | Purpose |
+|---------|---------|---------|
+| React | ^18.3.1 | UI framework with hooks |
+| React DOM | ^18.3.1 | React renderer |
+| React Router DOM | ^6.22.3 | Client-side routing |
+| Vite | ^5.1.6 | Build tool & dev server |
+| @vitejs/plugin-react | ^4.2.1 | React support for Vite |
+| vite-plugin-pwa | ^0.19.8 | PWA generation |
+| workbox-window | ^7.0.0 | Service worker utilities |
+| gh-pages | ^6.1.1 | GitHub Pages deployment |
+
+### Key Technologies
 - **React 18** - Modern functional components with hooks
-- **Vite** - Lightning-fast build tool
+- **Vite 5** - Lightning-fast build tool (requires Node 18+)
 - **PWA** - Service worker with offline support
-- **CSS Modules** - Clean, scoped styling
+- **CSS** - Clean, scoped styling
 - **React Context** - State management
 - **LocalStorage** - Persistent statistics
 
@@ -24,13 +36,29 @@ A progressive web application (PWA) for learning the Old Testament books through
 
 ### Prerequisites
 
-- Node.js 16+ and npm
+- **Node.js 18+** (required - Vite 5 does not support older versions)
+- npm 8+
+
+#### Using nvm (recommended)
+
+If you have multiple Node.js versions, use nvm to switch:
+
+```bash
+# Install Node 18 if needed
+nvm install 18
+
+# Use Node 18
+nvm use 18
+
+# Verify version
+node --version  # Should show v18.x.x or higher
+```
 
 ### Installation
 
 1. Clone or navigate to the repository:
 ```bash
-cd /Users/dmeneses/Documents/Vue/ITIApp
+cd ITIApp
 ```
 
 2. Install dependencies:
@@ -43,7 +71,7 @@ npm install
 npm run dev
 ```
 
-4. Open your browser to `http://localhost:5173`
+4. Open your browser to `http://localhost:5173/ITIApp/`
 
 ## Available Scripts
 
@@ -195,6 +223,31 @@ export const OLD_TESTAMENT_BOOKS = [ ... ]
 - Initial bundle size: ~50KB gzipped
 - Time to Interactive: <2s on 3G
 - Lighthouse Score: 95+ across all metrics
+
+## Limitations and Known Issues
+
+### Node.js Version
+- **Requires Node.js 18+**: Vite 5 uses modern JavaScript features (RegExp `d` flag) that are not available in older Node versions
+- Running with Node 15 or 16 will result in: `SyntaxError: Invalid regular expression flags`
+- Use `nvm use 18` or upgrade your Node.js installation
+
+### Browser Requirements
+- **Modern browsers only**: Uses ES6+ features, CSS Grid, and Flexbox
+- Internet Explorer is not supported
+- Older mobile browsers may have limited PWA functionality
+
+### Current Quiz Content
+- Only Old Testament books ordering quiz is available
+- New Testament and other quiz types are planned for future releases
+
+### Offline Mode
+- Initial visit requires internet connection to cache assets
+- Quiz data is static and bundled with the app
+
+### Data Persistence
+- Statistics stored in browser's localStorage
+- Clearing browser data will reset all progress
+- No cloud sync between devices
 
 ## Contributing
 
