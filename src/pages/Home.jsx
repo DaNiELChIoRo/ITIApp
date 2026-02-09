@@ -2,14 +2,13 @@ import React from 'react';
 import Card from '../components/common/Card';
 import { useStats } from '../hooks/useStats';
 import { useI18n } from '../i18n/I18nContext';
+import { useData } from '../contexts/DataContext';
 import '../styles/Home.css';
 
-/**
- * Home/Welcome screen component
- */
-const Home = ({ onStartOrder, onStartComplete, onStartCovenants }) => {
+const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onNavigateAdmin }) => {
   const { stats } = useStats();
-  const { t } = useI18n();
+  const { t, language } = useI18n();
+  const { quizzes } = useData();
 
   return (
     <div className="home-container">
@@ -63,11 +62,27 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants }) => {
           <div className="quiz-category">
             <h4 className="quiz-category-title">{t('home.knowledge')}</h4>
             <div className="quiz-types">
-              <button className="quiz-type-card" onClick={onStartCovenants}>
-                <span className="quiz-type-icon">{t('home.quizTypes.covenants.icon')}</span>
-                <span className="quiz-type-name">{t('home.quizTypes.covenants.title')}</span>
-                <span className="quiz-type-desc">{t('home.quizTypes.covenants.description')}</span>
-              </button>
+              {quizzes.map(quiz => (
+                <button
+                  key={quiz.id}
+                  className="quiz-type-card"
+                  onClick={() => {
+                    if (quiz.id === 'genesis-covenants') {
+                      onStartCovenants();
+                    } else if (onStartQuiz) {
+                      onStartQuiz(quiz.id);
+                    }
+                  }}
+                >
+                  <span className="quiz-type-icon">{quiz.icon || '📝'}</span>
+                  <span className="quiz-type-name">
+                    {quiz.title?.[language] || quiz.title?.en || quiz.id}
+                  </span>
+                  <span className="quiz-type-desc">
+                    {quiz.description?.[language] || quiz.description?.en || ''}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         </Card>
@@ -96,6 +111,13 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants }) => {
           <p className="footer-text">
             {t('home.footerText')}
           </p>
+          <button
+            className="admin-link"
+            onClick={onNavigateAdmin}
+            onContextMenu={(e) => { e.preventDefault(); onNavigateAdmin?.(); }}
+          >
+            ⚙
+          </button>
         </footer>
       </div>
     </div>

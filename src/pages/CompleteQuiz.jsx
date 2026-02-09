@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { OLD_TESTAMENT_BOOKS } from '../utils/constants';
 import { useI18n } from '../i18n/I18nContext';
+import { useData } from '../contexts/DataContext';
 import Button from '../components/common/Button';
 import ProgressBar from '../components/common/ProgressBar';
 import '../styles/CompleteQuiz.css';
@@ -47,15 +47,16 @@ const normalizeString = (str) => {
  */
 const CompleteQuiz = ({ onComplete }) => {
   const { t, translateBook, language } = useI18n();
+  const { books } = useData();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userInput, setUserInput] = useState('');
-  const [answers, setAnswers] = useState(Array(OLD_TESTAMENT_BOOKS.length).fill(null));
+  const [answers, setAnswers] = useState(Array(books.length).fill(null));
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const inputRef = useRef(null);
 
-  const currentBook = OLD_TESTAMENT_BOOKS[currentIndex];
+  const currentBook = books[currentIndex];
   const translatedBook = translateBook(currentBook);
   const hint = getHint(currentBook, translatedBook);
 
@@ -88,7 +89,7 @@ const CompleteQuiz = ({ onComplete }) => {
   };
 
   const handleNext = () => {
-    if (currentIndex < OLD_TESTAMENT_BOOKS.length - 1) {
+    if (currentIndex < books.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setUserInput('');
       setShowResult(false);
@@ -109,7 +110,7 @@ const CompleteQuiz = ({ onComplete }) => {
     };
     setAnswers(newAnswers);
 
-    if (currentIndex < OLD_TESTAMENT_BOOKS.length - 1) {
+    if (currentIndex < books.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setUserInput('');
       setShowResult(false);
@@ -135,7 +136,7 @@ const CompleteQuiz = ({ onComplete }) => {
 
   const handleConfirmSubmit = () => {
     const correctCount = answers.filter(a => a?.correct).length;
-    const total = OLD_TESTAMENT_BOOKS.length;
+    const total = books.length;
     const percentage = Math.round((correctCount / total) * 100);
 
     onComplete({
@@ -153,7 +154,7 @@ const CompleteQuiz = ({ onComplete }) => {
   };
 
   const completedCount = answers.filter(a => a !== null).length;
-  const progress = (completedCount / OLD_TESTAMENT_BOOKS.length) * 100;
+  const progress = (completedCount / books.length) * 100;
 
   return (
     <div className="complete-quiz-container">
@@ -165,7 +166,7 @@ const CompleteQuiz = ({ onComplete }) => {
       <div className="complete-quiz-progress">
         <ProgressBar progress={progress} />
         <div className="progress-text">
-          {t('completeQuiz.progress', { completed: completedCount, total: OLD_TESTAMENT_BOOKS.length })}
+          {t('completeQuiz.progress', { completed: completedCount, total: books.length })}
         </div>
       </div>
 
@@ -228,7 +229,7 @@ const CompleteQuiz = ({ onComplete }) => {
               variant="primary"
               className="next-button"
             >
-              {currentIndex < OLD_TESTAMENT_BOOKS.length - 1
+              {currentIndex < books.length - 1
                 ? t('completeQuiz.next')
                 : t('completeQuiz.submitAll')}
             </Button>
@@ -237,7 +238,7 @@ const CompleteQuiz = ({ onComplete }) => {
       </div>
 
       <div className="books-overview">
-        {OLD_TESTAMENT_BOOKS.map((_, index) => {
+        {books.map((_, index) => {
           const answer = answers[index];
           let statusClass = 'pending';
           if (answer) {
@@ -249,7 +250,7 @@ const CompleteQuiz = ({ onComplete }) => {
             <div
               key={index}
               className={`book-dot ${statusClass}`}
-              title={`${index + 1}. ${translateBook(OLD_TESTAMENT_BOOKS[index])}`}
+              title={`${index + 1}. ${translateBook(books[index])}`}
             />
           );
         })}
@@ -262,7 +263,7 @@ const CompleteQuiz = ({ onComplete }) => {
             <p className="confirmation-text">
               {t('completeQuiz.confirmText', {
                 completed: completedCount,
-                total: OLD_TESTAMENT_BOOKS.length
+                total: books.length
               })}
             </p>
             <div className="confirmation-actions">

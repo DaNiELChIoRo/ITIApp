@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { OLD_TESTAMENT_BOOKS } from '../utils/constants';
 import { getScoreColor } from '../utils/helpers';
+import { useData } from '../contexts/DataContext';
 import { useStats } from '../hooks/useStats';
 import { useI18n } from '../i18n/I18nContext';
 import Button from '../components/common/Button';
@@ -14,6 +14,7 @@ import '../styles/Results.css';
 const Results = ({ score, onRetry, onHome }) => {
   const { updateStats } = useStats();
   const { t, translateBook, getScoreMessage } = useI18n();
+  const { books } = useData();
 
   useEffect(() => {
     if (score) {
@@ -116,7 +117,7 @@ const Results = ({ score, onRetry, onHome }) => {
             ) : isCompleteQuiz ? (
               // Complete Quiz Results
               answers?.map((answer, index) => {
-                const correctBook = OLD_TESTAMENT_BOOKS[index];
+                const correctBook = books[index];
                 const isCorrect = answer?.correct;
                 const userAnswer = answer?.input || '-';
 
@@ -151,7 +152,7 @@ const Results = ({ score, onRetry, onHome }) => {
             ) : (
               // Order Quiz Results
               selections?.map((selectedBook, index) => {
-                const correctBook = OLD_TESTAMENT_BOOKS[index];
+                const correctBook = books[index];
                 const isCorrect = selectedBook === correctBook;
 
                 return (

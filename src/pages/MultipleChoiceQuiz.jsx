@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { GENESIS_COVENANTS_QUIZ, shuffleQuestions } from '../utils/genesisCovenants';
+import { shuffleQuestions } from '../utils/genesisCovenants';
 import { useI18n } from '../i18n/I18nContext';
+import { useData } from '../contexts/DataContext';
 import Button from '../components/common/Button';
 import ProgressBar from '../components/common/ProgressBar';
 import '../styles/MultipleChoiceQuiz.css';
@@ -9,8 +10,9 @@ import '../styles/MultipleChoiceQuiz.css';
  * Multiple Choice Quiz Component
  * Questions about Genesis Covenants
  */
-const MultipleChoiceQuiz = ({ onComplete }) => {
+const MultipleChoiceQuiz = ({ onComplete, quizId = 'genesis-covenants' }) => {
   const { t, language } = useI18n();
+  const { quizzes } = useData();
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -18,14 +20,16 @@ const MultipleChoiceQuiz = ({ onComplete }) => {
   const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
-    // Get questions for current language and shuffle them
-    const quizQuestions = GENESIS_COVENANTS_QUIZ[language] || GENESIS_COVENANTS_QUIZ.en;
+    const quiz = quizzes.find(q => q.id === quizId);
+    const quizData = quiz || quizzes[0];
+    if (!quizData) return;
+    const quizQuestions = quizData[language] || quizData.en || [];
     setQuestions(shuffleQuestions(quizQuestions));
     setAnswers([]);
     setCurrentIndex(0);
     setSelectedAnswer(null);
     setShowResult(false);
-  }, [language]);
+  }, [language, quizId, quizzes]);
 
   const currentQuestion = questions[currentIndex];
   const progress = questions.length > 0 ? ((currentIndex + 1) / questions.length) * 100 : 0;

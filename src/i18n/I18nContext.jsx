@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useMemo, useEffect } from 'react';
-import { translations } from './translations';
+import { translations as hardcodedTranslations } from './translations';
+import { useData } from '../contexts/DataContext';
 
 const I18nContext = createContext(null);
 
@@ -7,18 +8,14 @@ const I18nContext = createContext(null);
  * Get stored language from localStorage or detect from browser
  */
 const getInitialLanguage = () => {
-  // Check localStorage first
   const stored = localStorage.getItem('language');
-  if (stored && translations[stored]) {
+  if (stored && hardcodedTranslations[stored]) {
     return stored;
   }
-
-  // Detect from browser
   const browserLang = navigator.language?.split('-')[0];
-  if (browserLang && translations[browserLang]) {
+  if (browserLang && hardcodedTranslations[browserLang]) {
     return browserLang;
   }
-
   return 'en';
 };
 
@@ -26,9 +23,9 @@ const getInitialLanguage = () => {
  * I18n Provider component
  */
 export const I18nProvider = ({ children }) => {
+  const { translations } = useData();
   const [language, setLanguageState] = useState(getInitialLanguage);
 
-  // Update document lang attribute when language changes
   useEffect(() => {
     document.documentElement.lang = language;
   }, [language]);
@@ -38,12 +35,8 @@ export const I18nProvider = ({ children }) => {
       setLanguageState(lang);
       localStorage.setItem('language', lang);
     }
-  }, []);
+  }, [translations]);
 
-  /**
-   * Get translation for a key path
-   * Supports nested keys like 'home.welcomeTitle'
-   */
   const t = useCallback((keyPath, params = {}) => {
     const keys = keyPath.split('.');
     let value = translations[language];
@@ -58,14 +51,13 @@ export const I18nProvider = ({ children }) => {
           if (value && typeof value === 'object' && k in value) {
             value = value[k];
           } else {
-            return keyPath; // Return key if not found
+            return keyPath;
           }
         }
         break;
       }
     }
 
-    // Replace parameters like {count}, {correct}, etc.
     if (typeof value === 'string' && Object.keys(params).length > 0) {
       return value.replace(/\{(\w+)\}/g, (match, param) => {
         return params[param] !== undefined ? params[param] : match;
@@ -73,18 +65,12 @@ export const I18nProvider = ({ children }) => {
     }
 
     return value || keyPath;
-  }, [language]);
+  }, [language, translations]);
 
-  /**
-   * Translate a book name
-   */
   const translateBook = useCallback((bookName) => {
     return translations[language]?.books?.[bookName] || bookName;
-  }, [language]);
+  }, [language, translations]);
 
-  /**
-   * Get score message based on percentage
-   */
   const getScoreMessage = useCallback((percentage) => {
     const scores = translations[language]?.scores || translations.en.scores;
     if (percentage === 100) return scores.perfect;
@@ -94,9 +80,9 @@ export const I18nProvider = ({ children }) => {
     if (percentage >= 60) return scores.notBad;
     if (percentage >= 50) return scores.keepPracticing;
     return scores.tryAgain;
-  }, [language]);
+  }, [language, translations]);
 
-  const availableLanguages = useMemo(() => Object.keys(translations), []);
+  const availableLanguages = useMemo(() => Object.keys(translations), [translations]);
 
   const value = useMemo(() => ({
     language,
@@ -124,5 +110,3 @@ export const useI18n = () => {
   }
   return context;
 };
-
-// Note: Using named exports only for Fast Refresh compatibility
