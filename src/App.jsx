@@ -5,6 +5,7 @@ import CompleteQuiz from './pages/CompleteQuiz';
 import MultipleChoiceQuiz from './pages/MultipleChoiceQuiz';
 import Results from './pages/Results';
 import Admin from './pages/Admin';
+import { AuthProvider } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataContext';
 import { QuizProvider } from './contexts/QuizContext';
 import { I18nProvider } from './i18n/I18nContext';
@@ -68,6 +69,7 @@ function App() {
   };
 
   return (
+    <AuthProvider>
     <DataProvider>
       <I18nProvider>
         <QuizProvider>
@@ -103,6 +105,7 @@ function App() {
         </QuizProvider>
       </I18nProvider>
     </DataProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useData } from '../contexts/DataContext';
+import { useAuth } from '../contexts/AuthContext';
 import { saveBooks, saveQuiz, createQuiz, deleteQuiz, saveTranslations } from '../firebase/firestoreService';
 import { seedAllData } from '../firebase/seedData';
 import Button from '../components/common/Button';
 import '../styles/Admin.css';
 
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
-
 const Admin = ({ onBack }) => {
   const { books, quizzes, translations, refreshData } = useData();
-  const [authenticated, setAuthenticated] = useState(false);
+  const { user, loading: authLoading, signInWithEmail, signInWithGoogle, signOut } = useAuth();
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
   const [activeTab, setActiveTab] = useState('books');
   const [status, setStatus] = useState('');
   const [saving, setSaving] = useState(false);
@@ -48,13 +49,24 @@ const Admin = ({ onBack }) => {
     }
   }, [editLang, translations]);
 
-  const handleLogin = (e) => {
+  const handleEmailLogin = async (e) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      setAuthenticated(true);
-      setStatus('');
-    } else {
-      setStatus('Invalid password');
+    setAuthError('');
+    try {
+      await signInWithEmail(email, password);
+    } catch (err) {
+      setAuthError(err.code === 'auth/invalid-credential' ? 'Invalid email or password' : err.message);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setAuthError('');
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      if (err.code !== 'auth/popup-closed-by-user') {
+        setAuthError(err.message);
+      }
     }
   };
 
@@ -274,24 +286,47 @@ const Admin = ({ onBack }) => {
     setSaving(false);
   };
 
+  // --- Loading state ---
+  if (authLoading) {
+    return (
+      <div className="admin-container">
+        <div className="admin-login">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   // --- Login gate ---
-  if (!authenticated) {
+  if (!user) {
     return (
       <div className="admin-container">
         <div className="admin-login">
           <h2>Admin Access</h2>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleEmailLogin}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              className="admin-input"
+              autoFocus
+            />
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
+              placeholder="Password"
               className="admin-input"
-              autoFocus
             />
-            <Button type="submit" variant="primary">Login</Button>
+            <Button type="submit" variant="primary">Sign In</Button>
           </form>
-          {status && <p className="admin-status error">{status}</p>}
+          <div className="admin-divider"><span>or</span></div>
+          <button className="admin-google-btn" onClick={handleGoogleLogin}>
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            Sign in with Google
+          </button>
+          {authError && <p className="admin-status error">{authError}</p>}
           <Button onClick={onBack} variant="secondary" className="admin-back-btn">Back</Button>
         </div>
       </div>
@@ -303,9 +338,11 @@ const Admin = ({ onBack }) => {
       <header className="admin-header">
         <h1>Admin Panel</h1>
         <div className="admin-header-actions">
+          <span className="admin-user-info">{user.email}</span>
           <Button onClick={handleSeed} variant="secondary" disabled={saving}>
             Seed Data
           </Button>
+          <Button onClick={() => signOut()} variant="secondary">Sign Out</Button>
           <Button onClick={onBack} variant="secondary">Back to App</Button>
         </div>
       </header>
