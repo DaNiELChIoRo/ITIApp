@@ -13,9 +13,10 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || ''
 };
 
+const hasValidConfig = !!firebaseConfig.apiKey;
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
+const auth = hasValidConfig ? getAuth(app) : null;
 
 let analytics = null;
 isSupported().then(supported => {
