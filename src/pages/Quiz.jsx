@@ -10,7 +10,7 @@ import '../styles/Quiz.css';
  * Quiz screen component
  * Displays shuffled books and manages user selections
  */
-const Quiz = ({ onComplete }) => {
+const Quiz = ({ onComplete, onHome }) => {
   const {
     shuffledBooks,
     selectedBooks,
@@ -62,6 +62,9 @@ const Quiz = ({ onComplete }) => {
 
   return (
     <div className="quiz-container">
+      <button className="quiz-exit-btn" onClick={onHome}>
+        <span className="quiz-exit-btn-arrow">&#8592;</span> {t('exit')}
+      </button>
       <header className="quiz-header">
         <h1 className="quiz-title">{t('quiz.title')}</h1>
         <p className="quiz-instruction">

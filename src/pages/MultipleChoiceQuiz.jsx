@@ -10,7 +10,7 @@ import '../styles/MultipleChoiceQuiz.css';
  * Multiple Choice Quiz Component
  * Questions about Genesis Covenants
  */
-const MultipleChoiceQuiz = ({ onComplete, quizId = 'genesis-covenants' }) => {
+const MultipleChoiceQuiz = ({ onComplete, onHome, quizId = 'genesis-covenants' }) => {
   const { t, language } = useI18n();
   const { quizzes } = useData();
   const [questions, setQuestions] = useState([]);
@@ -94,6 +94,9 @@ const MultipleChoiceQuiz = ({ onComplete, quizId = 'genesis-covenants' }) => {
 
   return (
     <div className="mc-quiz-container">
+      <button className="quiz-exit-btn" onClick={onHome}>
+        <span className="quiz-exit-btn-arrow">&#8592;</span> {t('exit')}
+      </button>
       <header className="mc-quiz-header">
         <h1 className="mc-quiz-title">{t('multipleChoice.title')}</h1>
         <p className="mc-quiz-instruction">{t('multipleChoice.instruction')}</p>

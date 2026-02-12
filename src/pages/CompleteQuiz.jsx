@@ -45,7 +45,7 @@ const normalizeString = (str) => {
  * Complete Quiz Component
  * Users type the full book name based on first letter hints
  */
-const CompleteQuiz = ({ onComplete }) => {
+const CompleteQuiz = ({ onComplete, onHome }) => {
   const { t, translateBook, language } = useI18n();
   const { books } = useData();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -158,6 +158,9 @@ const CompleteQuiz = ({ onComplete }) => {
 
   return (
     <div className="complete-quiz-container">
+      <button className="quiz-exit-btn" onClick={onHome}>
+        <span className="quiz-exit-btn-arrow">&#8592;</span> {t('exit')}
+      </button>
       <header className="complete-quiz-header">
         <h1 className="complete-quiz-title">{t('completeQuiz.title')}</h1>
         <p className="complete-quiz-instruction">{t('completeQuiz.instruction')}</p>

@@ -8,6 +8,9 @@ export const translations = {
     appName: 'ITIApp',
     appSubtitle: 'Bible Quiz',
 
+    // Common
+    exit: 'Exit',
+
     // Home page
     home: {
       welcomeTitle: 'Old Testament Books',
@@ -40,7 +43,24 @@ export const translations = {
         }
       },
       oldTestament: 'Old Testament',
-      knowledge: 'Knowledge'
+      knowledge: 'Knowledge',
+      study: 'Study',
+      studyTypes: {
+        greekFlashCards: {
+          title: 'Greek Flashcards',
+          description: 'Study New Testament Greek vocabulary with flip cards'
+        }
+      }
+    },
+
+    // Flashcards
+    flashcards: {
+      title: 'Greek Flashcards',
+      tapToFlip: 'Tap to flip',
+      next: 'Next',
+      previous: 'Previous',
+      shuffle: 'Shuffle',
+      backToHome: 'Back to Home'
     },
 
     // Quiz page (Order mode)
@@ -173,6 +193,9 @@ export const translations = {
     appName: 'ITIApp',
     appSubtitle: 'Quiz Bíblico',
 
+    // Common
+    exit: 'Salir',
+
     // Home page
     home: {
       welcomeTitle: 'Libros del Antiguo Testamento',
@@ -205,7 +228,24 @@ export const translations = {
         }
       },
       oldTestament: 'Antiguo Testamento',
-      knowledge: 'Conocimiento'
+      knowledge: 'Conocimiento',
+      study: 'Estudio',
+      studyTypes: {
+        greekFlashCards: {
+          title: 'Tarjetas de Griego',
+          description: 'Estudia vocabulario griego del Nuevo Testamento con tarjetas'
+        }
+      }
+    },
+
+    // Flashcards
+    flashcards: {
+      title: 'Tarjetas de Griego',
+      tapToFlip: 'Toca para voltear',
+      next: 'Siguiente',
+      previous: 'Anterior',
+      shuffle: 'Mezclar',
+      backToHome: 'Volver al Inicio'
     },
 
     // Quiz page (Order mode)

@@ -5,7 +5,7 @@ import { useI18n } from '../i18n/I18nContext';
 import { useData } from '../contexts/DataContext';
 import '../styles/Home.css';
 
-const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onNavigateAdmin }) => {
+const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onStartFlashCards, onNavigateAdmin }) => {
   const { stats } = useStats();
   const { t, language } = useI18n();
   const { quizzes } = useData();
@@ -83,6 +83,20 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, on
                   </span>
                 </button>
               ))}
+            </div>
+          </div>
+
+          <div className="quiz-category">
+            <h4 className="quiz-category-title">{t('home.study')}</h4>
+            <div className="quiz-types">
+              <button
+                className="quiz-type-card"
+                onClick={() => onStartFlashCards?.('greek-vocabulary')}
+              >
+                <span className="quiz-type-icon">🃏</span>
+                <span className="quiz-type-name">{t('home.studyTypes.greekFlashCards.title')}</span>
+                <span className="quiz-type-desc">{t('home.studyTypes.greekFlashCards.description')}</span>
+              </button>
             </div>
           </div>
         </Card>

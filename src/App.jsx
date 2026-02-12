@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import CompleteQuiz from './pages/CompleteQuiz';
 import MultipleChoiceQuiz from './pages/MultipleChoiceQuiz';
+import FlashCards from './pages/FlashCards';
 import Results from './pages/Results';
 import Admin from './pages/Admin';
 import { AuthProvider } from './contexts/AuthContext';
@@ -54,6 +55,11 @@ function App() {
     setQuizScore(null);
   };
 
+  const navigateToFlashCards = (quizId) => {
+    setActiveQuizId(quizId);
+    setCurrentScreen('flashcards');
+  };
+
   const navigateToAdmin = () => {
     setCurrentScreen('admin');
   };
@@ -83,13 +89,14 @@ function App() {
                 onStartComplete={navigateToCompleteQuiz}
                 onStartCovenants={navigateToCovenantsQuiz}
                 onStartQuiz={navigateToMultipleChoiceQuiz}
+                onStartFlashCards={navigateToFlashCards}
                 onNavigateAdmin={navigateToAdmin}
               />
             )}
-            {currentScreen === 'quiz' && <Quiz onComplete={navigateToResults} />}
-            {currentScreen === 'completeQuiz' && <CompleteQuiz onComplete={navigateToResults} />}
+            {currentScreen === 'quiz' && <Quiz onComplete={navigateToResults} onHome={navigateToHome} />}
+            {currentScreen === 'completeQuiz' && <CompleteQuiz onComplete={navigateToResults} onHome={navigateToHome} />}
             {currentScreen === 'covenantsQuiz' && (
-              <MultipleChoiceQuiz onComplete={navigateToResults} quizId={activeQuizId} />
+              <MultipleChoiceQuiz onComplete={navigateToResults} onHome={navigateToHome} quizId={activeQuizId} />
             )}
             {currentScreen === 'results' && (
               <Results
@@ -97,6 +104,9 @@ function App() {
                 onRetry={handleRetry}
                 onHome={navigateToHome}
               />
+            )}
+            {currentScreen === 'flashcards' && (
+              <FlashCards quizId={activeQuizId} onHome={navigateToHome} />
             )}
             {currentScreen === 'admin' && (
               <Admin onBack={navigateToHome} />
