@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { getBooks, getAllQuizzes, getTranslations as fetchTranslations } from '../firebase/firestoreService';
 import { OLD_TESTAMENT_BOOKS } from '../utils/constants';
 import { GENESIS_COVENANTS_QUIZ } from '../utils/genesisCovenants';
+import { GREEK_VOCABULARY_QUIZ } from '../utils/greekVocabulary';
 import { translations as hardcodedTranslations } from '../i18n/translations';
 
 const DataContext = createContext(null);
@@ -19,6 +20,18 @@ const FALLBACK_QUIZZES = [
     category: 'knowledge',
     en: GENESIS_COVENANTS_QUIZ.en,
     es: GENESIS_COVENANTS_QUIZ.es
+  },
+  {
+    id: 'greek-vocabulary',
+    title: { en: 'Greek Vocabulary', es: 'Vocabulario Griego' },
+    description: {
+      en: 'Learn key Greek words from the New Testament',
+      es: 'Aprende palabras clave en griego del Nuevo Testamento'
+    },
+    icon: '\u03B1\u03B2',
+    category: 'knowledge',
+    en: GREEK_VOCABULARY_QUIZ.en,
+    es: GREEK_VOCABULARY_QUIZ.es
   }
 ];
 
