@@ -32,8 +32,8 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
 
   const cards = useMemo(() => {
     const quiz = quizzes.find(q => q.id === quizId);
-    if (!quiz?.data) return [];
-    const langData = quiz.data[language] || quiz.data.en || [];
+    if (!quiz) return [];
+    const langData = quiz[language] || quiz.en || [];
     return shuffleArray(langData);
   }, [quizzes, quizId, language, shuffleKey]);
 
