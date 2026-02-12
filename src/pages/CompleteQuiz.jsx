@@ -67,6 +67,13 @@ const CompleteQuiz = ({ onComplete, onHome }) => {
     }
   }, [currentIndex, showResult]);
 
+  const handleInputFocus = () => {
+    // Wait for mobile keyboard to finish opening, then scroll input into view
+    setTimeout(() => {
+      inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
+  };
+
   const checkAnswer = () => {
     const normalizedInput = normalizeString(userInput);
     const normalizedAnswer = normalizeString(translatedBook);
@@ -192,6 +199,7 @@ const CompleteQuiz = ({ onComplete, onHome }) => {
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               onKeyPress={handleKeyPress}
+              onFocus={handleInputFocus}
               placeholder={t('completeQuiz.placeholder')}
               autoComplete="off"
               autoCapitalize="words"
