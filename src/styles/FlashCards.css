@@ -9,7 +9,7 @@
 
 .flashcards-content {
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   animation: fadeInUp 0.6s ease-out;
 }
 
@@ -26,19 +26,20 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.flashcards-counter {
-  font-size: var(--font-size-lg);
-  color: rgba(255, 255, 255, 0.85);
+.flashcards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
 }
 
 .flashcard-scene {
   perspective: 800px;
-  margin-bottom: var(--spacing-xl);
 }
 
 .flashcard {
   width: 100%;
-  min-height: 280px;
+  min-height: 160px;
   position: relative;
   cursor: pointer;
   transform-style: preserve-3d;
@@ -52,7 +53,7 @@
 .flashcard-face {
   position: absolute;
   width: 100%;
-  min-height: 280px;
+  min-height: 160px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   border-radius: var(--radius-xl);
@@ -60,7 +61,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-2xl);
+  padding: var(--spacing-md);
   box-shadow: var(--shadow-lg);
   text-align: center;
 }
@@ -75,34 +76,28 @@
 }
 
 .flashcard-greek {
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-primary);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
   line-height: 1.3;
 }
 
 .flashcard-transliteration {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-sm);
   color: var(--color-text-light);
   font-style: italic;
 }
 
-.flashcard-hint {
-  font-size: var(--font-size-sm);
-  color: rgba(0, 0, 0, 0.4);
-  margin-top: var(--spacing-lg);
-}
-
 .flashcard-meaning {
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-lg);
   font-weight: 700;
   color: #2e7d32;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
 }
 
 .flashcard-reference {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   color: var(--color-text-light);
   font-style: italic;
 }
@@ -152,6 +147,7 @@
   display: flex;
   justify-content: center;
   gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
 .flashcard-action-btn {
@@ -171,25 +167,25 @@
   border-color: rgba(255, 255, 255, 0.5);
 }
 
-.flashcard-shuffle-btn {
-  background: rgba(255, 255, 255, 0.2);
-}
-
 @media (max-width: 768px) {
   .flashcards-container {
     padding: var(--spacing-md);
   }
 
-  .flashcard-face {
-    min-height: 240px;
-    padding: var(--spacing-xl);
+  .flashcards-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .flashcard {
-    min-height: 240px;
+  .flashcard,
+  .flashcard-face {
+    min-height: 140px;
   }
 
   .flashcard-greek {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
+  }
+
+  .flashcard-meaning {
+    font-size: var(--font-size-md);
   }
 }

@@ -60,7 +60,9 @@ export const translations = {
       next: 'Next',
       previous: 'Previous',
       shuffle: 'Shuffle',
-      backToHome: 'Back to Home'
+      backToHome: 'Back to Home',
+      showAll: 'Show All',
+      hideAll: 'Hide All'
     },
 
     // Quiz page (Order mode)
@@ -245,7 +247,9 @@ export const translations = {
       next: 'Siguiente',
       previous: 'Anterior',
       shuffle: 'Mezclar',
-      backToHome: 'Volver al Inicio'
+      backToHome: 'Volver al Inicio',
+      showAll: 'Mostrar Todo',
+      hideAll: 'Ocultar Todo'
     },
 
     // Quiz page (Order mode)

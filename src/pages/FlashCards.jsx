@@ -3,6 +3,8 @@ import { useData } from '../contexts/DataContext';
 import { useI18n } from '../i18n/I18nContext';
 import '../styles/FlashCards.css';
 
+const CARDS_PER_PAGE = 6;
+
 function shuffleArray(array) {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -13,9 +15,7 @@ function shuffleArray(array) {
 }
 
 function parseGreekWord(questionText) {
-  // Extract Greek word in parentheses like (ἀγάπη)
   const greekMatch = questionText.match(/\(([^)]*[\u0370-\u03FF\u1F00-\u1FFF][^)]*)\)/);
-  // Extract transliteration like 'agape' or 'logos'
   const translitMatch = questionText.match(/'([a-zA-Z]+)'/);
   return {
     greek: greekMatch ? greekMatch[1] : '',
@@ -26,8 +26,8 @@ function parseGreekWord(questionText) {
 const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
   const { quizzes } = useData();
   const { t, language } = useI18n();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [page, setPage] = useState(0);
+  const [flippedCards, setFlippedCards] = useState(new Set());
   const [shuffleKey, setShuffleKey] = useState(0);
 
   const cards = useMemo(() => {
@@ -37,17 +37,40 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
     return shuffleArray(langData);
   }, [quizzes, quizId, language, shuffleKey]);
 
-  const currentCard = cards[currentIndex];
+  const totalPages = Math.ceil(cards.length / CARDS_PER_PAGE);
+  const pageCards = cards.slice(page * CARDS_PER_PAGE, page * CARDS_PER_PAGE + CARDS_PER_PAGE);
 
-  const goTo = useCallback((index) => {
-    setIsFlipped(false);
-    setCurrentIndex(index);
+  const goToPage = useCallback((newPage) => {
+    setPage(newPage);
+    setFlippedCards(new Set());
   }, []);
+
+  const toggleCard = useCallback((index) => {
+    setFlippedCards(prev => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  }, []);
+
+  const allFlipped = pageCards.length > 0 && flippedCards.size === pageCards.length;
+
+  const toggleAll = useCallback(() => {
+    if (allFlipped) {
+      setFlippedCards(new Set());
+    } else {
+      setFlippedCards(new Set(pageCards.map((_, i) => i)));
+    }
+  }, [allFlipped, pageCards]);
 
   const handleShuffle = useCallback(() => {
     setShuffleKey(k => k + 1);
-    setCurrentIndex(0);
-    setIsFlipped(false);
+    setPage(0);
+    setFlippedCards(new Set());
   }, []);
 
   if (!cards.length) {
@@ -65,9 +88,6 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
     );
   }
 
-  const { greek, transliteration } = parseGreekWord(currentCard.question);
-  const meaning = currentCard.options[currentCard.correctIndex];
-
   return (
     <div className="flashcards-container">
       <div className="flashcards-content">
@@ -75,36 +95,45 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
           <h1 className="flashcards-title">{t('flashcards.title')}</h1>
         </div>
 
-        <div className="flashcard-scene" onClick={() => setIsFlipped(f => !f)}>
-          <div className={`flashcard ${isFlipped ? 'is-flipped' : ''}`}>
-            <div className="flashcard-face flashcard-front">
-              <div className="flashcard-greek">{greek}</div>
-              <div className="flashcard-transliteration">{transliteration}</div>
-              <div className="flashcard-hint">{t('flashcards.tapToFlip')}</div>
-            </div>
-            <div className="flashcard-face flashcard-back">
-              <div className="flashcard-meaning">{meaning}</div>
-              <div className="flashcard-reference">{currentCard.reference}</div>
-            </div>
-          </div>
+        <div className="flashcards-grid">
+          {pageCards.map((card, i) => {
+            const { greek, transliteration } = parseGreekWord(card.question);
+            const meaning = card.options[card.correctIndex];
+            const isFlipped = flippedCards.has(i);
+
+            return (
+              <div key={`${page}-${i}`} className="flashcard-scene" onClick={() => toggleCard(i)}>
+                <div className={`flashcard ${isFlipped ? 'is-flipped' : ''}`}>
+                  <div className="flashcard-face flashcard-front">
+                    <div className="flashcard-greek">{greek}</div>
+                    <div className="flashcard-transliteration">{transliteration}</div>
+                  </div>
+                  <div className="flashcard-face flashcard-back">
+                    <div className="flashcard-meaning">{meaning}</div>
+                    <div className="flashcard-reference">{card.reference}</div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="flashcards-nav">
           <button
             className="flashcard-nav-btn"
-            onClick={() => goTo(currentIndex - 1)}
-            disabled={currentIndex === 0}
+            onClick={() => goToPage(page - 1)}
+            disabled={page === 0}
             aria-label={t('flashcards.previous')}
           >
             &#8592;
           </button>
           <span className="flashcard-nav-indicator">
-            {currentIndex + 1} / {cards.length}
+            {page + 1} / {totalPages}
           </span>
           <button
             className="flashcard-nav-btn"
-            onClick={() => goTo(currentIndex + 1)}
-            disabled={currentIndex === cards.length - 1}
+            onClick={() => goToPage(page + 1)}
+            disabled={page >= totalPages - 1}
             aria-label={t('flashcards.next')}
           >
             &#8594;
@@ -112,6 +141,9 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
         </div>
 
         <div className="flashcards-actions">
+          <button className="flashcard-action-btn" onClick={toggleAll}>
+            {allFlipped ? t('flashcards.hideAll') : t('flashcards.showAll')}
+          </button>
           <button className="flashcard-action-btn" onClick={handleShuffle}>
             {t('flashcards.shuffle')}
           </button>
