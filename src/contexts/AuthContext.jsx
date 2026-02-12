@@ -26,14 +26,17 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signInWithEmail = (email, password) => {
+    if (!auth) throw new Error('Firebase is not configured. Set VITE_FIREBASE_* env vars.');
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const signInWithGoogle = () => {
+    if (!auth) throw new Error('Firebase is not configured. Set VITE_FIREBASE_* env vars.');
     return signInWithPopup(auth, googleProvider);
   };
 
   const signOut = () => {
+    if (!auth) return Promise.resolve();
     return firebaseSignOut(auth);
   };
 
