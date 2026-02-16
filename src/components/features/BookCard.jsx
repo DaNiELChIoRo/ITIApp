@@ -3,16 +3,9 @@ import '../../styles/BookCard.css';
 
 /**
  * Book card component for quiz selections
- * @param {Object} props
- * @param {string} props.book - Book name (internal identifier)
- * @param {string} props.displayName - Localized book name to display
- * @param {boolean} props.isSelected - Whether book is selected
- * @param {boolean} props.isCorrectlyPlaced - Whether book was placed in correct position
- * @param {boolean} props.isLastPlaced - Whether this was just placed (for animation)
- * @param {number} props.selectionIndex - Order in selection (1-based)
- * @param {Function} props.onClick - Click handler
+ * Single click selects, double click deselects.
  */
-const BookCard = ({ book, displayName, isSelected, isCorrectlyPlaced, isLastPlaced, selectionIndex, onClick }) => {
+const BookCard = ({ book, displayName, isSelected, isCorrectlyPlaced, isLastPlaced, selectionIndex, onClick, onDeselect }) => {
   const classNames = [
     'book-card',
     isSelected ? 'book-card-selected' : '',
@@ -20,11 +13,23 @@ const BookCard = ({ book, displayName, isSelected, isCorrectlyPlaced, isLastPlac
     isLastPlaced ? 'book-card-just-placed' : ''
   ].filter(Boolean).join(' ');
 
+  const handleClick = () => {
+    if (!isSelected) {
+      onClick();
+    }
+  };
+
+  const handleDoubleClick = () => {
+    if (isSelected && onDeselect) {
+      onDeselect();
+    }
+  };
+
   return (
     <button
       className={classNames}
-      onClick={onClick}
-      disabled={isSelected}
+      onClick={handleClick}
+      onDoubleClick={handleDoubleClick}
       aria-pressed={isSelected}
     >
       <div className="book-card-content">

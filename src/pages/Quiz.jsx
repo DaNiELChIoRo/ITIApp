@@ -19,6 +19,7 @@ const Quiz = ({ onComplete, onHome }) => {
     isInitialized,
     initializeQuiz,
     selectBook,
+    deselectBook,
     undoLastSelection,
     resetSelections,
     calculateScore,
@@ -133,6 +134,7 @@ const Quiz = ({ onComplete, onHome }) => {
                 isLastPlaced={lastSelected === book}
                 selectionIndex={selIdx}
                 onClick={() => handleBookClick(book)}
+                onDeselect={() => deselectBook(book)}
               />
             );
           })}

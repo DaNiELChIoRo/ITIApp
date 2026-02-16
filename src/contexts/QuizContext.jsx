@@ -38,6 +38,13 @@ export const QuizProvider = ({ children }) => {
   }, []);
 
   /**
+   * Remove a specific book from the selection
+   */
+  const deselectBook = useCallback((book) => {
+    setSelectedBooks(prev => prev.filter(b => b !== book));
+  }, []);
+
+  /**
    * Clear all selections
    */
   const resetSelections = useCallback(() => {
@@ -89,6 +96,7 @@ export const QuizProvider = ({ children }) => {
     isInitialized,
     initializeQuiz,
     selectBook,
+    deselectBook,
     undoLastSelection,
     resetSelections,
     calculateScore,

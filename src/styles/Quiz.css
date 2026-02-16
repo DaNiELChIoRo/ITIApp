@@ -238,13 +238,13 @@
     padding: 12px 20px;
     border-radius: var(--radius-lg);
     border: none;
-    background: rgba(255, 255, 255, 0.95);
+    background: #ffffff;
     color: var(--color-text);
     font-size: var(--font-size-sm);
     font-weight: 600;
     font-family: inherit;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
     transition: all 0.15s ease;
     -webkit-appearance: none;
     appearance: none;
