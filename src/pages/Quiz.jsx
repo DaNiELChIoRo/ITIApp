@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { useQuiz } from '../contexts/QuizContext';
 import { useData } from '../contexts/DataContext';
 import { useI18n } from '../i18n/I18nContext';
@@ -10,7 +10,7 @@ import '../styles/Quiz.css';
 /**
  * Quiz screen component
  * Displays shuffled books and manages user selections.
- * Correctly selected books animate to their proper position at the front of the grid.
+ * Selected books animate to the front of the grid in selection order.
  */
 const Quiz = ({ onComplete, onHome }) => {
   const {
@@ -29,8 +29,9 @@ const Quiz = ({ onComplete, onHome }) => {
   const { books } = useData();
   const { t, translateBook } = useI18n();
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [correctlyPlaced, setCorrectlyPlaced] = useState([]);
-  const [lastPlaced, setLastPlaced] = useState(null);
+  const [lastSelected, setLastSelected] = useState(null);
+  const [fabOpen, setFabOpen] = useState(false);
+  const fabRef = useRef(null);
 
   useEffect(() => {
     if (!isInitialized) {
@@ -38,39 +39,41 @@ const Quiz = ({ onComplete, onHome }) => {
     }
   }, [isInitialized, initializeQuiz]);
 
+  // Close FAB when tapping outside
+  useEffect(() => {
+    if (!fabOpen) return;
+    const handleTap = (e) => {
+      if (fabRef.current && !fabRef.current.contains(e.target)) {
+        setFabOpen(false);
+      }
+    };
+    document.addEventListener('pointerdown', handleTap);
+    return () => document.removeEventListener('pointerdown', handleTap);
+  }, [fabOpen]);
+
   const handleBookClick = useCallback((book) => {
     if (isBookSelected(book)) return;
-
-    const nextIndex = selectedBooks.length;
-    const nextCorrectBook = books[nextIndex];
-
     selectBook(book);
-
-    if (book === nextCorrectBook) {
-      setCorrectlyPlaced(prev => [...prev, book]);
-      setLastPlaced(book);
-      setTimeout(() => setLastPlaced(null), 600);
-    }
-  }, [isBookSelected, selectedBooks.length, books, selectBook]);
+    setLastSelected(book);
+    setTimeout(() => setLastSelected(null), 600);
+  }, [isBookSelected, selectBook]);
 
   const handleUndo = useCallback(() => {
-    const lastBook = selectedBooks[selectedBooks.length - 1];
     undoLastSelection();
-    if (correctlyPlaced.includes(lastBook)) {
-      setCorrectlyPlaced(prev => prev.filter(b => b !== lastBook));
-    }
-    setLastPlaced(null);
-  }, [selectedBooks, undoLastSelection, correctlyPlaced]);
+    setLastSelected(null);
+    setFabOpen(false);
+  }, [undoLastSelection]);
 
   const handleReset = useCallback(() => {
     resetSelections();
-    setCorrectlyPlaced([]);
-    setLastPlaced(null);
+    setLastSelected(null);
+    setFabOpen(false);
   }, [resetSelections]);
 
   const handleSubmit = () => {
     if (selectedBooks.length === shuffledBooks.length) {
       setShowConfirmation(true);
+      setFabOpen(false);
     }
   };
 
@@ -83,11 +86,11 @@ const Quiz = ({ onComplete, onHome }) => {
     setShowConfirmation(false);
   };
 
-  // Display order: correctly placed books first (in correct order), then remaining shuffled books
+  // Display order: selected books first (in selection order), then remaining shuffled books
   const displayBooks = useMemo(() => {
-    const remaining = shuffledBooks.filter(b => !correctlyPlaced.includes(b));
-    return [...correctlyPlaced, ...remaining];
-  }, [shuffledBooks, correctlyPlaced]);
+    const remaining = shuffledBooks.filter(b => !selectedBooks.includes(b));
+    return [...selectedBooks, ...remaining];
+  }, [shuffledBooks, selectedBooks]);
 
   const progress = shuffledBooks.length > 0
     ? (selectedBooks.length / shuffledBooks.length) * 100
@@ -116,22 +119,28 @@ const Quiz = ({ onComplete, onHome }) => {
 
       <div className="quiz-content">
         <div className="books-grid">
-          {displayBooks.map((book) => (
-            <BookCard
-              key={book}
-              book={book}
-              displayName={translateBook(book)}
-              isSelected={isBookSelected(book)}
-              isCorrectlyPlaced={correctlyPlaced.includes(book)}
-              isLastPlaced={lastPlaced === book}
-              selectionIndex={getSelectionIndex(book)}
-              onClick={() => handleBookClick(book)}
-            />
-          ))}
+          {displayBooks.map((book) => {
+            const selIdx = getSelectionIndex(book);
+            const isCorrect = selIdx !== null && books[selIdx - 1] === book;
+
+            return (
+              <BookCard
+                key={book}
+                book={book}
+                displayName={translateBook(book)}
+                isSelected={isBookSelected(book)}
+                isCorrectlyPlaced={isCorrect}
+                isLastPlaced={lastSelected === book}
+                selectionIndex={selIdx}
+                onClick={() => handleBookClick(book)}
+              />
+            );
+          })}
         </div>
       </div>
 
-      <div className="quiz-actions">
+      {/* Desktop: sticky action bar */}
+      <div className="quiz-actions quiz-actions-desktop">
         <Button
           onClick={handleUndo}
           variant="secondary"
@@ -156,6 +165,42 @@ const Quiz = ({ onComplete, onHome }) => {
         >
           {t('quiz.submitAnswer')}
         </Button>
+      </div>
+
+      {/* Mobile: floating action button */}
+      <div className="quiz-fab-wrapper" ref={fabRef}>
+        {fabOpen && (
+          <div className="quiz-fab-menu">
+            <button
+              className="quiz-fab-menu-item quiz-fab-menu-submit"
+              onClick={handleSubmit}
+              disabled={!allSelected}
+            >
+              {t('quiz.submitAnswer')}
+            </button>
+            <button
+              className="quiz-fab-menu-item"
+              onClick={handleUndo}
+              disabled={selectedBooks.length === 0}
+            >
+              {t('quiz.undoLast')}
+            </button>
+            <button
+              className="quiz-fab-menu-item"
+              onClick={handleReset}
+              disabled={selectedBooks.length === 0}
+            >
+              {t('quiz.resetAll')}
+            </button>
+          </div>
+        )}
+        <button
+          className={`quiz-fab ${fabOpen ? 'quiz-fab-open' : ''}`}
+          onClick={() => setFabOpen(prev => !prev)}
+          aria-label="Actions"
+        >
+          <span className="quiz-fab-icon">{fabOpen ? '\u00D7' : '\u2026'}</span>
+        </button>
       </div>
 
       {showConfirmation && (
