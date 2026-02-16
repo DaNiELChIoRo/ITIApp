@@ -81,7 +81,8 @@ export const translations = {
       confirmTitle: 'Submit Your Answer?',
       confirmText: 'Are you sure you want to submit? You have selected all {count} books.',
       goBack: 'Go Back',
-      yesSubmit: 'Yes, Submit'
+      yesSubmit: 'Yes, Submit',
+      searchPlaceholder: 'Search book...'
     },
 
     // Quiz page (Complete mode)
@@ -273,7 +274,8 @@ export const translations = {
       confirmTitle: '¿Enviar tu Respuesta?',
       confirmText: '¿Estás seguro de que quieres enviar? Has seleccionado los {count} libros.',
       goBack: 'Volver',
-      yesSubmit: 'Sí, Enviar'
+      yesSubmit: 'Sí, Enviar',
+      searchPlaceholder: 'Buscar libro...'
     },
 
     // Quiz page (Complete mode)

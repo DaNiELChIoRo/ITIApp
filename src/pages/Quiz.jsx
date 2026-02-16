@@ -32,6 +32,7 @@ const Quiz = ({ onComplete, onHome }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [lastSelected, setLastSelected] = useState(null);
   const [fabOpen, setFabOpen] = useState(false);
+  const [search, setSearch] = useState('');
   const fabRef = useRef(null);
 
   useEffect(() => {
@@ -56,6 +57,7 @@ const Quiz = ({ onComplete, onHome }) => {
     if (isBookSelected(book)) return;
     selectBook(book);
     setLastSelected(book);
+    setSearch('');
     setTimeout(() => setLastSelected(null), 600);
   }, [isBookSelected, selectBook]);
 
@@ -88,10 +90,19 @@ const Quiz = ({ onComplete, onHome }) => {
   };
 
   // Display order: selected books first (in selection order), then remaining shuffled books
+  // Search only filters unselected cards
   const displayBooks = useMemo(() => {
     const remaining = shuffledBooks.filter(b => !selectedBooks.includes(b));
-    return [...selectedBooks, ...remaining];
-  }, [shuffledBooks, selectedBooks]);
+    const query = search.trim().toLowerCase();
+    const filtered = query
+      ? remaining.filter(b => {
+          const display = translateBook(b).toLowerCase();
+          const internal = b.toLowerCase();
+          return display.includes(query) || internal.includes(query);
+        })
+      : remaining;
+    return [...selectedBooks, ...filtered];
+  }, [shuffledBooks, selectedBooks, search, translateBook]);
 
   const progress = shuffledBooks.length > 0
     ? (selectedBooks.length / shuffledBooks.length) * 100
@@ -116,6 +127,21 @@ const Quiz = ({ onComplete, onHome }) => {
         <div className="progress-text">
           {selectedBooks.length} / {shuffledBooks.length} {t('quiz.selected')}
         </div>
+      </div>
+
+      <div className="quiz-search">
+        <input
+          className="quiz-search-input"
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder={t('quiz.searchPlaceholder')}
+        />
+        {search && (
+          <button className="quiz-search-clear" onClick={() => setSearch('')} aria-label="Clear">
+            &times;
+          </button>
+        )}
       </div>
 
       <div className="quiz-content">
