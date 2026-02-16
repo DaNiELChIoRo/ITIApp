@@ -26,6 +26,65 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Progress bar */
+.flashcards-progress-bar {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.flashcards-progress-text {
+  color: white;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+.flashcards-progress-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.flashcards-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #81c784);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* Filter toggle */
+.flashcards-filter {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.flashcards-filter-btn {
+  padding: var(--spacing-xs) var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.flashcards-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.flashcards-filter-btn.active {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: white;
+}
+
+/* Grid */
 .flashcards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -68,6 +127,25 @@
 
 .flashcard-front {
   background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  position: relative;
+}
+
+/* Known badge (checkmark on front) */
+.flashcard-known-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #4caf50;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .flashcard-back {
@@ -100,6 +178,25 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-light);
   font-style: italic;
+}
+
+/* Know it button on card back */
+.flashcard-know-btn {
+  margin-top: var(--spacing-sm);
+  padding: 4px 16px;
+  border-radius: var(--radius-lg);
+  border: 2px solid #4caf50;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.flashcard-know-btn:hover {
+  background: #4caf50;
+  color: white;
 }
 
 .flashcards-nav {

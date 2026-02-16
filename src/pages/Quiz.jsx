@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { useQuiz } from '../contexts/QuizContext';
+import { useData } from '../contexts/DataContext';
 import { useI18n } from '../i18n/I18nContext';
 import BookCard from '../components/features/BookCard';
 import ProgressBar from '../components/common/ProgressBar';
@@ -8,7 +9,8 @@ import '../styles/Quiz.css';
 
 /**
  * Quiz screen component
- * Displays shuffled books and manages user selections
+ * Displays shuffled books and manages user selections.
+ * Correctly selected books animate to their proper position at the front of the grid.
  */
 const Quiz = ({ onComplete, onHome }) => {
   const {
@@ -24,8 +26,11 @@ const Quiz = ({ onComplete, onHome }) => {
     getSelectionIndex
   } = useQuiz();
 
+  const { books } = useData();
   const { t, translateBook } = useI18n();
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [correctlyPlaced, setCorrectlyPlaced] = useState([]);
+  const [lastPlaced, setLastPlaced] = useState(null);
 
   useEffect(() => {
     if (!isInitialized) {
@@ -33,11 +38,35 @@ const Quiz = ({ onComplete, onHome }) => {
     }
   }, [isInitialized, initializeQuiz]);
 
-  const handleBookClick = (book) => {
-    if (!isBookSelected(book)) {
-      selectBook(book);
+  const handleBookClick = useCallback((book) => {
+    if (isBookSelected(book)) return;
+
+    const nextIndex = selectedBooks.length;
+    const nextCorrectBook = books[nextIndex];
+
+    selectBook(book);
+
+    if (book === nextCorrectBook) {
+      setCorrectlyPlaced(prev => [...prev, book]);
+      setLastPlaced(book);
+      setTimeout(() => setLastPlaced(null), 600);
     }
-  };
+  }, [isBookSelected, selectedBooks.length, books, selectBook]);
+
+  const handleUndo = useCallback(() => {
+    const lastBook = selectedBooks[selectedBooks.length - 1];
+    undoLastSelection();
+    if (correctlyPlaced.includes(lastBook)) {
+      setCorrectlyPlaced(prev => prev.filter(b => b !== lastBook));
+    }
+    setLastPlaced(null);
+  }, [selectedBooks, undoLastSelection, correctlyPlaced]);
+
+  const handleReset = useCallback(() => {
+    resetSelections();
+    setCorrectlyPlaced([]);
+    setLastPlaced(null);
+  }, [resetSelections]);
 
   const handleSubmit = () => {
     if (selectedBooks.length === shuffledBooks.length) {
@@ -53,6 +82,12 @@ const Quiz = ({ onComplete, onHome }) => {
   const handleCancelSubmit = () => {
     setShowConfirmation(false);
   };
+
+  // Display order: correctly placed books first (in correct order), then remaining shuffled books
+  const displayBooks = useMemo(() => {
+    const remaining = shuffledBooks.filter(b => !correctlyPlaced.includes(b));
+    return [...correctlyPlaced, ...remaining];
+  }, [shuffledBooks, correctlyPlaced]);
 
   const progress = shuffledBooks.length > 0
     ? (selectedBooks.length / shuffledBooks.length) * 100
@@ -81,12 +116,14 @@ const Quiz = ({ onComplete, onHome }) => {
 
       <div className="quiz-content">
         <div className="books-grid">
-          {shuffledBooks.map((book, index) => (
+          {displayBooks.map((book) => (
             <BookCard
-              key={`${book}-${index}`}
+              key={book}
               book={book}
               displayName={translateBook(book)}
               isSelected={isBookSelected(book)}
+              isCorrectlyPlaced={correctlyPlaced.includes(book)}
+              isLastPlaced={lastPlaced === book}
               selectionIndex={getSelectionIndex(book)}
               onClick={() => handleBookClick(book)}
             />
@@ -96,7 +133,7 @@ const Quiz = ({ onComplete, onHome }) => {
 
       <div className="quiz-actions">
         <Button
-          onClick={undoLastSelection}
+          onClick={handleUndo}
           variant="secondary"
           disabled={selectedBooks.length === 0}
           className="action-button"
@@ -104,7 +141,7 @@ const Quiz = ({ onComplete, onHome }) => {
           {t('quiz.undoLast')}
         </Button>
         <Button
-          onClick={resetSelections}
+          onClick={handleReset}
           variant="secondary"
           disabled={selectedBooks.length === 0}
           className="action-button"

@@ -62,7 +62,12 @@ export const translations = {
       shuffle: 'Shuffle',
       backToHome: 'Back to Home',
       showAll: 'Show All',
-      hideAll: 'Hide All'
+      hideAll: 'Hide All',
+      learned: 'learned',
+      knowIt: 'Know it',
+      all: 'All',
+      notLearned: 'Not learned',
+      resetProgress: 'Reset Progress'
     },
 
     // Quiz page (Order mode)
@@ -249,7 +254,12 @@ export const translations = {
       shuffle: 'Mezclar',
       backToHome: 'Volver al Inicio',
       showAll: 'Mostrar Todo',
-      hideAll: 'Ocultar Todo'
+      hideAll: 'Ocultar Todo',
+      learned: 'aprendidas',
+      knowIt: 'La sé',
+      all: 'Todas',
+      notLearned: 'No aprendidas',
+      resetProgress: 'Reiniciar Progreso'
     },
 
     // Quiz page (Order mode)

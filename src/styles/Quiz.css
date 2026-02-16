@@ -2,7 +2,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: var(--spacing-lg);
   animation: fadeIn 0.4s ease-out;
 }
@@ -148,6 +148,10 @@
   .books-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: var(--spacing-sm);
+  }
+
+  .books-grid {
+    margin-bottom: 200px;
   }
 
   .quiz-actions {

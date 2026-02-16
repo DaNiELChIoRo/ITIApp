@@ -11,15 +11,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-.book-card:hover {
+.book-card:hover:not(:disabled) {
   border-color: var(--color-primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
-.book-card:active {
+.book-card:active:not(:disabled) {
   transform: translateY(0);
 }
 
@@ -31,6 +37,42 @@
 
 .book-card-selected:hover {
   transform: none;
+}
+
+/* Correctly placed card */
+.book-card-correct {
+  background: #e8f5e9;
+  border-color: #4caf50;
+}
+
+.book-card-correct:hover {
+  transform: none;
+}
+
+.book-card-correct .book-name {
+  color: #2e7d32;
+}
+
+/* Animation for just-placed card */
+.book-card-just-placed {
+  animation: cardPlaced 0.6s ease-out;
+}
+
+@keyframes cardPlaced {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.5;
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6);
+  }
+  40% {
+    transform: scale(1.05);
+    opacity: 1;
+    box-shadow: 0 0 0 8px rgba(76, 175, 80, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
 }
 
 .book-card-content {
@@ -55,6 +97,10 @@
   padding-right: 28px;
 }
 
+.book-card-correct .book-name {
+  padding-right: 28px;
+}
+
 .selection-badge {
   position: absolute;
   right: 0;
@@ -73,6 +119,10 @@
   box-shadow: var(--shadow-sm);
 }
 
+.selection-badge-correct {
+  background: #4caf50;
+}
+
 @media (max-width: 768px) {
   .book-card {
     min-height: 70px;
@@ -89,7 +139,8 @@
     font-size: 10px;
   }
 
-  .book-card-selected .book-name {
+  .book-card-selected .book-name,
+  .book-card-correct .book-name {
     padding-right: 24px;
   }
 }
