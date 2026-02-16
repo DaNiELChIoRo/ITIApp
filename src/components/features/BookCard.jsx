@@ -3,7 +3,7 @@ import '../../styles/BookCard.css';
 
 /**
  * Book card component for quiz selections
- * Single click selects, double click deselects.
+ * Single click selects or deselects.
  */
 const BookCard = ({ book, displayName, isSelected, isCorrectlyPlaced, isLastPlaced, selectionIndex, onClick, onDeselect }) => {
   const classNames = [
@@ -14,14 +14,10 @@ const BookCard = ({ book, displayName, isSelected, isCorrectlyPlaced, isLastPlac
   ].filter(Boolean).join(' ');
 
   const handleClick = () => {
-    if (!isSelected) {
-      onClick();
-    }
-  };
-
-  const handleDoubleClick = () => {
     if (isSelected && onDeselect) {
       onDeselect();
+    } else if (!isSelected) {
+      onClick();
     }
   };
 
@@ -29,7 +25,6 @@ const BookCard = ({ book, displayName, isSelected, isCorrectlyPlaced, isLastPlac
     <button
       className={classNames}
       onClick={handleClick}
-      onDoubleClick={handleDoubleClick}
       aria-pressed={isSelected}
     >
       <div className="book-card-content">
