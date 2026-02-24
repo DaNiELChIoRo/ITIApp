@@ -15,11 +15,12 @@ function shuffleArray(array) {
   return shuffled;
 }
 
-function parseGreekWord(questionText) {
-  const greekMatch = questionText.match(/\(([^)]*[\u0370-\u03FF\u1F00-\u1FFF][^)]*)\)/);
+function parseScriptWord(questionText) {
+  // Match parentheses containing Greek or Hebrew script characters
+  const scriptMatch = questionText.match(/\(([^)]*[\u0370-\u03FF\u1F00-\u1FFF\u05B0-\u05EA][^)]*)\)/);
   const translitMatch = questionText.match(/'([a-zA-Z]+)'/);
   return {
-    greek: greekMatch ? greekMatch[1] : '',
+    script: scriptMatch ? scriptMatch[1] : '',
     transliteration: translitMatch ? translitMatch[1] : ''
   };
 }
@@ -30,15 +31,20 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
   const [page, setPage] = useState(0);
   const [flippedCards, setFlippedCards] = useState(new Set());
   const [shuffleKey, setShuffleKey] = useState(0);
-  const [knownIds, setKnownIds] = useLocalStorage('itiapp-flashcard-progress', []);
+  const [knownIds, setKnownIds] = useLocalStorage(`itiapp-flashcard-progress-${quizId}`, []);
   const [filter, setFilter] = useState('all');
 
+  const quiz = useMemo(() => quizzes.find(q => q.id === quizId), [quizzes, quizId]);
+  const quizTitle = useMemo(
+    () => quiz?.title?.[language] || quiz?.title?.en || t('flashcards.title'),
+    [quiz, language, t]
+  );
+
   const allCards = useMemo(() => {
-    const quiz = quizzes.find(q => q.id === quizId);
     if (!quiz) return [];
     const langData = quiz[language] || quiz.en || [];
     return shuffleArray(langData);
-  }, [quizzes, quizId, language, shuffleKey]);
+  }, [quiz, language, shuffleKey]);
 
   const cards = useMemo(() => {
     if (filter === 'notLearned') {
@@ -118,7 +124,7 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
     <div className="flashcards-container">
       <div className="flashcards-content">
         <div className="flashcards-header">
-          <h1 className="flashcards-title">{t('flashcards.title')}</h1>
+          <h1 className="flashcards-title">{quizTitle}</h1>
         </div>
 
         <div className="flashcards-progress-bar">
@@ -156,7 +162,7 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
           <>
             <div className="flashcards-grid">
               {pageCards.map((card, i) => {
-                const { greek, transliteration } = parseGreekWord(card.question);
+                const { script, transliteration } = parseScriptWord(card.question);
                 const meaning = card.options[card.correctIndex];
                 const isFlipped = flippedCards.has(i);
                 const isKnown = knownIds.includes(card.id);
@@ -166,7 +172,7 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
                     <div className={`flashcard ${isFlipped ? 'is-flipped' : ''}`}>
                       <div className="flashcard-face flashcard-front">
                         {isKnown && <span className="flashcard-known-badge">&#10003;</span>}
-                        <div className="flashcard-greek">{greek}</div>
+                        <div className="flashcard-greek">{script}</div>
                         <div className="flashcard-transliteration">{transliteration}</div>
                       </div>
                       <div className="flashcard-face flashcard-back">

@@ -49,13 +49,17 @@ export const translations = {
         greekFlashCards: {
           title: 'Greek Flashcards',
           description: 'Study New Testament Greek vocabulary with flip cards'
+        },
+        hebrewFlashCards: {
+          title: 'Hebrew Flashcards',
+          description: 'Study Old Testament Hebrew vocabulary with flip cards'
         }
       }
     },
 
     // Flashcards
     flashcards: {
-      title: 'Greek Flashcards',
+      title: 'Flashcards',
       tapToFlip: 'Tap to flip',
       next: 'Next',
       previous: 'Previous',
@@ -242,13 +246,17 @@ export const translations = {
         greekFlashCards: {
           title: 'Tarjetas de Griego',
           description: 'Estudia vocabulario griego del Nuevo Testamento con tarjetas'
+        },
+        hebrewFlashCards: {
+          title: 'Tarjetas de Hebreo',
+          description: 'Estudia vocabulario hebreo del Antiguo Testamento con tarjetas'
         }
       }
     },
 
     // Flashcards
     flashcards: {
-      title: 'Tarjetas de Griego',
+      title: 'Tarjetas',
       tapToFlip: 'Toca para voltear',
       next: 'Siguiente',
       previous: 'Anterior',

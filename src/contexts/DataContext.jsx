@@ -3,6 +3,8 @@ import { getBooks, getAllQuizzes, getTranslations as fetchTranslations } from '.
 import { OLD_TESTAMENT_BOOKS } from '../utils/constants';
 import { GENESIS_COVENANTS_QUIZ } from '../utils/genesisCovenants';
 import { GREEK_VOCABULARY_QUIZ } from '../utils/greekVocabulary';
+import { HEBREW_VOCABULARY_QUIZ } from '../utils/hebrewVocabulary';
+import { OLD_TESTAMENT_FACTS_QUIZ } from '../utils/oldTestamentFacts';
 import { translations as hardcodedTranslations } from '../i18n/translations';
 
 const DataContext = createContext(null);
@@ -32,6 +34,30 @@ const FALLBACK_QUIZZES = [
     category: 'knowledge',
     en: GREEK_VOCABULARY_QUIZ.en,
     es: GREEK_VOCABULARY_QUIZ.es
+  },
+  {
+    id: 'hebrew-vocabulary',
+    title: { en: 'Hebrew Vocabulary', es: 'Vocabulario Hebreo' },
+    description: {
+      en: 'Learn key Hebrew words from the Old Testament',
+      es: 'Aprende palabras clave en hebreo del Antiguo Testamento'
+    },
+    icon: '\u05D0\u05D1',
+    category: 'knowledge',
+    en: HEBREW_VOCABULARY_QUIZ.en,
+    es: HEBREW_VOCABULARY_QUIZ.es
+  },
+  {
+    id: 'old-testament-facts',
+    title: { en: 'Old Testament Facts', es: 'Datos del Antiguo Testamento' },
+    description: {
+      en: 'Questions about the structure and key facts of the Old Testament',
+      es: 'Preguntas sobre la estructura y datos clave del Antiguo Testamento'
+    },
+    icon: '\uD83D\uDCD6',
+    category: 'knowledge',
+    en: OLD_TESTAMENT_FACTS_QUIZ.en,
+    es: OLD_TESTAMENT_FACTS_QUIZ.es
   }
 ];
 

@@ -97,6 +97,14 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, on
                 <span className="quiz-type-name">{t('home.studyTypes.greekFlashCards.title')}</span>
                 <span className="quiz-type-desc">{t('home.studyTypes.greekFlashCards.description')}</span>
               </button>
+              <button
+                className="quiz-type-card"
+                onClick={() => onStartFlashCards?.('hebrew-vocabulary')}
+              >
+                <span className="quiz-type-icon">🃏</span>
+                <span className="quiz-type-name">{t('home.studyTypes.hebrewFlashCards.title')}</span>
+                <span className="quiz-type-desc">{t('home.studyTypes.hebrewFlashCards.description')}</span>
+              </button>
             </div>
           </div>
         </Card>
