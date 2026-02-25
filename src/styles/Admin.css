@@ -441,6 +441,57 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@media (prefers-color-scheme: dark) {
+  .admin-login {
+    background: var(--color-card-background);
+  }
+
+  .admin-google-btn {
+    background: var(--color-card-background);
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+
+  .admin-google-btn:hover {
+    background: var(--color-background);
+  }
+
+  .admin-tab.active {
+    background: var(--color-card-background);
+    color: var(--color-text);
+  }
+
+  .admin-content {
+    background: var(--color-card-background);
+  }
+
+  .admin-book-actions button {
+    background: var(--color-card-background);
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .admin-quiz-select {
+    background: var(--color-card-background);
+    color: var(--color-text);
+  }
+
+  .admin-quiz-select.active {
+    background: var(--color-selected);
+  }
+
+  .admin-input,
+  .admin-textarea {
+    background: var(--color-background);
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+
+  .admin-input:focus {
+    border-color: var(--color-primary);
+  }
+}
+
 @media (max-width: 600px) {
   .admin-quiz-meta {
     grid-template-columns: 1fr;

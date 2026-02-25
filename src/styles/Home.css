@@ -227,6 +227,16 @@
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  .logo {
+    background: var(--color-card-background);
+  }
+
+  .quiz-type-card {
+    background: linear-gradient(135deg, var(--color-card-background) 0%, var(--color-background) 100%);
+  }
+}
+
 @media (max-width: 768px) {
   .home-container {
     padding: var(--spacing-md);

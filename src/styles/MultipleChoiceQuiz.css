@@ -251,6 +251,41 @@
   padding: 2rem;
 }
 
+@media (prefers-color-scheme: dark) {
+  .mc-question-card {
+    background: var(--color-card-background);
+  }
+
+  .mc-option {
+    background: var(--color-background);
+    border-color: var(--color-border);
+  }
+
+  .mc-option:hover:not(:disabled) {
+    background: var(--color-card-background);
+  }
+
+  .mc-option.selected {
+    background: var(--color-selected);
+  }
+
+  .mc-option.correct {
+    background: rgba(76, 175, 80, 0.15);
+  }
+
+  .mc-option.incorrect {
+    background: rgba(231, 76, 60, 0.15);
+  }
+
+  .mc-result.correct {
+    background: rgba(76, 175, 80, 0.15);
+  }
+
+  .mc-result.incorrect {
+    background: rgba(231, 76, 60, 0.15);
+  }
+}
+
 /* Responsive */
 @media (max-width: 480px) {
   .mc-quiz-container {

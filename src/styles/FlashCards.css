@@ -297,6 +297,31 @@
   border-color: rgba(255, 255, 255, 0.5);
 }
 
+@media (prefers-color-scheme: dark) {
+  .flashcard-front {
+    background: linear-gradient(135deg, #1e1b2e 0%, #231f3a 100%);
+  }
+
+  .flashcard-back {
+    background: linear-gradient(135deg, #1a2f22 0%, #1e2f1e 100%);
+  }
+
+  .flashcard-meaning {
+    color: #81c784;
+  }
+
+  .flashcard-know-btn {
+    background: #1a2f22;
+    border-color: #4caf50;
+    color: #81c784;
+  }
+
+  .flashcard-know-btn:hover {
+    background: #4caf50;
+    color: white;
+  }
+}
+
 @media (max-width: 768px) {
   .flashcards-container {
     padding: var(--spacing-md);
