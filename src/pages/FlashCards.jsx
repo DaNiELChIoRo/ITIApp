@@ -109,12 +109,13 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
     return (
       <div className="flashcards-container">
         <div className="flashcards-content">
-          <p style={{ color: 'white', textAlign: 'center' }}>No cards available.</p>
-          <div className="flashcards-actions">
-            <button className="flashcard-action-btn" onClick={onHome}>
-              {t('flashcards.backToHome')}
+          <div className="flashcards-header">
+            <button className="flashcard-back-btn" onClick={onHome} aria-label={t('flashcards.backToHome')}>
+              &#8592;
             </button>
+            <h1 className="flashcards-title">{quizTitle}</h1>
           </div>
+          <p style={{ color: 'white', textAlign: 'center' }}>No cards available.</p>
         </div>
       </div>
     );
@@ -124,6 +125,9 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
     <div className="flashcards-container">
       <div className="flashcards-content">
         <div className="flashcards-header">
+          <button className="flashcard-back-btn" onClick={onHome} aria-label={t('flashcards.backToHome')}>
+            &#8592;
+          </button>
           <h1 className="flashcards-title">{quizTitle}</h1>
         </div>
 
