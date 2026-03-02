@@ -9,15 +9,15 @@
 
 .app-language-selector {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
+  top: calc(1rem + env(safe-area-inset-top));
+  right: calc(1rem + env(safe-area-inset-right));
   z-index: 100;
 }
 
 .quiz-exit-btn {
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  top: calc(1rem + env(safe-area-inset-top));
+  left: calc(1rem + env(safe-area-inset-left));
   z-index: 100;
   display: flex;
   align-items: center;
@@ -58,8 +58,8 @@
   }
 
   .app-language-selector {
-    top: 0.5rem;
-    right: 0.5rem;
+    top: calc(0.5rem + env(safe-area-inset-top));
+    right: calc(0.5rem + env(safe-area-inset-right));
   }
 }
 
