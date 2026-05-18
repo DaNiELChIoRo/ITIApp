@@ -4,6 +4,7 @@ import { OLD_TESTAMENT_BOOKS } from '../utils/constants';
 import { GENESIS_COVENANTS_QUIZ } from '../utils/genesisCovenants';
 import { GREEK_VOCABULARY_QUIZ } from '../utils/greekVocabulary';
 import { HEBREW_VOCABULARY_QUIZ } from '../utils/hebrewVocabulary';
+import { GERMAN_VOCABULARY_QUIZ } from '../utils/germanVocabulary';
 import { OLD_TESTAMENT_FACTS_QUIZ } from '../utils/oldTestamentFacts';
 import { translations as hardcodedTranslations } from '../i18n/translations';
 
@@ -46,6 +47,18 @@ const FALLBACK_QUIZZES = [
     category: 'knowledge',
     en: HEBREW_VOCABULARY_QUIZ.en,
     es: HEBREW_VOCABULARY_QUIZ.es
+  },
+  {
+    id: 'german-vocabulary',
+    title: { en: 'German Vocabulary', es: 'Vocabulario Alemán' },
+    description: {
+      en: 'Learn essential German words with pronunciation guides',
+      es: 'Aprende palabras esenciales en alemán con guías de pronunciación'
+    },
+    icon: 'Aa',
+    category: 'knowledge',
+    en: GERMAN_VOCABULARY_QUIZ.en,
+    es: GERMAN_VOCABULARY_QUIZ.es
   },
   {
     id: 'old-testament-facts',

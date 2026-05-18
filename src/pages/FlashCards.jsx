@@ -171,17 +171,21 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
                 const isFlipped = flippedCards.has(i);
                 const isKnown = knownIds.includes(card.id);
 
+                // German cards use dedicated word/ipa fields; others use parsed script/transliteration
+                const displayWord = card.word || script;
+                const displaySub = card.ipa || transliteration;
+
                 return (
                   <div key={`${page}-${i}`} className="flashcard-scene" onClick={() => toggleCard(i)}>
                     <div className={`flashcard ${isFlipped ? 'is-flipped' : ''}`}>
                       <div className="flashcard-face flashcard-front">
                         {isKnown && <span className="flashcard-known-badge">&#10003;</span>}
-                        <div className="flashcard-greek">{script}</div>
-                        <div className="flashcard-transliteration">{transliteration}</div>
+                        <div className="flashcard-greek">{displayWord}</div>
+                        <div className="flashcard-transliteration">{displaySub}</div>
                       </div>
                       <div className="flashcard-face flashcard-back">
                         <div className="flashcard-meaning">{meaning}</div>
-                        <div className="flashcard-reference">{card.reference}</div>
+                        <div className="flashcard-reference">{card.word ? '' : card.reference}</div>
                         {!isKnown && (
                           <button
                             className="flashcard-know-btn"

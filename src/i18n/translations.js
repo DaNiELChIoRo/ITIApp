@@ -53,8 +53,21 @@ export const translations = {
         hebrewFlashCards: {
           title: 'Hebrew Flashcards',
           description: 'Study Old Testament Hebrew vocabulary with flip cards'
+        },
+        germanFlashCards: {
+          title: 'German Flashcards',
+          description: 'Learn essential German words with IPA pronunciation'
+        },
+        germanyMap: {
+          title: 'Map of Germany',
+          description: 'Explore German states and cities with pronunciation cards'
+        },
+        speakingGame: {
+          title: 'Pronunciation Practice',
+          description: 'Say the name of German states and cities aloud — mic checks you'
         }
-      }
+      },
+      german: 'German'
     },
 
     // Flashcards
@@ -250,8 +263,21 @@ export const translations = {
         hebrewFlashCards: {
           title: 'Tarjetas de Hebreo',
           description: 'Estudia vocabulario hebreo del Antiguo Testamento con tarjetas'
+        },
+        germanFlashCards: {
+          title: 'Tarjetas de Alemán',
+          description: 'Aprende palabras esenciales en alemán con pronunciación IPA'
+        },
+        germanyMap: {
+          title: 'Mapa de Alemania',
+          description: 'Explora estados y ciudades alemanas con tarjetas de pronunciación'
+        },
+        speakingGame: {
+          title: 'Práctica de pronunciación',
+          description: 'Di en voz alta el nombre de estados y ciudades — el micrófono te evalúa'
         }
-      }
+      },
+      german: 'Alemán'
     },
 
     // Flashcards

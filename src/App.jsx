@@ -4,6 +4,8 @@ import Quiz from './pages/Quiz';
 import CompleteQuiz from './pages/CompleteQuiz';
 import MultipleChoiceQuiz from './pages/MultipleChoiceQuiz';
 import FlashCards from './pages/FlashCards';
+import GermanyMap from './pages/GermanyMap';
+import GermanSpeakingGame from './pages/GermanSpeakingGame';
 import Results from './pages/Results';
 import Admin from './pages/Admin';
 import { AuthProvider } from './contexts/AuthContext';
@@ -60,6 +62,14 @@ function App() {
     setCurrentScreen('flashcards');
   };
 
+  const navigateToGermanyMap = () => {
+    setCurrentScreen('germanyMap');
+  };
+
+  const navigateToSpeakingGame = () => {
+    setCurrentScreen('speakingGame');
+  };
+
   const navigateToAdmin = () => {
     setCurrentScreen('admin');
   };
@@ -91,6 +101,8 @@ function App() {
                 onStartQuiz={navigateToMultipleChoiceQuiz}
                 onStartFlashCards={navigateToFlashCards}
                 onNavigateAdmin={navigateToAdmin}
+                onGermanyMap={navigateToGermanyMap}
+                onSpeakingGame={navigateToSpeakingGame}
               />
             )}
             {currentScreen === 'quiz' && <Quiz onComplete={navigateToResults} onHome={navigateToHome} />}
@@ -107,6 +119,12 @@ function App() {
             )}
             {currentScreen === 'flashcards' && (
               <FlashCards quizId={activeQuizId} onHome={navigateToHome} />
+            )}
+            {currentScreen === 'germanyMap' && (
+              <GermanyMap onHome={navigateToHome} />
+            )}
+            {currentScreen === 'speakingGame' && (
+              <GermanSpeakingGame onHome={navigateToHome} />
             )}
             {currentScreen === 'admin' && (
               <Admin onBack={navigateToHome} />
