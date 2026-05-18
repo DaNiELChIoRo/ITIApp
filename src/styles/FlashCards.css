@@ -164,6 +164,40 @@
 }
 
 /* Known badge (checkmark on front) */
+.flashcard-speaker-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(91, 155, 213, 0.15);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease;
+  padding: 0;
+}
+
+.flashcard-speaker-btn:hover {
+  background: rgba(91, 155, 213, 0.3);
+  transform: scale(1.1);
+}
+
+.flashcard-speaker-btn.speaking {
+  background: rgba(91, 155, 213, 0.25);
+  animation: speakerPulse 0.8s ease-in-out infinite;
+}
+
+@keyframes speakerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
 .flashcard-known-badge {
   position: absolute;
   top: 8px;

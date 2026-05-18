@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { useData } from '../contexts/DataContext';
 import { useI18n } from '../i18n/I18nContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useTextToSpeech } from '../hooks/useTextToSpeech';
 import '../styles/FlashCards.css';
 
 const CARDS_PER_PAGE = 6;
@@ -98,6 +99,8 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
     setKnownIds([]);
   }, [setKnownIds]);
 
+  const { supported: ttsSupported, speakingId, speak } = useTextToSpeech();
+
   // Reset page when filter changes and current page is out of bounds
   const handleFilterChange = useCallback((newFilter) => {
     setFilter(newFilter);
@@ -175,6 +178,9 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
                 const displayWord = card.word || script;
                 const displaySub = card.ipa || transliteration;
 
+                const cardSpeakId = `${quizId}-${card.id}`;
+                const isSpeaking = speakingId === cardSpeakId;
+
                 return (
                   <div key={`${page}-${i}`} className="flashcard-scene" onClick={() => toggleCard(i)}>
                     <div className={`flashcard ${isFlipped ? 'is-flipped' : ''}`}>
@@ -182,6 +188,15 @@ const FlashCards = ({ quizId = 'greek-vocabulary', onHome }) => {
                         {isKnown && <span className="flashcard-known-badge">&#10003;</span>}
                         <div className="flashcard-greek">{displayWord}</div>
                         <div className="flashcard-transliteration">{displaySub}</div>
+                        {card.word && ttsSupported && (
+                          <button
+                            className={`flashcard-speaker-btn ${isSpeaking ? 'speaking' : ''}`}
+                            onClick={(e) => { e.stopPropagation(); speak(card.word, cardSpeakId); }}
+                            aria-label={`Pronounce ${card.word}`}
+                          >
+                            {isSpeaking ? '🔊' : '🔈'}
+                          </button>
+                        )}
                       </div>
                       <div className="flashcard-face flashcard-back">
                         <div className="flashcard-meaning">{meaning}</div>
