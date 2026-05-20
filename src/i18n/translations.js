@@ -65,9 +65,18 @@ export const translations = {
         speakingGame: {
           title: 'Pronunciation Practice',
           description: 'Say the name of German states and cities aloud — mic checks you'
+        },
+        russianFlashCards: {
+          title: 'Russian Flashcards',
+          description: 'Learn essential Russian words with Cyrillic script and transliteration'
+        },
+        russianGrammar: {
+          title: 'Russian Grammar Cases',
+          description: 'Study the 6 Russian grammatical cases with examples'
         }
       },
-      german: 'German'
+      german: 'German',
+      russian: 'Russian'
     },
 
     // Flashcards
@@ -275,9 +284,18 @@ export const translations = {
         speakingGame: {
           title: 'Práctica de pronunciación',
           description: 'Di en voz alta el nombre de estados y ciudades — el micrófono te evalúa'
+        },
+        russianFlashCards: {
+          title: 'Tarjetas de Ruso',
+          description: 'Aprende palabras esenciales en ruso con escritura cirílica y transliteración'
+        },
+        russianGrammar: {
+          title: 'Casos Gramaticales del Ruso',
+          description: 'Estudia los 6 casos gramaticales del ruso con ejemplos'
         }
       },
-      german: 'Alemán'
+      german: 'Alemán',
+      russian: 'Ruso'
     },
 
     // Flashcards

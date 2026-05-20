@@ -5,6 +5,7 @@ import { GENESIS_COVENANTS_QUIZ } from '../utils/genesisCovenants';
 import { GREEK_VOCABULARY_QUIZ } from '../utils/greekVocabulary';
 import { HEBREW_VOCABULARY_QUIZ } from '../utils/hebrewVocabulary';
 import { GERMAN_VOCABULARY_QUIZ } from '../utils/germanVocabulary';
+import { RUSSIAN_VOCABULARY_QUIZ } from '../utils/russianVocabulary';
 import { OLD_TESTAMENT_FACTS_QUIZ } from '../utils/oldTestamentFacts';
 import { translations as hardcodedTranslations } from '../i18n/translations';
 
@@ -59,6 +60,18 @@ const FALLBACK_QUIZZES = [
     category: 'knowledge',
     en: GERMAN_VOCABULARY_QUIZ.en,
     es: GERMAN_VOCABULARY_QUIZ.es
+  },
+  {
+    id: 'russian-vocabulary',
+    title: { en: 'Russian Vocabulary', es: 'Vocabulario Ruso' },
+    description: {
+      en: 'Learn essential Russian words with transliteration and pronunciation',
+      es: 'Aprende palabras esenciales en ruso con transliteración y pronunciación'
+    },
+    icon: 'Яя',
+    category: 'knowledge',
+    en: RUSSIAN_VOCABULARY_QUIZ.en,
+    es: RUSSIAN_VOCABULARY_QUIZ.es
   },
   {
     id: 'old-testament-facts',

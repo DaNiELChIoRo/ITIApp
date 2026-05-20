@@ -5,7 +5,7 @@ import { useI18n } from '../i18n/I18nContext';
 import { useData } from '../contexts/DataContext';
 import '../styles/Home.css';
 
-const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onStartFlashCards, onNavigateAdmin, onGermanyMap, onSpeakingGame }) => {
+const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onStartFlashCards, onNavigateAdmin, onGermanyMap, onSpeakingGame, onRussianGrammar }) => {
   const { stats } = useStats();
   const { t, language } = useI18n();
   const { quizzes } = useData();
@@ -104,6 +104,28 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, on
                 <span className="quiz-type-icon">🃏</span>
                 <span className="quiz-type-name">{t('home.studyTypes.hebrewFlashCards.title')}</span>
                 <span className="quiz-type-desc">{t('home.studyTypes.hebrewFlashCards.description')}</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="quiz-category">
+            <h4 className="quiz-category-title">{t('home.russian')}</h4>
+            <div className="quiz-types">
+              <button
+                className="quiz-type-card"
+                onClick={() => onStartFlashCards?.('russian-vocabulary')}
+              >
+                <span className="quiz-type-icon">🇷🇺</span>
+                <span className="quiz-type-name">{t('home.studyTypes.russianFlashCards.title')}</span>
+                <span className="quiz-type-desc">{t('home.studyTypes.russianFlashCards.description')}</span>
+              </button>
+              <button
+                className="quiz-type-card"
+                onClick={() => onRussianGrammar?.()}
+              >
+                <span className="quiz-type-icon">📐</span>
+                <span className="quiz-type-name">{t('home.studyTypes.russianGrammar.title')}</span>
+                <span className="quiz-type-desc">{t('home.studyTypes.russianGrammar.description')}</span>
               </button>
             </div>
           </div>

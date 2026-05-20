@@ -6,6 +6,7 @@ import MultipleChoiceQuiz from './pages/MultipleChoiceQuiz';
 import FlashCards from './pages/FlashCards';
 import GermanyMap from './pages/GermanyMap';
 import GermanSpeakingGame from './pages/GermanSpeakingGame';
+import RussianGrammarCases from './pages/RussianGrammarCases';
 import Results from './pages/Results';
 import Admin from './pages/Admin';
 import { AuthProvider } from './contexts/AuthContext';
@@ -70,6 +71,10 @@ function App() {
     setCurrentScreen('speakingGame');
   };
 
+  const navigateToRussianGrammar = () => {
+    setCurrentScreen('russianGrammar');
+  };
+
   const navigateToAdmin = () => {
     setCurrentScreen('admin');
   };
@@ -103,6 +108,7 @@ function App() {
                 onNavigateAdmin={navigateToAdmin}
                 onGermanyMap={navigateToGermanyMap}
                 onSpeakingGame={navigateToSpeakingGame}
+                onRussianGrammar={navigateToRussianGrammar}
               />
             )}
             {currentScreen === 'quiz' && <Quiz onComplete={navigateToResults} onHome={navigateToHome} />}
@@ -125,6 +131,9 @@ function App() {
             )}
             {currentScreen === 'speakingGame' && (
               <GermanSpeakingGame onHome={navigateToHome} />
+            )}
+            {currentScreen === 'russianGrammar' && (
+              <RussianGrammarCases onHome={navigateToHome} />
             )}
             {currentScreen === 'admin' && (
               <Admin onBack={navigateToHome} />
