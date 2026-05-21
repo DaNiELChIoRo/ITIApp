@@ -261,8 +261,8 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome }) => {
                 onClick={() => setShowTranslation(v => !v)}
               >
                 {showTranslation
-                  ? (language === 'es' ? 'Ocultar traducción' : 'Hide translation')
-                  : (language === 'es' ? 'Mostrar traducción' : 'Show translation')}
+                  ? (language === 'es' ? 'Ocultar inglés' : 'Hide English')
+                  : (language === 'es' ? 'Mostrar inglés' : 'Show English')}
               </button>
             </div>
 
@@ -274,8 +274,15 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome }) => {
                 <div className="wbd-lines">
                   {stanza.lines.map((line, li) => (
                     <div key={li} className="wbd-line">
-                      <div className="wbd-line-de">{line.de}</div>
-                      {showTranslation && (
+                      {line.es && (
+                        <div className="wbd-line-es">
+                          <span className="wbd-line-flag">🇪🇸</span> {line.es}
+                        </div>
+                      )}
+                      <div className="wbd-line-de">
+                        {line.es && <span className="wbd-line-flag">🇩🇪</span>} {line.de}
+                      </div>
+                      {showTranslation && line.en && (
                         <div className="wbd-line-en">{line.en}</div>
                       )}
                     </div>

@@ -393,6 +393,19 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  padding-bottom: 6px;
+}
+
+.wbd-line:last-child {
+  padding-bottom: 0;
+}
+
+.wbd-line-es {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: #ffcc80;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
 }
 
 .wbd-line-de {
@@ -403,11 +416,17 @@
   letter-spacing: 0.01em;
 }
 
+.wbd-line-flag {
+  font-size: 0.9em;
+  vertical-align: middle;
+}
+
 .wbd-line-en {
   font-size: var(--font-size-sm);
-  color: rgba(255,200,160,0.8);
+  color: rgba(255,200,160,0.65);
   font-style: italic;
   padding-left: 2px;
+  padding-top: 1px;
 }
 
 @media (max-width: 480px) {
