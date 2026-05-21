@@ -281,13 +281,13 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome }) => {
             className={`wbd-tab ${tab === 'vocab' ? 'active' : ''}`}
             onClick={() => setTab('vocab')}
           >
-            🃏 {language === 'es' ? `Vocabulario (${vocab.length})` : `Vocabulary (${vocab.length})`}
+            🃏 {language === 'es' ? 'Vocab' : 'Vocab'}
           </button>
           <button
             className={`wbd-tab ${tab === 'quiz' ? 'active' : ''}`}
             onClick={() => setTab('quiz')}
           >
-            🧠 {language === 'es' ? 'Quiz' : 'Quiz'}
+            🧠 Quiz
           </button>
           <button
             className={`wbd-tab ${tab === 'lyrics' ? 'active' : ''}`}
