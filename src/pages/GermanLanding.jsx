@@ -43,6 +43,14 @@ const GermanLanding = () => {
         ? 'Vocabulario alemán-francés y letra de Reise, Reise (2004)'
         : 'German–French vocabulary and full lyrics from Reise, Reise (2004)',
       path: '/german/amour'
+    },
+    {
+      icon: '🥀',
+      title: 'Stirb nicht vor mir — Rammstein',
+      desc: language === 'es'
+        ? 'Dúo alemán/inglés con Sharleen Spiteri — Rosenrot (2005)'
+        : 'German/English duet feat. Sharleen Spiteri — Rosenrot (2005)',
+      path: '/german/stirb-nicht'
     }
   ];
 

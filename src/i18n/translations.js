@@ -81,6 +81,10 @@ export const translations = {
         amour: {
           title: 'Amour — Rammstein',
           description: 'German–French vocabulary + full lyrics from Reise, Reise (2004)'
+        },
+        stirbNicht: {
+          title: 'Stirb nicht vor mir — Rammstein',
+          description: 'German/English duet feat. Sharleen Spiteri — Rosenrot (2005)'
         }
       },
       german: 'German',
@@ -308,6 +312,10 @@ export const translations = {
         amour: {
           title: 'Amour — Rammstein',
           description: 'Vocabulario alemán-francés + letra completa de Reise, Reise (2004)'
+        },
+        stirbNicht: {
+          title: 'Stirb nicht vor mir — Rammstein',
+          description: 'Dúo alemán/inglés con Sharleen Spiteri — Rosenrot (2005)'
         }
       },
       german: 'Alemán',

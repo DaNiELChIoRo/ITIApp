@@ -52,6 +52,8 @@ function App() {
     setQuizScore(null);
   };
 
+  const navigateToStirNicht = () => navigate('/german/stirb-nicht');
+
   const navigateToFlashCards = (quizId) => {
     if (quizId === 'german-vocabulary') { navigate('/german/flashcards'); return; }
     if (quizId === 'russian-vocabulary') { navigate('/russian/flashcards'); return; }
@@ -88,6 +90,7 @@ function App() {
           onRussianGrammar={() => navigate('/russian/grammar')}
           onWoBistDu={() => navigate('/german/wo-bist-du')}
           onAmour={() => navigate('/german/amour')}
+          onStirNicht={navigateToStirNicht}
           onGermanSection={() => navigate('/german')}
           onRussianSection={() => navigate('/russian')}
         />

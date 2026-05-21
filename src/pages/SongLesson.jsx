@@ -203,7 +203,7 @@ const SongQuizMode = ({ vocab, knownIds, setKnownIds, language, storageKey }) =>
  *   storageKey  – localStorage key for "known" progress
  *   onHome      – back-button callback
  */
-const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome }) => {
+const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = '🇪🇸' }) => {
   const { language } = useI18n();
   const [tab, setTab]               = useState('vocab');
   const [filter, setFilter]         = useState('all');
@@ -459,7 +459,7 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome }) => {
                     <div key={li} className="wbd-line">
                       {line.es && (
                         <div className="wbd-line-es">
-                          <span className="wbd-line-flag">🇪🇸</span> {line.es}
+                          <span className="wbd-line-flag">{altFlag}</span> {line.es}
                         </div>
                       )}
                       <div className="wbd-line-de">
