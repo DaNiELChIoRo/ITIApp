@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useI18n } from '../i18n/I18nContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
@@ -6,6 +6,7 @@ import { VOCAB_TYPE_LABELS } from '../utils/woBistDuVocabulary';
 import '../styles/WoBistDuLesson.css';
 
 const CARDS_PER_PAGE = 6;
+const QUIZ_STATUS = { IDLE: 'idle', ANSWERED: 'answered', DONE: 'done' };
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -24,6 +25,171 @@ const TYPE_COLORS = {
   adverb:    '#90caf9',
   noun:      '#ce93d8',
   french:    '#f48fb1',
+};
+
+function buildSongQuizOptions(card, allVocab) {
+  const correct = card.en;
+  const distractors = shuffleArray(
+    allVocab.filter(c => c.id !== card.id).map(c => c.en)
+  ).slice(0, 3);
+  const pool = shuffleArray([correct, ...distractors]);
+  return { options: pool, correctIndex: pool.indexOf(correct) };
+}
+
+// ─── Song Quiz Mode ───────────────────────────────────────────────────────────
+
+const SongQuizMode = ({ vocab, knownIds, setKnownIds, language, storageKey }) => {
+  const { supported: ttsSupported, speakingId, speak } = useTextToSpeech();
+
+  const [quizCards, setQuizCards]   = useState(() => shuffleArray(vocab));
+  const [index, setIndex]           = useState(0);
+  const [status, setStatus]         = useState(QUIZ_STATUS.IDLE);
+  const [selected, setSelected]     = useState(null);
+  const [sessionCorrect, setCorrect] = useState(0);
+  const [wrongIds, setWrongIds]     = useState([]);
+  const [onlyWrong, setOnlyWrong]   = useState(false);
+
+  const card = quizCards[index];
+
+  const { options, correctIndex } = useMemo(
+    () => card ? buildSongQuizOptions(card, vocab) : { options: [], correctIndex: 0 },
+    [card, vocab]
+  );
+
+  const speakId    = `song-quiz-${storageKey}-${card?.id}`;
+  const isSpeaking = speakingId === speakId;
+
+  const handleSelect = useCallback((i) => {
+    if (status !== QUIZ_STATUS.IDLE) return;
+    setSelected(i);
+    setStatus(QUIZ_STATUS.ANSWERED);
+    if (i === correctIndex) {
+      setCorrect(prev => prev + 1);
+      setKnownIds(prev => prev.includes(card.id) ? prev : [...prev, card.id]);
+    } else {
+      setWrongIds(prev => prev.includes(card.id) ? prev : [...prev, card.id]);
+    }
+  }, [status, correctIndex, card, setKnownIds]);
+
+  const handleNext = useCallback(() => {
+    if (index + 1 >= quizCards.length) {
+      setStatus(QUIZ_STATUS.DONE);
+    } else {
+      setIndex(i => i + 1);
+      setSelected(null);
+      setStatus(QUIZ_STATUS.IDLE);
+    }
+  }, [index, quizCards.length]);
+
+  useEffect(() => {
+    if (status === QUIZ_STATUS.ANSWERED && selected === correctIndex) {
+      const t = setTimeout(handleNext, 900);
+      return () => clearTimeout(t);
+    }
+  }, [status, selected, correctIndex, handleNext]);
+
+  const restartWrong = useCallback(() => {
+    const wrong = vocab.filter(c => wrongIds.includes(c.id));
+    setQuizCards(shuffleArray(wrong.length ? wrong : vocab));
+    setIndex(0); setSelected(null); setStatus(QUIZ_STATUS.IDLE);
+    setCorrect(0); setWrongIds([]); setOnlyWrong(wrong.length > 0);
+  }, [vocab, wrongIds]);
+
+  const restartAll = useCallback(() => {
+    setQuizCards(shuffleArray(vocab));
+    setIndex(0); setSelected(null); setStatus(QUIZ_STATUS.IDLE);
+    setCorrect(0); setWrongIds([]); setOnlyWrong(false);
+  }, [vocab]);
+
+  const total = quizCards.length;
+  const pct   = Math.round((sessionCorrect / total) * 100);
+  const isLast = index + 1 >= total;
+
+  if (status === QUIZ_STATUS.DONE) {
+    const stars = pct >= 90 ? 3 : pct >= 65 ? 2 : 1;
+    return (
+      <div className="wbd-quiz-done">
+        <div className="wbd-quiz-done-stars">{'⭐'.repeat(stars)}</div>
+        <h2 className="wbd-quiz-done-title">
+          {language === 'es' ? '¡Quiz terminado!' : 'Quiz complete!'}
+        </h2>
+        <p className="wbd-quiz-done-score">{sessionCorrect} / {total} — {pct}%</p>
+        <p className="wbd-quiz-done-known">
+          {language === 'es'
+            ? `${knownIds.length} palabras marcadas como aprendidas`
+            : `${knownIds.length} words marked as learned`}
+        </p>
+        <div className="wbd-quiz-done-actions">
+          {wrongIds.length > 0 && (
+            <button className="wbd-quiz-done-btn primary" onClick={restartWrong}>
+              {language === 'es' ? `🔁 Repetir errores (${wrongIds.length})` : `🔁 Retry wrong (${wrongIds.length})`}
+            </button>
+          )}
+          <button className="wbd-quiz-done-btn" onClick={restartAll}>
+            {language === 'es' ? '🔀 Empezar de nuevo' : '🔀 Start over'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="wbd-quiz">
+      <div className="wbd-quiz-progress">
+        <span className="wbd-quiz-progress-text">
+          {index + 1} / {total}
+          {onlyWrong && <span className="wbd-quiz-wrong-badge">
+            {language === 'es' ? ' · solo errores' : ' · wrong only'}
+          </span>}
+        </span>
+        <span className="wbd-quiz-score-text">✓ {sessionCorrect}</span>
+      </div>
+      <div className="wbd-quiz-progress-track">
+        <div className="wbd-quiz-progress-fill" style={{ width: `${((index + 1) / total) * 100}%` }} />
+      </div>
+
+      <div className="wbd-quiz-card">
+        <div className="wbd-quiz-word">{card?.word}</div>
+        {card?.ipa && <div className="wbd-quiz-ipa">{card.ipa}</div>}
+        {ttsSupported && (
+          <button
+            className={`wbd-quiz-speak-btn ${isSpeaking ? 'speaking' : ''}`}
+            onClick={() => speak(card.word, speakId)}
+            aria-label={`Pronounce ${card?.word}`}
+          >
+            {isSpeaking ? '🔊' : '🔈'}
+          </button>
+        )}
+        <p className="wbd-quiz-prompt">
+          {language === 'es' ? '¿Cuál es el significado?' : 'What does this mean?'}
+        </p>
+      </div>
+
+      <div className="wbd-quiz-options">
+        {options.map((opt, i) => {
+          let cls = 'wbd-quiz-option';
+          if (status === QUIZ_STATUS.ANSWERED) {
+            if (i === correctIndex) cls += ' correct';
+            else if (i === selected) cls += ' wrong';
+          }
+          return (
+            <button key={i} className={cls} onClick={() => handleSelect(i)}
+              disabled={status === QUIZ_STATUS.ANSWERED}>
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+
+      {status === QUIZ_STATUS.ANSWERED && selected !== correctIndex && (
+        <button className="wbd-quiz-next-btn" onClick={handleNext}>
+          {isLast
+            ? (language === 'es' ? 'Ver resultados →' : 'See results →')
+            : (language === 'es' ? 'Siguiente →' : 'Next →')}
+        </button>
+      )}
+    </div>
+  );
 };
 
 /**
@@ -116,6 +282,12 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome }) => {
             onClick={() => setTab('vocab')}
           >
             🃏 {language === 'es' ? `Vocabulario (${vocab.length})` : `Vocabulary (${vocab.length})`}
+          </button>
+          <button
+            className={`wbd-tab ${tab === 'quiz' ? 'active' : ''}`}
+            onClick={() => setTab('quiz')}
+          >
+            🧠 {language === 'es' ? 'Quiz' : 'Quiz'}
           </button>
           <button
             className={`wbd-tab ${tab === 'lyrics' ? 'active' : ''}`}
@@ -249,6 +421,17 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome }) => {
               )}
             </div>
           </>
+        )}
+
+        {/* ── QUIZ TAB ── */}
+        {tab === 'quiz' && (
+          <SongQuizMode
+            vocab={vocab}
+            knownIds={knownIds}
+            setKnownIds={setKnownIds}
+            language={language}
+            storageKey={storageKey}
+          />
         )}
 
         {/* ── LYRICS TAB ── */}
