@@ -27,6 +27,19 @@ const TYPE_COLORS = {
   french:    '#f48fb1',
 };
 
+function highlightWrongWords(text, wrongWords) {
+  if (!text || !wrongWords.length) return text;
+  const escaped = wrongWords.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const regex = new RegExp(`(${escaped.join('|')})`, 'gi');
+  const parts = text.split(regex);
+  if (parts.length === 1) return text;
+  return parts.map((part, i) =>
+    wrongWords.some(w => w.toLowerCase() === part.toLowerCase())
+      ? <span key={i} className="wbd-wrong-word">{part}</span>
+      : part
+  );
+}
+
 function buildSongQuizOptions(card, allVocab) {
   const correct = card.en;
   const distractors = shuffleArray(
@@ -38,7 +51,7 @@ function buildSongQuizOptions(card, allVocab) {
 
 // ─── Song Quiz Mode ───────────────────────────────────────────────────────────
 
-const SongQuizMode = ({ vocab, knownIds, setKnownIds, language, storageKey }) => {
+const SongQuizMode = ({ vocab, knownIds, setKnownIds, language, storageKey, onWrongUpdate, onGoToLyrics }) => {
   const { supported: ttsSupported, speakingId, speak } = useTextToSpeech();
 
   const [quizCards, setQuizCards]   = useState(() => shuffleArray(vocab));
@@ -88,18 +101,25 @@ const SongQuizMode = ({ vocab, knownIds, setKnownIds, language, storageKey }) =>
     }
   }, [status, selected, correctIndex, handleNext]);
 
+  // Report wrong IDs to parent when quiz finishes
+  useEffect(() => {
+    if (status === QUIZ_STATUS.DONE) onWrongUpdate?.(wrongIds);
+  }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const restartWrong = useCallback(() => {
     const wrong = vocab.filter(c => wrongIds.includes(c.id));
     setQuizCards(shuffleArray(wrong.length ? wrong : vocab));
     setIndex(0); setSelected(null); setStatus(QUIZ_STATUS.IDLE);
     setCorrect(0); setWrongIds([]); setOnlyWrong(wrong.length > 0);
-  }, [vocab, wrongIds]);
+    onWrongUpdate?.([]);
+  }, [vocab, wrongIds, onWrongUpdate]);
 
   const restartAll = useCallback(() => {
     setQuizCards(shuffleArray(vocab));
     setIndex(0); setSelected(null); setStatus(QUIZ_STATUS.IDLE);
     setCorrect(0); setWrongIds([]); setOnlyWrong(false);
-  }, [vocab]);
+    onWrongUpdate?.([]);
+  }, [vocab, onWrongUpdate]);
 
   const total = quizCards.length;
   const pct   = Math.round((sessionCorrect / total) * 100);
@@ -123,6 +143,11 @@ const SongQuizMode = ({ vocab, knownIds, setKnownIds, language, storageKey }) =>
           {wrongIds.length > 0 && (
             <button className="wbd-quiz-done-btn primary" onClick={restartWrong}>
               {language === 'es' ? `🔁 Repetir errores (${wrongIds.length})` : `🔁 Retry wrong (${wrongIds.length})`}
+            </button>
+          )}
+          {wrongIds.length > 0 && onGoToLyrics && (
+            <button className="wbd-quiz-done-btn lyrics-btn" onClick={onGoToLyrics}>
+              {language === 'es' ? '🎵 Ver errores en la letra' : '🎵 See wrong words in Lyrics'}
             </button>
           )}
           <button className="wbd-quiz-done-btn" onClick={restartAll}>
@@ -390,6 +415,12 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
   const [flipped, setFlipped]       = useState(new Set());
   const [knownIds, setKnownIds]     = useLocalStorage(storageKey, []);
   const [showTranslation, setShowTranslation] = useState(true);
+  const [wrongVocabIds, setWrongVocabIds] = useState([]);
+
+  const wrongWords = useMemo(
+    () => vocab.filter(v => wrongVocabIds.includes(v.id)).map(v => v.word),
+    [wrongVocabIds, vocab]
+  );
 
   const { supported: ttsSupported, speakingId, speak } = useTextToSpeech();
 
@@ -625,6 +656,8 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
             setKnownIds={setKnownIds}
             language={language}
             storageKey={storageKey}
+            onWrongUpdate={setWrongVocabIds}
+            onGoToLyrics={() => setTab('lyrics')}
           />
         )}
 
@@ -643,6 +676,13 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
               </button>
             </div>
 
+            {wrongWords.length > 0 && (
+              <div className="wbd-lyrics-legend">
+                <span className="wbd-wrong-word">■</span>
+                {language === 'es' ? ' Palabras falladas en el quiz' : ' Words missed in quiz'}
+              </div>
+            )}
+
             {lyrics.map((stanza, si) => (
               <div key={si} className="wbd-stanza">
                 <div className="wbd-stanza-label">
@@ -656,9 +696,12 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
                           <span className="wbd-line-flag">{altFlag}</span> {line.es}
                         </div>
                       )}
-                      <div className="wbd-line-de">
-                        {line.es && <span className="wbd-line-flag">🇩🇪</span>} {line.de}
-                      </div>
+                      {line.de && (
+                        <div className="wbd-line-de">
+                          {line.es && <span className="wbd-line-flag">🇩🇪</span>}{' '}
+                          {highlightWrongWords(line.de, wrongWords)}
+                        </div>
+                      )}
                       {showTranslation && line.en && (
                         <div className="wbd-line-en">{line.en}</div>
                       )}

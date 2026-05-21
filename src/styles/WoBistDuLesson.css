@@ -431,6 +431,31 @@
   padding-top: 1px;
 }
 
+.wbd-wrong-word {
+  color: #ef5350;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: rgba(239,83,80,0.5);
+  text-underline-offset: 3px;
+}
+
+.wbd-lyrics-legend {
+  font-size: var(--font-size-xs);
+  color: rgba(255,255,255,0.5);
+  font-style: italic;
+  padding: 4px 2px;
+}
+
+.wbd-quiz-done-btn.lyrics-btn {
+  border-color: rgba(255,200,100,0.4);
+  background: rgba(255,200,100,0.1);
+  color: #ffcc80;
+}
+
+.wbd-quiz-done-btn.lyrics-btn:hover {
+  background: rgba(255,200,100,0.22);
+}
+
 /* ── MATCHING PAIRS TAB ── */
 .wbd-match {
   display: flex;
