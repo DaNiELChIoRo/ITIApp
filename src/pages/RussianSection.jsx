@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import FlashCards from './FlashCards';
 import RussianGrammarCases from './RussianGrammarCases';
 import RussianLanding from './RussianLanding';
+import KletkaLesson from './KletkaLesson';
 
 const RussianSection = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const RussianSection = () => {
       <Route index element={<RussianLanding />} />
       <Route path="flashcards" element={<FlashCards quizId="russian-vocabulary" onHome={goSection} />} />
       <Route path="grammar" element={<RussianGrammarCases onHome={goSection} />} />
+      <Route path="kletka" element={<KletkaLesson onHome={goSection} />} />
     </Routes>
   );
 };

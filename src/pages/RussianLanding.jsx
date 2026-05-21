@@ -21,6 +21,12 @@ const RussianLanding = () => {
       title: t('home.studyTypes.russianGrammar.title'),
       desc: t('home.studyTypes.russianGrammar.description'),
       path: '/russian/grammar'
+    },
+    {
+      icon: '🏙️',
+      title: t('home.studyTypes.kletka.title'),
+      desc: t('home.studyTypes.kletka.description'),
+      path: '/russian/kletka'
     }
   ];
 

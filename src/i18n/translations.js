@@ -85,6 +85,10 @@ export const translations = {
         stirbNicht: {
           title: 'Stirb nicht vor mir — Rammstein',
           description: 'German/English duet feat. Sharleen Spiteri — Rosenrot (2005)'
+        },
+        kletka: {
+          title: 'Клетка — Molchat Doma',
+          description: 'Russian post-punk vocabulary + full lyrics (2018)'
         }
       },
       german: 'German',
@@ -316,6 +320,10 @@ export const translations = {
         stirbNicht: {
           title: 'Stirb nicht vor mir — Rammstein',
           description: 'Dúo alemán/inglés con Sharleen Spiteri — Rosenrot (2005)'
+        },
+        kletka: {
+          title: 'Клетка — Molchat Doma',
+          description: 'Vocabulario post-punk ruso + letra completa (2018)'
         }
       },
       german: 'Alemán',
