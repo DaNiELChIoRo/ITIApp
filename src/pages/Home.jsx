@@ -5,7 +5,7 @@ import { useI18n } from '../i18n/I18nContext';
 import { useData } from '../contexts/DataContext';
 import '../styles/Home.css';
 
-const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onStartFlashCards, onNavigateAdmin, onGermanyMap, onSpeakingGame, onRussianGrammar }) => {
+const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onStartFlashCards, onNavigateAdmin, onGermanyMap, onSpeakingGame, onRussianGrammar, onGermanSection, onRussianSection, onWoBistDu, onAmour }) => {
   const { stats } = useStats();
   const { t, language } = useI18n();
   const { quizzes } = useData();
@@ -109,7 +109,9 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, on
           </div>
 
           <div className="quiz-category">
-            <h4 className="quiz-category-title">{t('home.russian')}</h4>
+            <h4 className="quiz-category-title section-category-title" onClick={() => onRussianSection?.()}>
+              {t('home.russian')} <span className="section-title-arrow">&#8594;</span>
+            </h4>
             <div className="quiz-types">
               <button
                 className="quiz-type-card"
@@ -131,7 +133,9 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, on
           </div>
 
           <div className="quiz-category">
-            <h4 className="quiz-category-title">{t('home.german')}</h4>
+            <h4 className="quiz-category-title section-category-title" onClick={() => onGermanSection?.()}>
+              {t('home.german')} <span className="section-title-arrow">&#8594;</span>
+            </h4>
             <div className="quiz-types">
               <button
                 className="quiz-type-card"
@@ -156,6 +160,22 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, on
                 <span className="quiz-type-icon">🎙️</span>
                 <span className="quiz-type-name">{t('home.studyTypes.speakingGame.title')}</span>
                 <span className="quiz-type-desc">{t('home.studyTypes.speakingGame.description')}</span>
+              </button>
+              <button
+                className="quiz-type-card"
+                onClick={() => onWoBistDu?.()}
+              >
+                <span className="quiz-type-icon">🎸</span>
+                <span className="quiz-type-name">{t('home.studyTypes.woBistDu.title')}</span>
+                <span className="quiz-type-desc">{t('home.studyTypes.woBistDu.description')}</span>
+              </button>
+              <button
+                className="quiz-type-card"
+                onClick={() => onAmour?.()}
+              >
+                <span className="quiz-type-icon">🎶</span>
+                <span className="quiz-type-name">{t('home.studyTypes.amour.title')}</span>
+                <span className="quiz-type-desc">{t('home.studyTypes.amour.description')}</span>
               </button>
             </div>
           </div>

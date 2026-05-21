@@ -118,6 +118,29 @@
   margin-bottom: 0;
 }
 
+.section-category-title {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s ease;
+}
+
+.section-category-title:hover {
+  color: var(--color-primary);
+}
+
+.section-title-arrow {
+  font-size: var(--font-size-xs);
+  opacity: 0.6;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.section-category-title:hover .section-title-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
 .quiz-category-title {
   font-size: var(--font-size-sm);
   color: var(--color-text-light);

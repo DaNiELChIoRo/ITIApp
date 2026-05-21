@@ -73,6 +73,14 @@ export const translations = {
         russianGrammar: {
           title: 'Russian Grammar Cases',
           description: 'Study the 6 Russian grammatical cases with examples'
+        },
+        woBistDu: {
+          title: 'Wo bist du? — Rammstein',
+          description: 'Vocabulary flashcards + full lyrics from Rosenrot (2005)'
+        },
+        amour: {
+          title: 'Amour — Rammstein',
+          description: 'German–French vocabulary + full lyrics from Reise, Reise (2004)'
         }
       },
       german: 'German',
@@ -292,6 +300,14 @@ export const translations = {
         russianGrammar: {
           title: 'Casos Gramaticales del Ruso',
           description: 'Estudia los 6 casos gramaticales del ruso con ejemplos'
+        },
+        woBistDu: {
+          title: 'Wo bist du? — Rammstein',
+          description: 'Tarjetas de vocabulario + letra completa de Rosenrot (2005)'
+        },
+        amour: {
+          title: 'Amour — Rammstein',
+          description: 'Vocabulario alemán-francés + letra completa de Reise, Reise (2004)'
         }
       },
       german: 'Alemán',
