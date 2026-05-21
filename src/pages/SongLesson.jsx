@@ -192,6 +192,184 @@ const SongQuizMode = ({ vocab, knownIds, setKnownIds, language, storageKey }) =>
   );
 };
 
+// ─── Matching Pairs Mode ─────────────────────────────────────────────────────
+
+const MATCH_BATCH = 6;
+
+const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
+  const [allWords]  = useState(() => shuffleArray(vocab));
+  const [batchStart, setBatchStart] = useState(0);
+  const [selected,  setSelected]    = useState(null); // { id, side: 'left'|'right' }
+  const [matched,   setMatched]     = useState(new Set());
+  const [wrongFlash, setWrongFlash] = useState(null); // { leftId, rightId }
+  const [mistakes,  setMistakes]    = useState(0);
+  const [roundDone, setRoundDone]   = useState(false);
+  const [allDone,   setAllDone]     = useState(false);
+
+  const totalBatches  = Math.ceil(allWords.length / MATCH_BATCH);
+  const currentBatch  = Math.floor(batchStart / MATCH_BATCH);
+  const batchWords    = useMemo(() => allWords.slice(batchStart, batchStart + MATCH_BATCH), [allWords, batchStart]);
+  const rightWords    = useMemo(() => shuffleArray(batchWords), [batchWords]);
+
+  useEffect(() => {
+    if (!roundDone && matched.size > 0 && matched.size === batchWords.length) {
+      const t = setTimeout(() => setRoundDone(true), 300);
+      return () => clearTimeout(t);
+    }
+  }, [matched.size, batchWords.length, roundDone]);
+
+  const handleClick = useCallback((id, side) => {
+    if (matched.has(id) || wrongFlash) return;
+
+    if (!selected) {
+      setSelected({ id, side });
+      return;
+    }
+
+    if (selected.side === side) {
+      setSelected({ id, side }); // swap within same column
+      return;
+    }
+
+    const leftId  = side === 'right' ? selected.id : id;
+    const rightId = side === 'right' ? id : selected.id;
+
+    if (leftId === rightId) {
+      setMatched(prev => { const n = new Set(prev); n.add(leftId); return n; });
+      setKnownIds(prev => prev.includes(leftId) ? prev : [...prev, leftId]);
+      setSelected(null);
+    } else {
+      setMistakes(prev => prev + 1);
+      setWrongFlash({ leftId, rightId });
+      setSelected(null);
+      setTimeout(() => setWrongFlash(null), 650);
+    }
+  }, [selected, matched, wrongFlash, setKnownIds]);
+
+  const nextRound = () => {
+    const next = batchStart + MATCH_BATCH;
+    if (next >= allWords.length) {
+      setAllDone(true);
+    } else {
+      setBatchStart(next);
+      setSelected(null);
+      setMatched(new Set());
+      setWrongFlash(null);
+      setRoundDone(false);
+    }
+  };
+
+  const restart = () => {
+    setBatchStart(0);
+    setSelected(null);
+    setMatched(new Set());
+    setWrongFlash(null);
+    setRoundDone(false);
+    setAllDone(false);
+    setMistakes(0);
+  };
+
+  if (allDone) {
+    const stars = mistakes === 0 ? 3 : mistakes <= 4 ? 2 : 1;
+    return (
+      <div className="wbd-match-done">
+        <div className="wbd-quiz-done-stars">{'⭐'.repeat(stars)}</div>
+        <h2 className="wbd-quiz-done-title">
+          {language === 'es' ? '¡Todo emparejado!' : 'All matched!'}
+        </h2>
+        <p className="wbd-quiz-done-score">
+          {language === 'es' ? `${mistakes} errores` : `${mistakes} mistake${mistakes !== 1 ? 's' : ''}`}
+        </p>
+        <p className="wbd-quiz-done-known">
+          {language === 'es'
+            ? `${knownIds.length} palabras marcadas como aprendidas`
+            : `${knownIds.length} words marked as learned`}
+        </p>
+        <div className="wbd-quiz-done-actions">
+          <button className="wbd-quiz-done-btn primary" onClick={restart}>
+            {language === 'es' ? '🔀 Jugar de nuevo' : '🔀 Play again'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="wbd-match">
+      <div className="wbd-match-header">
+        <span className="wbd-match-round-info">
+          {language === 'es'
+            ? `Ronda ${currentBatch + 1} / ${totalBatches}`
+            : `Round ${currentBatch + 1} / ${totalBatches}`}
+        </span>
+        <span className="wbd-match-mistakes">
+          {language === 'es' ? `${mistakes} errores` : `${mistakes} mistake${mistakes !== 1 ? 's' : ''}`}
+        </span>
+      </div>
+
+      <div className="wbd-match-progress-track">
+        <div
+          className="wbd-match-progress-fill"
+          style={{ width: `${(matched.size / batchWords.length) * 100}%` }}
+        />
+      </div>
+
+      <div className="wbd-match-grid">
+        {/* Left column — German words */}
+        <div className="wbd-match-col">
+          <div className="wbd-match-col-label">🇩🇪 DE</div>
+          {batchWords.map(w => {
+            const isMatched  = matched.has(w.id);
+            const isSelected = selected?.id === w.id && selected?.side === 'left';
+            const isWrong    = wrongFlash?.leftId === w.id;
+            return (
+              <button
+                key={w.id}
+                className={`wbd-match-item${isSelected ? ' selected' : ''}${isMatched ? ' matched' : ''}${isWrong ? ' wrong' : ''}`}
+                onClick={() => !isMatched && handleClick(w.id, 'left')}
+                disabled={isMatched}
+              >
+                {w.word}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right column — English meanings, shuffled */}
+        <div className="wbd-match-col">
+          <div className="wbd-match-col-label">🇬🇧 EN</div>
+          {rightWords.map(w => {
+            const isMatched  = matched.has(w.id);
+            const isSelected = selected?.id === w.id && selected?.side === 'right';
+            const isWrong    = wrongFlash?.rightId === w.id;
+            return (
+              <button
+                key={w.id}
+                className={`wbd-match-item${isSelected ? ' selected' : ''}${isMatched ? ' matched' : ''}${isWrong ? ' wrong' : ''}`}
+                onClick={() => !isMatched && handleClick(w.id, 'right')}
+                disabled={isMatched}
+              >
+                {w.en}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {roundDone && (
+        <div className="wbd-match-round-done">
+          <span className="wbd-match-round-done-text">
+            {language === 'es' ? '✓ ¡Ronda completada!' : '✓ Round complete!'}
+          </span>
+          <button className="wbd-quiz-done-btn primary" onClick={nextRound}>
+            {language === 'es' ? 'Siguiente →' : 'Next →'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 /**
  * Generic reusable song-lesson page.
  *
@@ -282,6 +460,12 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
             onClick={() => setTab('vocab')}
           >
             🃏 {language === 'es' ? 'Vocab' : 'Vocab'}
+          </button>
+          <button
+            className={`wbd-tab ${tab === 'match' ? 'active' : ''}`}
+            onClick={() => setTab('match')}
+          >
+            🔗 {language === 'es' ? 'Pares' : 'Match'}
           </button>
           <button
             className={`wbd-tab ${tab === 'quiz' ? 'active' : ''}`}
@@ -421,6 +605,16 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
               )}
             </div>
           </>
+        )}
+
+        {/* ── MATCH TAB ── */}
+        {tab === 'match' && (
+          <MatchMode
+            vocab={vocab}
+            knownIds={knownIds}
+            setKnownIds={setKnownIds}
+            language={language}
+          />
         )}
 
         {/* ── QUIZ TAB ── */}
