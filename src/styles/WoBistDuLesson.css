@@ -899,6 +899,121 @@
 
 .wbd-quiz-done-btn.primary:hover { background: rgba(255,111,0,0.35); }
 
+.wbd-quiz-done-scorebox {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 14px 18px 12px;
+}
+
+.wbd-quiz-done-scorebox-nums {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.wbd-quiz-done-score-correct {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #a5d6a7;
+}
+
+.wbd-quiz-done-score-sep {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.4);
+}
+
+.wbd-quiz-done-score-total {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+}
+
+.wbd-quiz-done-score-pct {
+  margin-left: auto;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffcc80;
+}
+
+.wbd-quiz-done-bar-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.wbd-quiz-done-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #66bb6a, #ffee58);
+  transition: width 0.6s ease;
+}
+
+.wbd-quiz-done-perfect {
+  font-size: var(--font-size-md);
+  color: #a5d6a7;
+  font-weight: 700;
+  margin: 0;
+}
+
+.wbd-quiz-done-wrong-section {
+  width: 100%;
+  max-width: 360px;
+  text-align: left;
+}
+
+.wbd-quiz-done-wrong-label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: #ef9a9a;
+  margin: 0 0 8px;
+}
+
+.wbd-quiz-done-wrong-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.wbd-quiz-done-wrong-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(239,154,154,0.1);
+  border: 1px solid rgba(239,154,154,0.25);
+  border-radius: 10px;
+}
+
+.wbd-quiz-done-wrong-word {
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  color: #ef9a9a;
+}
+
+.wbd-quiz-done-wrong-ipa {
+  font-size: 11px;
+  font-family: monospace;
+  color: rgba(255,255,255,0.45);
+  justify-self: start;
+}
+
+.wbd-quiz-done-wrong-meaning {
+  font-size: var(--font-size-sm);
+  color: rgba(255,255,255,0.75);
+  text-align: right;
+}
+
 @media (max-width: 480px) {
   .wbd-grid {
     grid-template-columns: repeat(2, 1fr);

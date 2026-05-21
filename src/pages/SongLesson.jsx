@@ -127,18 +127,49 @@ const SongQuizMode = ({ vocab, knownIds, setKnownIds, language, storageKey, onWr
 
   if (status === QUIZ_STATUS.DONE) {
     const stars = pct >= 90 ? 3 : pct >= 65 ? 2 : 1;
+    const wrongCards = vocab.filter(c => wrongIds.includes(c.id));
     return (
       <div className="wbd-quiz-done">
         <div className="wbd-quiz-done-stars">{'⭐'.repeat(stars)}</div>
         <h2 className="wbd-quiz-done-title">
           {language === 'es' ? '¡Quiz terminado!' : 'Quiz complete!'}
         </h2>
-        <p className="wbd-quiz-done-score">{sessionCorrect} / {total} — {pct}%</p>
-        <p className="wbd-quiz-done-known">
-          {language === 'es'
-            ? `${knownIds.length} palabras marcadas como aprendidas`
-            : `${knownIds.length} words marked as learned`}
-        </p>
+
+        <div className="wbd-quiz-done-scorebox">
+          <div className="wbd-quiz-done-scorebox-nums">
+            <span className="wbd-quiz-done-score-correct">✓ {sessionCorrect}</span>
+            <span className="wbd-quiz-done-score-sep">/</span>
+            <span className="wbd-quiz-done-score-total">{total}</span>
+            <span className="wbd-quiz-done-score-pct">{pct}%</span>
+          </div>
+          <div className="wbd-quiz-done-bar-track">
+            <div className="wbd-quiz-done-bar-fill" style={{ width: `${pct}%` }} />
+          </div>
+        </div>
+
+        {wrongCards.length > 0 ? (
+          <div className="wbd-quiz-done-wrong-section">
+            <p className="wbd-quiz-done-wrong-label">
+              {language === 'es'
+                ? `❌ Incorrectas (${wrongCards.length})`
+                : `❌ Wrong answers (${wrongCards.length})`}
+            </p>
+            <ul className="wbd-quiz-done-wrong-list">
+              {wrongCards.map(c => (
+                <li key={c.id} className="wbd-quiz-done-wrong-item">
+                  <span className="wbd-quiz-done-wrong-word">{c.word}</span>
+                  {c.ipa && <span className="wbd-quiz-done-wrong-ipa">{c.ipa}</span>}
+                  <span className="wbd-quiz-done-wrong-meaning">{c.en}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <p className="wbd-quiz-done-perfect">
+            {language === 'es' ? '🎉 ¡Sin errores!' : '🎉 No mistakes!'}
+          </p>
+        )}
+
         <div className="wbd-quiz-done-actions">
           {wrongIds.length > 0 && (
             <button className="wbd-quiz-done-btn primary" onClick={restartWrong}>
