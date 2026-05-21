@@ -222,19 +222,36 @@ const SongQuizMode = ({ vocab, knownIds, setKnownIds, language, storageKey, onWr
 const MATCH_BATCH = 6;
 
 const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
-  const [allWords]  = useState(() => shuffleArray(vocab));
+  const { supported: ttsSupported, speakingId, speak } = useTextToSpeech();
+  const [matchType,  setMatchType]  = useState('meaning'); // 'meaning' | 'pronunciation'
+  const [allWords]   = useState(() => shuffleArray(vocab));
   const [batchStart, setBatchStart] = useState(0);
-  const [selected,  setSelected]    = useState(null); // { id, side: 'left'|'right' }
-  const [matched,   setMatched]     = useState(new Set());
-  const [wrongFlash, setWrongFlash] = useState(null); // { leftId, rightId }
-  const [mistakes,  setMistakes]    = useState(0);
-  const [roundDone, setRoundDone]   = useState(false);
-  const [allDone,   setAllDone]     = useState(false);
+  const [selected,   setSelected]   = useState(null);
+  const [matched,    setMatched]    = useState(new Set());
+  const [wrongFlash, setWrongFlash] = useState(null);
+  const [mistakes,   setMistakes]   = useState(0);
+  const [roundDone,  setRoundDone]  = useState(false);
+  const [allDone,    setAllDone]    = useState(false);
 
-  const totalBatches  = Math.ceil(allWords.length / MATCH_BATCH);
-  const currentBatch  = Math.floor(batchStart / MATCH_BATCH);
-  const batchWords    = useMemo(() => allWords.slice(batchStart, batchStart + MATCH_BATCH), [allWords, batchStart]);
-  const rightWords    = useMemo(() => shuffleArray(batchWords), [batchWords]);
+  const totalBatches = Math.ceil(allWords.length / MATCH_BATCH);
+  const currentBatch = Math.floor(batchStart / MATCH_BATCH);
+  const batchWords   = useMemo(() => allWords.slice(batchStart, batchStart + MATCH_BATCH), [allWords, batchStart]);
+  const rightWords   = useMemo(() => shuffleArray(batchWords), [batchWords]);
+
+  const resetState = useCallback(() => {
+    setBatchStart(0);
+    setSelected(null);
+    setMatched(new Set());
+    setWrongFlash(null);
+    setRoundDone(false);
+    setAllDone(false);
+    setMistakes(0);
+  }, []);
+
+  const switchType = useCallback((type) => {
+    setMatchType(type);
+    resetState();
+  }, [resetState]);
 
   useEffect(() => {
     if (!roundDone && matched.size > 0 && matched.size === batchWords.length) {
@@ -245,16 +262,8 @@ const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
 
   const handleClick = useCallback((id, side) => {
     if (matched.has(id) || wrongFlash) return;
-
-    if (!selected) {
-      setSelected({ id, side });
-      return;
-    }
-
-    if (selected.side === side) {
-      setSelected({ id, side }); // swap within same column
-      return;
-    }
+    if (!selected) { setSelected({ id, side }); return; }
+    if (selected.side === side) { setSelected({ id, side }); return; }
 
     const leftId  = side === 'right' ? selected.id : id;
     const rightId = side === 'right' ? id : selected.id;
@@ -284,15 +293,8 @@ const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
     }
   };
 
-  const restart = () => {
-    setBatchStart(0);
-    setSelected(null);
-    setMatched(new Set());
-    setWrongFlash(null);
-    setRoundDone(false);
-    setAllDone(false);
-    setMistakes(0);
-  };
+  const rightValue = (w) => matchType === 'pronunciation' ? w.ipa : w.en;
+  const rightLabel = matchType === 'pronunciation' ? '🔊 IPA' : '🇬🇧 EN';
 
   if (allDone) {
     const stars = mistakes === 0 ? 3 : mistakes <= 4 ? 2 : 1;
@@ -311,7 +313,7 @@ const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
             : `${knownIds.length} words marked as learned`}
         </p>
         <div className="wbd-quiz-done-actions">
-          <button className="wbd-quiz-done-btn primary" onClick={restart}>
+          <button className="wbd-quiz-done-btn primary" onClick={resetState}>
             {language === 'es' ? '🔀 Jugar de nuevo' : '🔀 Play again'}
           </button>
         </div>
@@ -321,6 +323,23 @@ const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
 
   return (
     <div className="wbd-match">
+
+      {/* Mode toggle */}
+      <div className="wbd-match-type-toggle">
+        <button
+          className={`wbd-match-type-btn ${matchType === 'meaning' ? 'active' : ''}`}
+          onClick={() => switchType('meaning')}
+        >
+          🇬🇧 {language === 'es' ? 'Significado' : 'Meaning'}
+        </button>
+        <button
+          className={`wbd-match-type-btn ${matchType === 'pronunciation' ? 'active' : ''}`}
+          onClick={() => switchType('pronunciation')}
+        >
+          🔊 {language === 'es' ? 'Pronunciación' : 'Pronunciation'}
+        </button>
+      </div>
+
       <div className="wbd-match-header">
         <span className="wbd-match-round-info">
           {language === 'es'
@@ -333,20 +352,19 @@ const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
       </div>
 
       <div className="wbd-match-progress-track">
-        <div
-          className="wbd-match-progress-fill"
-          style={{ width: `${(matched.size / batchWords.length) * 100}%` }}
-        />
+        <div className="wbd-match-progress-fill" style={{ width: `${(matched.size / batchWords.length) * 100}%` }} />
       </div>
 
       <div className="wbd-match-grid">
-        {/* Left column — German words */}
+        {/* Left column — German words (with optional audio in pronunciation mode) */}
         <div className="wbd-match-col">
           <div className="wbd-match-col-label">🇩🇪 DE</div>
           {batchWords.map(w => {
             const isMatched  = matched.has(w.id);
             const isSelected = selected?.id === w.id && selected?.side === 'left';
             const isWrong    = wrongFlash?.leftId === w.id;
+            const speakId    = `match-pronun-${w.id}`;
+            const isSpeaking = speakingId === speakId;
             return (
               <button
                 key={w.id}
@@ -354,15 +372,25 @@ const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
                 onClick={() => !isMatched && handleClick(w.id, 'left')}
                 disabled={isMatched}
               >
-                {w.word}
+                <span className="wbd-match-word-text">{w.word}</span>
+                {matchType === 'pronunciation' && ttsSupported && (
+                  <span
+                    className={`wbd-match-speak ${isSpeaking ? 'speaking' : ''}`}
+                    role="button"
+                    aria-label={`Pronounce ${w.word}`}
+                    onClick={e => { e.stopPropagation(); speak(w.word, speakId); }}
+                  >
+                    {isSpeaking ? '🔊' : '🔈'}
+                  </span>
+                )}
               </button>
             );
           })}
         </div>
 
-        {/* Right column — English meanings, shuffled */}
+        {/* Right column — meaning or IPA, shuffled */}
         <div className="wbd-match-col">
-          <div className="wbd-match-col-label">🇬🇧 EN</div>
+          <div className="wbd-match-col-label">{rightLabel}</div>
           {rightWords.map(w => {
             const isMatched  = matched.has(w.id);
             const isSelected = selected?.id === w.id && selected?.side === 'right';
@@ -370,11 +398,11 @@ const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
             return (
               <button
                 key={w.id}
-                className={`wbd-match-item${isSelected ? ' selected' : ''}${isMatched ? ' matched' : ''}${isWrong ? ' wrong' : ''}`}
+                className={`wbd-match-item${isSelected ? ' selected' : ''}${isMatched ? ' matched' : ''}${isWrong ? ' wrong' : ''}${matchType === 'pronunciation' ? ' ipa' : ''}`}
                 onClick={() => !isMatched && handleClick(w.id, 'right')}
                 disabled={isMatched}
               >
-                {w.en}
+                {rightValue(w)}
               </button>
             );
           })}
