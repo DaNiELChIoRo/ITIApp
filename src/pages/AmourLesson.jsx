@@ -9,6 +9,7 @@ const AmourLesson = ({ onHome }) => (
     vocab={AMOUR_VOCAB}
     lyrics={AMOUR_LYRICS}
     storageKey="itiapp-amour-known"
+    appleMusic="https://music.apple.com/search?term=Rammstein+Amour"
     onHome={onHome}
   />
 );

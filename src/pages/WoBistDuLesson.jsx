@@ -9,6 +9,7 @@ const WoBistDuLesson = ({ onHome }) => (
     vocab={WO_BIST_DU_VOCAB}
     lyrics={WO_BIST_DU_LYRICS}
     storageKey="itiapp-wo-bist-du-known"
+    appleMusic="https://music.apple.com/search?term=Rammstein+Wo+bist+du"
     onHome={onHome}
   />
 );

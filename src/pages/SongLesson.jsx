@@ -434,7 +434,7 @@ const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
  *   storageKey  – localStorage key for "known" progress
  *   onHome      – back-button callback
  */
-const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = '🇪🇸' }) => {
+const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = '🇪🇸', appleMusic }) => {
   const { language } = useI18n();
   const [tab, setTab]               = useState('vocab');
   const [filter, setFilter]         = useState('all');
@@ -509,6 +509,16 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
           <div className="wbd-header-text">
             <h1 className="wbd-song-title">{title}</h1>
             <div className="wbd-song-meta">{meta}</div>
+            {appleMusic && (
+              <a
+                href={appleMusic}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="wbd-apple-music-link"
+              >
+                ♫ Apple Music
+              </a>
+            )}
           </div>
         </div>
 

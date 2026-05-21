@@ -66,6 +66,24 @@
   text-transform: uppercase;
 }
 
+.wbd-apple-music-link {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  background: #FA2D48;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  opacity: 0.92;
+  transition: opacity 0.15s;
+}
+.wbd-apple-music-link:hover {
+  opacity: 1;
+}
+
 /* ── Tabs ── */
 .wbd-tabs {
   display: flex;

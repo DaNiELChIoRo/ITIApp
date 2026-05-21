@@ -10,6 +10,7 @@ const StirNichtLesson = ({ onHome }) => (
     lyrics={STIRB_NICHT_LYRICS}
     storageKey="itiapp-stirb-nicht-known"
     altFlag="🇬🇧"
+    appleMusic="https://music.apple.com/search?term=Rammstein+Stirb+nicht+vor+mir"
     onHome={onHome}
   />
 );
