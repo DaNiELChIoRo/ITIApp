@@ -91,6 +91,7 @@ function App() {
           onWoBistDu={() => navigate('/german/wo-bist-du')}
           onAmour={() => navigate('/german/amour')}
           onStirNicht={navigateToStirNicht}
+          onKletka={() => navigate('/russian/kletka')}
           onGermanSection={() => navigate('/german')}
           onRussianSection={() => navigate('/russian')}
         />
