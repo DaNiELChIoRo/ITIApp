@@ -190,6 +190,9 @@
   height: 160px;
   perspective: 1000px;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .wbd-card {
@@ -262,6 +265,44 @@
   color: rgba(255,255,255,0.4);
   position: absolute;
   bottom: 8px;
+}
+
+/* Song context hint */
+.wbd-hint-dot {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-size: 11px;
+  color: rgba(255, 220, 120, 0.5);
+  pointer-events: none;
+  line-height: 1;
+}
+
+.wbd-song-hint {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: rgba(255, 220, 120, 0.95);
+  font-size: 11px;
+  font-style: italic;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 0 0 14px 14px;
+  animation: fadeIn 0.18s ease-out;
+  pointer-events: none;
+  z-index: 2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .wbd-meaning {

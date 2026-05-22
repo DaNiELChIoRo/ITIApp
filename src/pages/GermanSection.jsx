@@ -6,6 +6,8 @@ import GermanSpeakingGame from './GermanSpeakingGame';
 import WoBistDuLesson from './WoBistDuLesson';
 import AmourLesson from './AmourLesson';
 import StirNichtLesson from './StirNichtLesson';
+import EngelLesson from './EngelLesson';
+import RosenrotLesson from './RosenrotLesson';
 import GermanLanding from './GermanLanding';
 
 const GermanSection = () => {
@@ -21,6 +23,8 @@ const GermanSection = () => {
       <Route path="wo-bist-du" element={<WoBistDuLesson onHome={goSection} />} />
       <Route path="amour" element={<AmourLesson onHome={goSection} />} />
       <Route path="stirb-nicht" element={<StirNichtLesson onHome={goSection} />} />
+      <Route path="engel" element={<EngelLesson onHome={goSection} />} />
+      <Route path="rosenrot" element={<RosenrotLesson onHome={goSection} />} />
     </Routes>
   );
 };

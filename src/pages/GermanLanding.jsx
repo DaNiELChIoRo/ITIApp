@@ -51,6 +51,22 @@ const GermanLanding = () => {
         ? 'Dúo alemán/inglés con Sharleen Spiteri — Rosenrot (2005)'
         : 'German/English duet feat. Sharleen Spiteri — Rosenrot (2005)',
       path: '/german/stirb-nicht'
+    },
+    {
+      icon: '😇',
+      title: 'Engel — Rammstein',
+      desc: language === 'es'
+        ? 'Vocabulario y letra de Sehnsucht (1997)'
+        : 'Vocabulary flashcards and full lyrics from Sehnsucht (1997)',
+      path: '/german/engel'
+    },
+    {
+      icon: '🌹',
+      title: 'Rosenrot — Rammstein',
+      desc: language === 'es'
+        ? 'Vocabulario y letra de Rosenrot (2005)'
+        : 'Vocabulary flashcards and full lyrics from Rosenrot (2005)',
+      path: '/german/rosenrot'
     }
   ];
 

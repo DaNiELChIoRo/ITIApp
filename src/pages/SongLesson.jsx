@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useI18n } from '../i18n/I18nContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
@@ -476,6 +476,9 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
   const [showTranslation, setShowTranslation] = useState(true);
   const [showPron, setShowPron]               = useState(false);
   const [wrongVocabIds, setWrongVocabIds] = useState([]);
+  const [hintId, setHintId]               = useState(null);
+  const longPressTimer  = useRef(null);
+  const longPressActive = useRef(false);
 
   const hasPron = useMemo(() => lyrics.some(s => s.lines.some(l => l.pron)), [lyrics]);
 
@@ -528,6 +531,19 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
     setShuffleKey(k => k + 1);
     setPage(0);
     setFlipped(new Set());
+  }, []);
+
+  const startHint = useCallback((cardId) => {
+    longPressActive.current = false;
+    clearTimeout(longPressTimer.current);
+    longPressTimer.current = setTimeout(() => {
+      longPressActive.current = true;
+      setHintId(cardId);
+    }, 500);
+  }, []);
+
+  const cancelHint = useCallback(() => {
+    clearTimeout(longPressTimer.current);
   }, []);
 
   const typeLabels   = VOCAB_TYPE_LABELS[language] || VOCAB_TYPE_LABELS.en;
@@ -638,11 +654,27 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
                     const isSpeaking = speakingId === speakId;
                     const typeColor  = TYPE_COLORS[card.type] || 'white';
 
+                    const showHint = hintId === card.id && !isFlipped;
+
                     return (
-                      <div key={`${page}-${i}`} className="wbd-card-scene" onClick={() => toggleCard(i)}>
+                      <div
+                        key={`${page}-${i}`}
+                        className="wbd-card-scene"
+                        onPointerDown={() => card.songContext && startHint(card.id)}
+                        onPointerUp={cancelHint}
+                        onPointerCancel={cancelHint}
+                        onMouseEnter={() => card.songContext && !isFlipped && setHintId(card.id)}
+                        onMouseLeave={() => setHintId(null)}
+                        onClick={() => {
+                          if (longPressActive.current) { longPressActive.current = false; return; }
+                          setHintId(null);
+                          toggleCard(i);
+                        }}
+                      >
                         <div className={`wbd-card ${isFlipped ? 'is-flipped' : ''}`}>
                           <div className="wbd-card-face wbd-card-front">
                             {isKnown && <span className="wbd-known-badge">✓</span>}
+                            {card.songContext && <span className="wbd-hint-dot" title="Hover / long-press to see song phrase">♪</span>}
                             <div className="wbd-word">{card.word}</div>
                             <div className="wbd-ipa">{card.ipa}</div>
                             {ttsSupported && (
@@ -661,6 +693,9 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
                             <div className="wbd-type-badge" style={{ color: typeColor }}>
                               {typeLabels[card.type] || card.type}
                             </div>
+                            {showHint && (
+                              <div className="wbd-song-hint">♪ „{card.songContext}"</div>
+                            )}
                           </div>
 
                           <div className="wbd-card-face wbd-card-back">
