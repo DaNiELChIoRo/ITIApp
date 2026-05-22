@@ -444,6 +444,14 @@
   vertical-align: middle;
 }
 
+.wbd-line-pron {
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(255,255,255,0.4);
+  padding-left: 2px;
+  letter-spacing: 0.02em;
+}
+
 .wbd-line-en {
   font-size: var(--font-size-sm);
   color: rgba(255,200,160,0.65);

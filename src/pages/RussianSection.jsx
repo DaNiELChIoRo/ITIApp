@@ -4,6 +4,7 @@ import FlashCards from './FlashCards';
 import RussianGrammarCases from './RussianGrammarCases';
 import RussianLanding from './RussianLanding';
 import KletkaLesson from './KletkaLesson';
+import ToskaLesson from './ToskaLesson';
 
 const RussianSection = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const RussianSection = () => {
       <Route path="flashcards" element={<FlashCards quizId="russian-vocabulary" onHome={goSection} />} />
       <Route path="grammar" element={<RussianGrammarCases onHome={goSection} />} />
       <Route path="kletka" element={<KletkaLesson onHome={goSection} />} />
+      <Route path="toska" element={<ToskaLesson onHome={goSection} />} />
     </Routes>
   );
 };

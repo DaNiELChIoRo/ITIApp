@@ -89,6 +89,10 @@ export const translations = {
         kletka: {
           title: 'Клетка — Molchat Doma',
           description: 'Russian post-punk vocabulary + full lyrics (2018)'
+        },
+        toska: {
+          title: 'Тоска — Molchat Doma',
+          description: 'Russian vocabulary + lyrics about longing and loss'
         }
       },
       german: 'German',
@@ -324,6 +328,10 @@ export const translations = {
         kletka: {
           title: 'Клетка — Molchat Doma',
           description: 'Vocabulario post-punk ruso + letra completa (2018)'
+        },
+        toska: {
+          title: 'Тоска — Molchat Doma',
+          description: 'Vocabulario ruso + letra sobre añoranza y pérdida'
         }
       },
       german: 'Alemán',

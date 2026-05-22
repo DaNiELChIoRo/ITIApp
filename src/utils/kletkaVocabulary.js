@@ -44,57 +44,57 @@ export const KLETKA_LYRICS = [
   {
     label: { en: "Verse 1", es: "Estrofa 1" },
     lines: [
-      { de: "И вот, эта улица",                              en: "And so, this street" },
-      { de: "Войди в этот дом",                              en: "Enter this house" },
-      { de: "Поднимись на восьмой этаж",                     en: "Go up to the eighth floor" },
-      { de: "Позвони в звонок",                              en: "Ring the doorbell" },
-      { de: "Постучи в эту дверь",                           en: "Knock on this door" },
-      { de: "И тебе никто не откроет",                       en: "And no one will open it for you" },
-      { de: "Беги, дурак",                                   en: "Run, fool" },
-      { de: "Беги, дурак",                                   en: "Run, fool" },
+      { de: "И вот, эта улица",                              pron: "I vot, eta ulitsa",                              en: "And so, this street" },
+      { de: "Войди в этот дом",                              pron: "Voydi v etot dom",                               en: "Enter this house" },
+      { de: "Поднимись на восьмой этаж",                     pron: "Podnimis' na vos'moy etazh",                    en: "Go up to the eighth floor" },
+      { de: "Позвони в звонок",                              pron: "Pozvoni v zvonok",                               en: "Ring the doorbell" },
+      { de: "Постучи в эту дверь",                           pron: "Postuchi v etu dver'",                           en: "Knock on this door" },
+      { de: "И тебе никто не откроет",                       pron: "I tebe nikto ne otkroyet",                       en: "And no one will open it for you" },
+      { de: "Беги, дурак",                                   pron: "Begi, durak",                                    en: "Run, fool" },
+      { de: "Беги, дурак",                                   pron: "Begi, durak",                                    en: "Run, fool" },
     ]
   },
   {
     label: { en: "Chorus", es: "Coro" },
     lines: [
-      { de: "Вниз по лестничной клетке, сквозь записки на стенках",  en: "Down the stairwell, through notes on the walls" },
-      { de: "Позабытые навсегда",                                      en: "Forgotten forever" },
-      { de: "Вниз по лестничной клетке, как ожоги на побелке",        en: "Down the stairwell, like burns on the whitewash" },
-      { de: "Непонятны как и я",                                       en: "Incomprehensible, just like me" },
-      { de: "Вниз по лестничной клетке",                               en: "Down the stairwell" },
+      { de: "Вниз по лестничной клетке, сквозь записки на стенках",  pron: "Vniz po lestnichnoy kletke, skvoz' zapiski na stenkakh",  en: "Down the stairwell, through notes on the walls" },
+      { de: "Позабытые навсегда",                                      pron: "Pozabytye navsegda",                                      en: "Forgotten forever" },
+      { de: "Вниз по лестничной клетке, как ожоги на побелке",        pron: "Vniz po lestnichnoy kletke, kak ozhogi na pobelke",       en: "Down the stairwell, like burns on the whitewash" },
+      { de: "Непонятны как и я",                                       pron: "Neponyatny kak i ya",                                     en: "Incomprehensible, just like me" },
+      { de: "Вниз по лестничной клетке",                               pron: "Vniz po lestnichnoy kletke",                              en: "Down the stairwell" },
     ]
   },
   {
     label: { en: "Verse 2", es: "Estrofa 2" },
     lines: [
-      { de: "И где та улица?",                               en: "And where is that street?" },
-      { de: "И где тот дом?",                                en: "And where is that house?" },
-      { de: "На каком этаже ждут нас?",                      en: "On which floor do they wait for us?" },
-      { de: "Где откроют без звонка",                        en: "Where they'll open without ringing" },
-      { de: "Где без стука войду",                           en: "Where I'll enter without knocking" },
-      { de: "Там, где скажут привет и я не убегу",           en: "Where they'll say hello and I won't run away" },
-      { de: "Не убегу",                                      en: "I won't run away" },
+      { de: "И где та улица?",                               pron: "I gde ta ulitsa?",                               en: "And where is that street?" },
+      { de: "И где тот дом?",                                pron: "I gde tot dom?",                                 en: "And where is that house?" },
+      { de: "На каком этаже ждут нас?",                      pron: "Na kakom etazhe zhdut nas?",                     en: "On which floor do they wait for us?" },
+      { de: "Где откроют без звонка",                        pron: "Gde otkroyut bez zvonka",                        en: "Where they'll open without ringing" },
+      { de: "Где без стука войду",                           pron: "Gde bez stuka voydu",                            en: "Where I'll enter without knocking" },
+      { de: "Там, где скажут привет и я не убегу",           pron: "Tam, gde skazhut privet i ya ne ubegu",          en: "Where they'll say hello and I won't run away" },
+      { de: "Не убегу",                                      pron: "Ne ubegu",                                       en: "I won't run away" },
     ]
   },
   {
     label: { en: "Chorus", es: "Coro" },
     lines: [
-      { de: "Вниз по лестничной клетке, сквозь записки на стенках",  en: "Down the stairwell, through notes on the walls" },
-      { de: "Позабытые навсегда",                                      en: "Forgotten forever" },
-      { de: "Вниз по лестничной клетке, как ожоги на побелке",        en: "Down the stairwell, like burns on the whitewash" },
-      { de: "Непонятны как и я",                                       en: "Incomprehensible, just like me" },
+      { de: "Вниз по лестничной клетке, сквозь записки на стенках",  pron: "Vniz po lestnichnoy kletke, skvoz' zapiski na stenkakh",  en: "Down the stairwell, through notes on the walls" },
+      { de: "Позабытые навсегда",                                      pron: "Pozabytye navsegda",                                      en: "Forgotten forever" },
+      { de: "Вниз по лестничной клетке, как ожоги на побелке",        pron: "Vniz po lestnichnoy kletke, kak ozhogi na pobelke",       en: "Down the stairwell, like burns on the whitewash" },
+      { de: "Непонятны как и я",                                       pron: "Neponyatny kak i ya",                                     en: "Incomprehensible, just like me" },
     ]
   },
   {
     label: { en: "Outro", es: "Outro" },
     lines: [
-      { de: "Вниз по лестничной клетке", en: "Down the stairwell" },
-      { de: "Вниз по лестничной клетке", en: "Down the stairwell" },
-      { de: "Вниз по лестничной клетке", en: "Down the stairwell" },
-      { de: "Вниз по лестничной клетке", en: "Down the stairwell" },
-      { de: "Вниз по лестничной клетке", en: "Down the stairwell" },
-      { de: "Вниз по лестничной клетке", en: "Down the stairwell" },
-      { de: "Вниз по лестничной клетке", en: "Down the stairwell" },
+      { de: "Вниз по лестничной клетке", pron: "Vniz po lestnichnoy kletke", en: "Down the stairwell" },
+      { de: "Вниз по лестничной клетке", pron: "Vniz po lestnichnoy kletke", en: "Down the stairwell" },
+      { de: "Вниз по лестничной клетке", pron: "Vniz po lestnichnoy kletke", en: "Down the stairwell" },
+      { de: "Вниз по лестничной клетке", pron: "Vniz po lestnichnoy kletke", en: "Down the stairwell" },
+      { de: "Вниз по лестничной клетке", pron: "Vniz po lestnichnoy kletke", en: "Down the stairwell" },
+      { de: "Вниз по лестничной клетке", pron: "Vniz po lestnichnoy kletke", en: "Down the stairwell" },
+      { de: "Вниз по лестничной клетке", pron: "Vniz po lestnichnoy kletke", en: "Down the stairwell" },
     ]
   },
 ];

@@ -474,7 +474,10 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
   const [flipped, setFlipped]       = useState(new Set());
   const [knownIds, setKnownIds]     = useLocalStorage(storageKey, []);
   const [showTranslation, setShowTranslation] = useState(true);
+  const [showPron, setShowPron]               = useState(false);
   const [wrongVocabIds, setWrongVocabIds] = useState([]);
+
+  const hasPron = useMemo(() => lyrics.some(s => s.lines.some(l => l.pron)), [lyrics]);
 
   const wrongWords = useMemo(
     () => vocab.filter(v => wrongVocabIds.includes(v.id)).map(v => v.word),
@@ -735,6 +738,16 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
           <div className="wbd-lyrics-wrapper">
             <div className="wbd-lyrics-controls">
               <span className="wbd-lyrics-info">{meta}</span>
+              {hasPron && (
+                <button
+                  className={`wbd-transl-toggle ${showPron ? 'on' : ''}`}
+                  onClick={() => setShowPron(v => !v)}
+                >
+                  {showPron
+                    ? (language === 'es' ? 'Ocultar pronunciación' : 'Hide romanization')
+                    : (language === 'es' ? 'Mostrar pronunciación' : 'Show romanization')}
+                </button>
+              )}
               <button
                 className={`wbd-transl-toggle ${showTranslation ? 'on' : ''}`}
                 onClick={() => setShowTranslation(v => !v)}
@@ -770,6 +783,9 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
                           {line.es && <span className="wbd-line-flag">🇩🇪</span>}{' '}
                           {highlightWrongWords(line.de, wrongWords)}
                         </div>
+                      )}
+                      {showPron && line.pron && (
+                        <div className="wbd-line-pron">{line.pron}</div>
                       )}
                       {showTranslation && line.en && (
                         <div className="wbd-line-en">{line.en}</div>
