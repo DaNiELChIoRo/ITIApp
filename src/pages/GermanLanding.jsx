@@ -67,6 +67,14 @@ const GermanLanding = () => {
         ? 'Vocabulario y letra de Rosenrot (2005)'
         : 'Vocabulary flashcards and full lyrics from Rosenrot (2005)',
       path: '/german/rosenrot'
+    },
+    {
+      icon: '⚔️',
+      title: 'Mann gegen Mann — Rammstein',
+      desc: language === 'es'
+        ? 'Vocabulario y letra de Rosenrot (2005)'
+        : 'Vocabulary flashcards and full lyrics from Rosenrot (2005)',
+      path: '/german/mann-gegen-mann'
     }
   ];
 
