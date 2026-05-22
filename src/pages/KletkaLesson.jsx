@@ -9,7 +9,7 @@ const KletkaLesson = ({ onHome }) => (
     vocab={KLETKA_VOCAB}
     lyrics={KLETKA_LYRICS}
     storageKey="itiapp-kletka-known"
-    appleMusic="https://music.apple.com/search?term=Molchat+Doma+Kletka"
+    appleMusic="https://music.youtube.com/search?q=Molchat+Doma+Kletka"
     onHome={onHome}
   />
 );

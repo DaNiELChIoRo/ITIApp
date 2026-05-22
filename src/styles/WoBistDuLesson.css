@@ -83,6 +83,9 @@
 .wbd-apple-music-link:hover {
   opacity: 1;
 }
+.wbd-apple-music-link.youtube {
+  background: #FF0000;
+}
 
 /* ── Tabs ── */
 .wbd-tabs {

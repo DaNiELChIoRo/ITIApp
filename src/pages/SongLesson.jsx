@@ -545,9 +545,9 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
                 href={appleMusic}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="wbd-apple-music-link"
+                className={`wbd-apple-music-link${appleMusic.includes('youtube') ? ' youtube' : ''}`}
               >
-                ♫ Apple Music
+                {appleMusic.includes('youtube') ? '▶ YouTube Music' : '♫ Apple Music'}
               </a>
             )}
           </div>
