@@ -9,6 +9,7 @@ import StirNichtLesson from './StirNichtLesson';
 import EngelLesson from './EngelLesson';
 import RosenrotLesson from './RosenrotLesson';
 import MannGegenMannLesson from './MannGegenMannLesson';
+import FeuerUndWasserLesson from './FeuerUndWasserLesson';
 import GermanLanding from './GermanLanding';
 
 const GermanSection = () => {
@@ -27,6 +28,7 @@ const GermanSection = () => {
       <Route path="engel" element={<EngelLesson onHome={goSection} />} />
       <Route path="rosenrot" element={<RosenrotLesson onHome={goSection} />} />
       <Route path="mann-gegen-mann" element={<MannGegenMannLesson onHome={goSection} />} />
+      <Route path="feuer-und-wasser" element={<FeuerUndWasserLesson onHome={goSection} />} />
     </Routes>
   );
 };

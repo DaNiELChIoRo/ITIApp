@@ -75,6 +75,14 @@ const GermanLanding = () => {
         ? 'Vocabulario y letra de Rosenrot (2005)'
         : 'Vocabulary flashcards and full lyrics from Rosenrot (2005)',
       path: '/german/mann-gegen-mann'
+    },
+    {
+      icon: '🔥',
+      title: 'Feuer und Wasser — Rammstein',
+      desc: language === 'es'
+        ? 'Vocabulario y letra de Mutter (2001)'
+        : 'Vocabulary flashcards and full lyrics from Mutter (2001)',
+      path: '/german/feuer-und-wasser'
     }
   ];
 
