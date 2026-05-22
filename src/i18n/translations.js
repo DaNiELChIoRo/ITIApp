@@ -93,6 +93,10 @@ export const translations = {
         toska: {
           title: 'Тоска — Molchat Doma',
           description: 'Russian vocabulary + lyrics about longing and loss'
+        },
+        volny: {
+          title: 'Волны — Molchat Doma',
+          description: 'Russian vocabulary + lyrics about waves and nature'
         }
       },
       german: 'German',
@@ -332,6 +336,10 @@ export const translations = {
         toska: {
           title: 'Тоска — Molchat Doma',
           description: 'Vocabulario ruso + letra sobre añoranza y pérdida'
+        },
+        volny: {
+          title: 'Волны — Molchat Doma',
+          description: 'Vocabulario ruso + letra sobre olas y naturaleza'
         }
       },
       german: 'Alemán',

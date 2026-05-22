@@ -5,7 +5,7 @@ import { useI18n } from '../i18n/I18nContext';
 import { useData } from '../contexts/DataContext';
 import '../styles/Home.css';
 
-const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onStartFlashCards, onNavigateAdmin, onGermanyMap, onSpeakingGame, onRussianGrammar, onGermanSection, onRussianSection, onWoBistDu, onAmour, onStirNicht, onKletka, onToska }) => {
+const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onStartFlashCards, onNavigateAdmin, onGermanyMap, onSpeakingGame, onRussianGrammar, onGermanSection, onRussianSection, onWoBistDu, onAmour, onStirNicht, onKletka, onToska, onVolny }) => {
   const { stats } = useStats();
   const { t, language } = useI18n();
   const { quizzes } = useData();
@@ -144,6 +144,14 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, on
                 <span className="quiz-type-icon">🎭</span>
                 <span className="quiz-type-name">{t('home.studyTypes.toska.title')}</span>
                 <span className="quiz-type-desc">{t('home.studyTypes.toska.description')}</span>
+              </button>
+              <button
+                className="quiz-type-card"
+                onClick={() => onVolny?.()}
+              >
+                <span className="quiz-type-icon">🌊</span>
+                <span className="quiz-type-name">{t('home.studyTypes.volny.title')}</span>
+                <span className="quiz-type-desc">{t('home.studyTypes.volny.description')}</span>
               </button>
             </div>
           </div>

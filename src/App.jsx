@@ -93,6 +93,7 @@ function App() {
           onStirNicht={navigateToStirNicht}
           onKletka={() => navigate('/russian/kletka')}
           onToska={() => navigate('/russian/toska')}
+          onVolny={() => navigate('/russian/volny')}
           onGermanSection={() => navigate('/german')}
           onRussianSection={() => navigate('/russian')}
         />
