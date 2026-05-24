@@ -29,6 +29,22 @@ const GermanLanding = () => {
       path: '/german/speaking'
     },
     {
+      icon: '🧩',
+      title: language === 'es' ? 'Palabras Compuestas' : 'Compound Words',
+      desc: language === 'es'
+        ? 'Kummerspeck, Fernweh, Schadenfreude… 25 palabras que el alemán hace mejor'
+        : 'Kummerspeck, Fernweh, Schadenfreude… 25 words German does better than anyone',
+      path: '/german/compound-words'
+    },
+    {
+      icon: '❓',
+      title: language === 'es' ? 'W-Fragen' : 'W-Fragen',
+      desc: language === 'es'
+        ? 'Tarjetas, emparejamiento y ejemplos de las palabras interrogativas'
+        : 'Flashcards, matching pairs, and usage examples for all question words',
+      path: '/german/w-fragen'
+    },
+    {
       icon: '🎸',
       title: 'Wo bist du? — Rammstein',
       desc: language === 'es'

@@ -465,7 +465,7 @@ const MatchMode = ({ vocab, knownIds, setKnownIds, language }) => {
  *   storageKey  – localStorage key for "known" progress
  *   onHome      – back-button callback
  */
-const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = '🇪🇸', appleMusic }) => {
+const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = '🇪🇸', appleMusic, typeLabels: customTypeLabels, lyricsTabLabel, pronLabel }) => {
   const { language } = useI18n();
   const [tab, setTab]               = useState('vocab');
   const [filter, setFilter]         = useState('all');
@@ -546,7 +546,7 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
     clearTimeout(longPressTimer.current);
   }, []);
 
-  const typeLabels   = VOCAB_TYPE_LABELS[language] || VOCAB_TYPE_LABELS.en;
+  const typeLabels   = (customTypeLabels?.[language] ?? customTypeLabels?.en) ?? VOCAB_TYPE_LABELS[language] ?? VOCAB_TYPE_LABELS.en;
   const uniqueTypes  = [...new Set(vocab.map(c => c.type))];
 
   return (
@@ -596,7 +596,7 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
             className={`wbd-tab ${tab === 'lyrics' ? 'active' : ''}`}
             onClick={() => setTab('lyrics')}
           >
-            🎸 {language === 'es' ? 'Letra' : 'Lyrics'}
+            🎸 {lyricsTabLabel?.[language] ?? (language === 'es' ? 'Letra' : 'Lyrics')}
           </button>
         </div>
 
@@ -779,8 +779,8 @@ const SongLesson = ({ title, meta, vocab, lyrics, storageKey, onHome, altFlag = 
                   onClick={() => setShowPron(v => !v)}
                 >
                   {showPron
-                    ? (language === 'es' ? 'Ocultar pronunciación' : 'Hide romanization')
-                    : (language === 'es' ? 'Mostrar pronunciación' : 'Show romanization')}
+                    ? (pronLabel?.[language] ? `Ocultar ${pronLabel[language]}` : (language === 'es' ? 'Ocultar pronunciación' : 'Hide romanization'))
+                    : (pronLabel?.[language] ? `Mostrar ${pronLabel[language]}` : (language === 'es' ? 'Mostrar pronunciación' : 'Show romanization'))}
                 </button>
               )}
               <button
