@@ -29,6 +29,14 @@ const GermanLanding = () => {
       path: '/german/speaking'
     },
     {
+      icon: '🔤',
+      title: language === 'es' ? 'Verbos & Conjugación' : 'Verbs & Conjugation',
+      desc: language === 'es'
+        ? 'Tablas y quiz de 15 verbos en presente — regulares e irregulares'
+        : 'Conjugation tables + quiz for 15 verbs in present tense — regular & irregular',
+      path: '/german/verben'
+    },
+    {
       icon: '🧩',
       title: language === 'es' ? 'Palabras Compuestas' : 'Compound Words',
       desc: language === 'es'

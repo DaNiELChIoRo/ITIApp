@@ -12,6 +12,7 @@ import MannGegenMannLesson from './MannGegenMannLesson';
 import FeuerUndWasserLesson from './FeuerUndWasserLesson';
 import WFragenLesson from './WFragenLesson';
 import GermanCompoundWords from './GermanCompoundWords';
+import GermanVerbsPage from './GermanVerbsPage';
 import GermanLanding from './GermanLanding';
 
 const GermanSection = () => {
@@ -33,6 +34,7 @@ const GermanSection = () => {
       <Route path="feuer-und-wasser" element={<FeuerUndWasserLesson onHome={goSection} />} />
       <Route path="w-fragen" element={<WFragenLesson onHome={goSection} />} />
       <Route path="compound-words" element={<GermanCompoundWords onHome={goSection} />} />
+      <Route path="verben" element={<GermanVerbsPage onHome={goSection} />} />
     </Routes>
   );
 };
