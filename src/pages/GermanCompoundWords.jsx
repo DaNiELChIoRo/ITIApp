@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
 import { COMPOUND_WORDS } from '../utils/germanCompoundWords';
 import { useI18n } from '../i18n/I18nContext';
+import { useTextToSpeech } from '../hooks/useTextToSpeech';
 import '../styles/GermanCompoundWords.css';
 
 const GermanCompoundWords = ({ onHome }) => {
   const { language } = useI18n();
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  const { supported, speakingId, speak, stop } = useTextToSpeech();
 
   const card = COMPOUND_WORDS[index];
   const total = COMPOUND_WORDS.length;
 
   const go = (dir) => {
+    stop();
     setFlipped(false);
     setTimeout(() => setIndex(i => (i + dir + total) % total), 150);
+  };
+
+  const handleSpeak = (e) => {
+    e.stopPropagation();
+    if (speakingId === card.id) {
+      stop();
+    } else {
+      speak(card.word, card.id, 'de-DE');
+    }
   };
 
   return (
@@ -47,6 +59,15 @@ const GermanCompoundWords = ({ onHome }) => {
               <div className="gcw-emoji">{card.emoji}</div>
               <div className="gcw-word">{card.word}</div>
               <div className="gcw-ipa">{card.ipa}</div>
+              {supported && (
+                <button
+                  className={`gcw-speak-btn ${speakingId === card.id ? 'gcw-speak-btn--active' : ''}`}
+                  onClick={handleSpeak}
+                  aria-label="Pronounce"
+                >
+                  {speakingId === card.id ? '⏹' : '🔊'}
+                </button>
+              )}
               <div className="gcw-parts">
                 {card.parts.map((part, i) => (
                   <React.Fragment key={i}>

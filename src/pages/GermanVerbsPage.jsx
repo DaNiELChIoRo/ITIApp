@@ -1,7 +1,10 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useI18n } from '../i18n/I18nContext';
 import { GERMAN_VERBS, PRONOUNS } from '../utils/germanVerbsData';
+import { IRREGULAR_VERBS } from '../utils/germanIrregularVerbs';
 import '../styles/GermanVerbsPage.css';
+
+const UMLAUT_KEYS = ['ä', 'ö', 'ü', 'ß'];
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -252,6 +255,197 @@ const QuizMode = ({ language }) => {
   );
 };
 
+// ─── Drill Mode ───────────────────────────────────────────────────────────────
+
+const DrillMode = ({ language }) => {
+  const total = IRREGULAR_VERBS.length;
+  const [verbIdx, setVerbIdx] = useState(0);
+  const [typed, setTyped]   = useState(Array(6).fill(''));
+  const [done, setDone]     = useState(Array(6).fill(false));
+  const [focusedRow, setFocusedRow] = useState(null);
+  const [celebrated, setCelebrated] = useState(false);
+  const inputRefs = useRef([]);
+
+  const verb = IRREGULAR_VERBS[verbIdx];
+  const correctCount = done.filter(Boolean).length;
+
+  const changeVerb = (newIdx) => {
+    setVerbIdx(newIdx);
+    setTyped(Array(6).fill(''));
+    setDone(Array(6).fill(false));
+    setCelebrated(false);
+    setFocusedRow(null);
+    setTimeout(() => inputRefs.current[0]?.focus(), 60);
+  };
+
+  const handleChange = (rowIdx, val) => {
+    if (done[rowIdx]) return;
+    const conj = verb.conjugations[rowIdx];
+    if (val.length > conj.target.length) return;
+    const newTyped = [...typed];
+    const newDone  = [...done];
+    newTyped[rowIdx] = val;
+    if (val === conj.target) {
+      newDone[rowIdx] = true;
+      const nextRow = newDone.findIndex((d, i) => i > rowIdx && !d);
+      if (nextRow !== -1) {
+        setTimeout(() => { inputRefs.current[nextRow]?.focus(); setFocusedRow(nextRow); }, 90);
+      } else if (newDone.every(Boolean)) {
+        setCelebrated(true);
+      }
+    }
+    setTyped(newTyped);
+    setDone(newDone);
+  };
+
+  const handleKeyDown = (rowIdx, e) => {
+    if (done[rowIdx]) return;
+    const conj = verb.conjugations[rowIdx];
+    const cur  = typed[rowIdx];
+    const hasGhost = conj.target.startsWith(cur) && cur.length < conj.target.length;
+    if ((e.key === 'Tab' || e.key === 'ArrowRight' || e.key === 'Enter') && hasGhost) {
+      e.preventDefault();
+      handleChange(rowIdx, conj.target);
+    }
+  };
+
+  const insertUmlaut = (char) => {
+    if (focusedRow === null || done[focusedRow]) return;
+    const cur = typed[focusedRow];
+    handleChange(focusedRow, cur + char);
+    setTimeout(() => inputRefs.current[focusedRow]?.focus(), 0);
+  };
+
+  const reset = () => {
+    setTyped(Array(6).fill(''));
+    setDone(Array(6).fill(false));
+    setCelebrated(false);
+    setTimeout(() => inputRefs.current[0]?.focus(), 60);
+  };
+
+  const prev = () => changeVerb((verbIdx - 1 + total) % total);
+  const next = () => changeVerb((verbIdx + 1) % total);
+
+  return (
+    <div className="gv-drill">
+      {/* Verb counter strip */}
+      <div className="gv-drill-strip">
+        <button className="gv-drill-strip-btn" onClick={prev}>&#8592;</button>
+        <span className="gv-drill-counter">{verbIdx + 1} / {total}</span>
+        <button className="gv-drill-strip-btn" onClick={next}>&#8594;</button>
+      </div>
+
+      {/* Verb info */}
+      <div className="gv-drill-verb-card">
+        <div className="gv-drill-verb-top">
+          <span className="gv-drill-infinitive">{verb.infinitive}</span>
+          <span className="gv-drill-badge">{language === 'es' ? verb.pattern.es : verb.pattern.en}</span>
+        </div>
+        <div className="gv-drill-meaning">{language === 'es' ? verb.es : verb.en}</div>
+        <div className="gv-drill-note">{language === 'es' ? verb.note.es : verb.note.en}</div>
+      </div>
+
+      {/* Conjugation table */}
+      <div className="gv-drill-table">
+        {verb.conjugations.map((conj, rowIdx) => {
+          const cur    = typed[rowIdx];
+          const isDone = done[rowIdx];
+          const isOk   = conj.target.startsWith(cur);
+          const ghost  = !isDone && isOk && cur.length < conj.target.length
+            ? conj.target.slice(cur.length) : '';
+          const isWrong = cur.length > 0 && !isOk;
+
+          return (
+            <div
+              key={conj.pronoun}
+              className={`gv-drill-row${isDone ? ' done' : ''}${conj.irregular ? ' irregular' : ''}`}
+            >
+              <span className="gv-drill-pronoun">{conj.pronoun}</span>
+
+              <span className="gv-drill-field">
+                {conj.prefix && <span className="gv-drill-static">{conj.prefix}</span>}
+
+                <span
+                  className={`gv-drill-zone${isWrong ? ' wrong' : ''}${isDone ? ' correct' : ''}`}
+                  style={{ minWidth: `${conj.target.length}ch` }}
+                >
+                  <input
+                    ref={el => { inputRefs.current[rowIdx] = el; }}
+                    value={cur}
+                    onChange={e => handleChange(rowIdx, e.target.value)}
+                    onKeyDown={e => handleKeyDown(rowIdx, e)}
+                    onFocus={() => setFocusedRow(rowIdx)}
+                    onBlur={() => setFocusedRow(f => f === rowIdx ? null : f)}
+                    disabled={isDone}
+                    className="gv-drill-input"
+                    style={{ width: cur.length > 0 ? `${cur.length}ch` : '2px' }}
+                    spellCheck={false}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="none"
+                  />
+                  {!isDone && ghost && (
+                    <span className="gv-drill-ghost" aria-hidden="true">{ghost}</span>
+                  )}
+                </span>
+
+                {conj.suffix && <span className="gv-drill-static">{conj.suffix}</span>}
+              </span>
+
+              <span className="gv-drill-row-end">
+                {isDone && <span className="gv-drill-check">✓</span>}
+                {conj.irregular && !isDone && <span className="gv-drill-dot" />}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Umlaut helper */}
+      <div className="gv-drill-umlauts">
+        <span className="gv-drill-umlaut-label">
+          {language === 'es' ? 'Insertar:' : 'Insert:'}
+        </span>
+        {UMLAUT_KEYS.map(k => (
+          <button
+            key={k}
+            className="gv-drill-umlaut-btn"
+            onMouseDown={e => e.preventDefault()}
+            onClick={() => insertUmlaut(k)}
+          >{k}</button>
+        ))}
+      </div>
+
+      {/* Progress */}
+      <div className="gv-drill-progress-wrap">
+        <div className="gv-drill-progress-track">
+          <div className="gv-drill-progress-fill" style={{ width: `${(correctCount / 6) * 100}%` }} />
+        </div>
+        <span className="gv-drill-progress-label">{correctCount} / 6</span>
+      </div>
+
+      {celebrated && (
+        <div className="gv-drill-celebrate">
+          🎉 {language === 'es' ? '¡Perfecto! →' : 'Perfect! →'}
+        </div>
+      )}
+
+      {/* Nav */}
+      <div className="gv-drill-nav">
+        <button className="gv-drill-nav-btn" onClick={prev}>
+          &#8592; {language === 'es' ? 'Anterior' : 'Prev'}
+        </button>
+        <button className="gv-drill-reset-btn" onClick={reset}>
+          {language === 'es' ? 'Reiniciar' : 'Reset'}
+        </button>
+        <button className="gv-drill-nav-btn" onClick={next}>
+          {language === 'es' ? 'Siguiente' : 'Next'} &#8594;
+        </button>
+      </div>
+    </div>
+  );
+};
+
 // ─── Root Page ────────────────────────────────────────────────────────────────
 
 const GermanVerbsPage = ({ onHome }) => {
@@ -285,11 +479,17 @@ const GermanVerbsPage = ({ onHome }) => {
           >
             🧠 Quiz
           </button>
+          <button
+            className={`gv-tab ${tab === 'drill' ? 'active' : ''}`}
+            onClick={() => setTab('drill')}
+          >
+            ✏️ {language === 'es' ? 'Conjugar' : 'Drill'}
+          </button>
         </div>
 
-        {tab === 'tables'
-          ? <TablesMode language={language} />
-          : <QuizMode key={tab} language={language} />
+        {tab === 'tables' ? <TablesMode language={language} />
+          : tab === 'quiz' ? <QuizMode key={tab} language={language} />
+          : <DrillMode key={tab} language={language} />
         }
 
       </div>
