@@ -18,12 +18,13 @@ export const STIRB_NICHT_VOCAB = [
   // Nature / element nouns from the chorus
   { id: 10, word: "Luft",      ipa: "[lʊft]",            en: "air",                     es: "aire",                    type: "noun" },
   { id: 11, word: "atmen",     ipa: "[ˈaːtmən]",         en: "to breathe",              es: "respirar",                type: "verb" },
-  { id: 12, word: "Feuer",     ipa: "[ˈfɔʏɐ]",           en: "fire",                    es: "fuego",                   type: "noun" },
+  { id: 12, word: "Feuer",     ipa: "[ˈfɔɪɐ]",            en: "fire",                    es: "fuego",                   type: "noun" },
   { id: 13, word: "Rauch",     ipa: "[ʁaʊx]",            en: "smoke",                   es: "humo",                    type: "noun" },
   { id: 14, word: "Wasser",    ipa: "[ˈvasɐ]",           en: "water",                   es: "agua",                    type: "noun" },
   { id: 15, word: "Boot",      ipa: "[boːt]",            en: "boat",                    es: "barca / bote",            type: "noun" },
-  { id: 16, word: "Kälte",     ipa: "[ˈkɛltə]",          en: "cold (noun) / coldness",  es: "frío / frialdad",         type: "noun" },
-  { id: 17, word: "Nacht",     ipa: "[naxt]",            en: "night",                   es: "noche",                   type: "noun" },
+  { id: 16, word: "Kälte",       ipa: "[ˈkɛltə]",          en: "cold (noun) / coldness",  es: "frío / frialdad",         type: "noun" },
+  { id: 17, word: "Nacht",       ipa: "[naxt]",            en: "night",                   es: "noche",                   type: "noun" },
+  { id: 31, word: "Sommernacht", ipa: "[ˈzɔmɐˌnaxt]",     en: "summer night",            es: "noche de verano",         type: "noun" },
   { id: 18, word: "Licht",     ipa: "[lɪçt]",            en: "light",                   es: "luz",                     type: "noun" },
   { id: 19, word: "Dunkel",    ipa: "[ˈdʊŋkəl]",         en: "darkness",                es: "oscuridad",               type: "noun" },
   // Emotional / abstract nouns
@@ -40,6 +41,7 @@ export const STIRB_NICHT_VOCAB = [
   { id: 28, word: "schlafen",  ipa: "[ˈʃlaːfən]",        en: "to sleep",                es: "dormir",                  type: "verb" },
   { id: 29, word: "halten",    ipa: "[ˈhaltən]",         en: "to hold / to keep",       es: "sostener / mantener",     type: "verb" },
   { id: 30, word: "brauchen",  ipa: "[ˈbʁaʊxən]",        en: "to need",                 es: "necesitar",               type: "verb" },
+  { id: 32, word: "erwachen", ipa: "[ɛɐ̯ˈvaxən]",         en: "to wake up / awaken",     es: "despertar / despertarse", type: "verb" },
 ];
 
 export const STIRB_NICHT_LYRICS = [
@@ -82,21 +84,21 @@ export const STIRB_NICHT_LYRICS = [
     ]
   },
   {
-    label: { en: "Bridge — Both", es: "Puente — Ambos" },
-    lines: [
-      { es: "Don't die before me",   de: "Stirb nicht vor mir",  en: "Don't die before me" },
-      { es: "Don't die before me",   de: "Stirb nicht vor mir",  en: "Don't die before me" },
-      { es: "Don't die before me",   de: "Stirb nicht vor mir",  en: "Don't die before me" },
-    ]
-  },
-  {
-    label: { en: "Outro — Till", es: "Outro — Till" },
+    label: { en: "Bridge — Till", es: "Puente — Till" },
     lines: [
       { de: "Du bist die Kälte in der Sommernacht",        en: "You are the cold in the summer night" },
       { de: "Du bist das Dunkel wenn das Licht erwacht",   en: "You are the darkness when the light awakens" },
       { de: "Du bist mein Herz und meine Seele auch",      en: "You are my heart and my soul too" },
       { de: "Stirb nicht vor mir",                         en: "Don't die before me" },
       { de: "Stirb nicht vor mir",                         en: "Don't die before me" },
+    ]
+  },
+  {
+    label: { en: "Outro — Both", es: "Outro — Ambos" },
+    lines: [
+      { es: "Don't die before me",   de: "Stirb nicht vor mir",  en: "Don't die before me" },
+      { es: "Don't die before me",   de: "Stirb nicht vor mir",  en: "Don't die before me" },
+      { es: "Don't die before me",   de: "Stirb nicht vor mir",  en: "Don't die before me" },
     ]
   },
 ];

@@ -10,6 +10,8 @@ const SONGS = [
   { icon: '🥀', title: 'Stirb nicht vor mir',meta: 'Rosenrot (2005)',    path: '/german/stirb-nicht' },
   { icon: '⚔️', title: 'Mann gegen Mann',    meta: 'Rosenrot (2005)',    path: '/german/mann-gegen-mann' },
   { icon: '🔥', title: 'Feuer und Wasser',   meta: 'Mutter (2001)',      path: '/german/feuer-und-wasser' },
+  { icon: '🎮', title: 'Spiel mit mir',      meta: 'Sehnsucht (1997)',   path: '/german/spiel-mit-mir' },
+  { icon: '⚓', title: 'Seemann',            meta: 'Herzeleid (1995)',   path: '/german/seemann' },
 ];
 
 const GermanSongsLanding = ({ onHome }) => {
