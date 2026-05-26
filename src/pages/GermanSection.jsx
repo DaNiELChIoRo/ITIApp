@@ -4,6 +4,7 @@ import FlashCards from './FlashCards';
 import GermanyMap from './GermanyMap';
 import GermanSpeakingGame from './GermanSpeakingGame';
 import WoBistDuLesson from './WoBistDuLesson';
+import AlterMannLesson from './AlterMannLesson';
 import AmourLesson from './AmourLesson';
 import StirNichtLesson from './StirNichtLesson';
 import EngelLesson from './EngelLesson';
@@ -41,6 +42,7 @@ const GermanSection = () => {
       <Route path="verben"   element={<GermanVerbsPage    onHome={goSection} />} />
       <Route path="numbers" element={<GermanNumbersPage  onHome={goSection} />} />
       <Route path="spiel-mit-mir" element={<SpielMitMirLesson onHome={goSection} />} />
+      <Route path="alter-mann" element={<AlterMannLesson onHome={goSection} />} />
       <Route path="seemann" element={<SeemannLesson onHome={goSection} />} />
       <Route path="songs" element={<GermanSongsLanding onHome={goSection} />} />
     </Routes>

@@ -12,6 +12,7 @@ const SONGS = [
   { icon: '🔥', title: 'Feuer und Wasser',   meta: 'Mutter (2001)',      path: '/german/feuer-und-wasser' },
   { icon: '🎮', title: 'Spiel mit mir',      meta: 'Sehnsucht (1997)',   path: '/german/spiel-mit-mir' },
   { icon: '⚓', title: 'Seemann',            meta: 'Herzeleid (1995)',   path: '/german/seemann' },
+  { icon: '🌊', title: 'Alter Mann',         meta: 'Sehnsucht (1997)',   path: '/german/alter-mann' },
 ];
 
 const GermanSongsLanding = ({ onHome }) => {

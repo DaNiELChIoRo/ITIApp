@@ -58,7 +58,7 @@ const TOOLS = [
 const SONG_PREVIEWS = [
   'Engel', 'Rosenrot', 'Wo bist du?', 'Amour',
   'Stirb nicht vor mir', 'Mann gegen Mann', 'Feuer und Wasser',
-  'Spiel mit mir', 'Seemann',
+  'Spiel mit mir', 'Seemann', 'Alter Mann',
 ];
 
 const GermanLanding = () => {
