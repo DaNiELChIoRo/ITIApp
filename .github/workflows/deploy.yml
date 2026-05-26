@@ -44,8 +44,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          cd dist
-          git init
+          cp -r dist /tmp/dist-deploy
+          git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
+          git rm -rf . --quiet
+          cp -r /tmp/dist-deploy/. .
           git add -A
-          git commit -m "Deploy to GitHub Pages"
-          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:gh-pages
+          git commit -m "Deploy to GitHub Pages [skip ci]"
+          git push origin gh-pages
