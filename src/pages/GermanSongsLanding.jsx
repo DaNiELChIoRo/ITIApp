@@ -13,6 +13,7 @@ const SONGS = [
   { icon: '🎮', title: 'Spiel mit mir',      meta: 'Sehnsucht (1997)',   path: '/german/spiel-mit-mir' },
   { icon: '⚓', title: 'Seemann',            meta: 'Herzeleid (1995)',   path: '/german/seemann' },
   { icon: '🌊', title: 'Alter Mann',         meta: 'Sehnsucht (1997)',   path: '/german/alter-mann' },
+  { icon: '💉', title: 'Tattoo',             meta: 'Zeit (2022)',        path: '/german/tattoo' },
 ];
 
 const GermanSongsLanding = ({ onHome }) => {

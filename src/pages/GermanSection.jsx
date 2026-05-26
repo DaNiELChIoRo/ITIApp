@@ -16,6 +16,7 @@ import GermanCompoundWords from './GermanCompoundWords';
 import GermanVerbsPage from './GermanVerbsPage';
 import GermanNumbersPage from './GermanNumbersPage';
 import SpielMitMirLesson from './SpielMitMirLesson';
+import TattooLesson from './TattooLesson';
 import GermanSongsLanding from './GermanSongsLanding';
 import SeemannLesson from './SeemannLesson';
 import GermanLanding from './GermanLanding';
@@ -44,6 +45,7 @@ const GermanSection = () => {
       <Route path="spiel-mit-mir" element={<SpielMitMirLesson onHome={goSection} />} />
       <Route path="alter-mann" element={<AlterMannLesson onHome={goSection} />} />
       <Route path="seemann" element={<SeemannLesson onHome={goSection} />} />
+      <Route path="tattoo" element={<TattooLesson onHome={goSection} />} />
       <Route path="songs" element={<GermanSongsLanding onHome={goSection} />} />
     </Routes>
   );
