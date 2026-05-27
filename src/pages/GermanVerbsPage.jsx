@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { useI18n } from '../i18n/I18nContext';
 import { GERMAN_VERBS, PRONOUNS } from '../utils/germanVerbsData';
 import { IRREGULAR_VERBS } from '../utils/germanIrregularVerbs';
+import { useTextToSpeech } from '../hooks/useTextToSpeech';
 import '../styles/GermanVerbsPage.css';
 
 const UMLAUT_KEYS = ['ä', 'ö', 'ü', 'ß'];
@@ -265,9 +266,17 @@ const DrillMode = ({ language }) => {
   const [focusedRow, setFocusedRow] = useState(null);
   const [celebrated, setCelebrated] = useState(false);
   const inputRefs = useRef([]);
+  const { speak } = useTextToSpeech();
 
   const verb = IRREGULAR_VERBS[verbIdx];
   const correctCount = done.filter(Boolean).length;
+
+  // Spell the verb aloud when all conjugations are completed
+  useEffect(() => {
+    if (!celebrated) return;
+    const timeout = setTimeout(() => speak(verb.infinitive, `drill-${verb.id}`, 'de-DE'), 300);
+    return () => clearTimeout(timeout);
+  }, [celebrated, verb, speak]);
 
   const changeVerb = (newIdx) => {
     setVerbIdx(newIdx);
@@ -426,7 +435,7 @@ const DrillMode = ({ language }) => {
 
       {celebrated && (
         <div className="gv-drill-celebrate">
-          🎉 {language === 'es' ? '¡Perfecto! →' : 'Perfect! →'}
+          🎉 {language === 'es' ? '¡Perfecto!' : 'Perfect!'} 🔊 <em>{verb.infinitive}</em>
         </div>
       )}
 

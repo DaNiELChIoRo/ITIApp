@@ -36,8 +36,72 @@ export const KEINE_LUST_VOCAB = [
   { id: 30, word: "schwer",     ipa: "[ʃveːɐ̯]",          en: "heavy / difficult",                 es: "pesado/a / difícil",              type: "adjective" },
 ];
 
-// ⚠️  Paste the verified German lyrics here from the official/licensed source.
-// Structure: array of sections, each with label:{en,es} and lines:[{de,en}].
-// Example:
-//   { label:{en:"Verse 1",es:"Estrofa 1"}, lines:[{de:"...",en:"..."}] }
-export const KEINE_LUST_LYRICS = [];
+export const KEINE_LUST_LYRICS = [
+  {
+    label: { en: "Verse 1", es: "Estrofa 1" },
+    lines: [
+      { de: "Ich hab' keine Lust",                          en: "I have no desire" },
+      { de: "Ich hab' keine Lust",                          en: "I have no desire" },
+      { de: "Ich hab' keine Lust",                          en: "I have no desire" },
+      { de: "Ich hab' keine Lust",                          en: "I have no desire" },
+      { de: "Ich habe keine Lust, mich nicht zu hassen",    en: "I have no desire to stop hating myself" },
+      { de: "Hab' keine Lust, mich anzufassen",             en: "Have no desire to touch myself" },
+      { de: "Ich hätte Lust zu onanieren",                  en: "I would like to pleasure myself" },
+      { de: "Hab' keine Lust, es zu probieren",             en: "Have no desire to try it" },
+      { de: "Ich hätte Lust, mich auszuzieh'n",             en: "I would like to undress" },
+      { de: "Hab' keine Lust, mich nackt zu seh'n",         en: "Have no desire to see myself naked" },
+    ],
+  },
+  {
+    label: { en: "Chorus", es: "Coro" },
+    lines: [
+      { de: "Ich hätte Lust, mit großen Tieren",            en: "I would like to be with big creatures" },
+      { de: "Hab' keine Lust, es zu riskieren",             en: "Have no desire to risk it" },
+      { de: "Hab' keine Lust vom Schnee zu geh'n",          en: "Have no desire to leave the snow" },
+      { de: "Hab' keine Lust zu erfrieren",                 en: "Have no desire to freeze to death" },
+    ],
+  },
+  {
+    label: { en: "Verse 2", es: "Estrofa 2" },
+    lines: [
+      { de: "Ich hab' keine Lust",                          en: "I have no desire" },
+      { de: "Ich hab' keine Lust",                          en: "I have no desire" },
+      { de: "Ich hab' keine Lust",                          en: "I have no desire" },
+      { de: "Nein, ich hab keine Lust",                     en: "No, I have no desire" },
+      { de: "Ich hab' keine Lust, etwas zu kau'n",          en: "I have no desire to chew anything" },
+      { de: "Denn ich hab' keine Lust, es zu verdau'n",     en: "For I have no desire to digest it" },
+      { de: "Hab' keine Lust, mich zu wiegen",              en: "Have no desire to weigh myself" },
+      { de: "Hab' keine Lust, im Fett zu liegen",           en: "Have no desire to lie in fat" },
+    ],
+  },
+  {
+    label: { en: "Chorus", es: "Coro" },
+    lines: [
+      { de: "Ich hätte Lust, mit großen Tieren",            en: "I would like to be with big creatures" },
+      { de: "Hab' keine Lust, es zu riskieren",             en: "Have no desire to risk it" },
+      { de: "Hab' keine Lust vom Schnee zu gehen",          en: "Have no desire to leave the snow" },
+      { de: "Hab' keine Lust zu erfrieren",                 en: "Have no desire to freeze to death" },
+      { de: "Ich bleibe einfach liegen",                    en: "I simply stay lying down" },
+      { de: "Und wieder zähle ich die Fliegen",             en: "And again I count the flies" },
+      { de: "Lustlos fasse ich mich an",                    en: "Listlessly I touch myself" },
+      { de: "Und merke bald, ich bin schon lange kalt",     en: "And soon notice I've been cold for a long time" },
+    ],
+  },
+  {
+    label: { en: "Bridge", es: "Puente" },
+    lines: [
+      { de: "So kalt, mir ist kalt",                        en: "So cold, I am cold" },
+      { de: "So kalt, mir ist kalt",                        en: "So cold, I am cold" },
+      { de: "Mir ist kalt",                                 en: "I am cold" },
+      { de: "So kalt, mir ist kalt",                        en: "So cold, I am cold" },
+      { de: "So kalt, mir ist kalt",                        en: "So cold, I am cold" },
+      { de: "So kalt, mir ist kalt",                        en: "So cold, I am cold" },
+    ],
+  },
+  {
+    label: { en: "Outro", es: "Outro" },
+    lines: [
+      { de: "Ich hab' keine Lust",                          en: "I have no desire" },
+    ],
+  },
+];
