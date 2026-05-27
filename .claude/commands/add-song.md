@@ -51,19 +51,43 @@ Transformations:
 
 Example: `https://genius.com/Rammstein-mein-herz-brennt-lyrics`
 
-### 2b. Fetch and extract
+### 2b. Fetch with curl (browser User-Agent)
 
-Use `WebFetch` to load that URL. Parse the page HTML to extract:
+**Do NOT use `WebFetch` for Genius.com** — it sends Anthropic's crawler user-agent which Genius blocks with a 403/empty response. Use `Bash` with `curl` and a browser `User-Agent` instead:
+
+```bash
+curl -s -L \
+  -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+  -H "Accept-Language: en-US,en;q=0.9" \
+  "https://genius.com/{artist}-{song}-lyrics" | \
+python3 -c "
+import sys, re, html as h
+raw = sys.stdin.read()
+containers = re.findall(r'data-lyrics-container=\"true\"[^>]*>(.*?)</div>\s*</div>', raw, re.DOTALL)
+if not containers:
+    containers = re.findall(r'data-lyrics-container=\"true\"[^>]*>(.*?)</div>', raw, re.DOTALL)
+for c in containers:
+    c = re.sub(r'<br\s*/?>', '\n', c, flags=re.IGNORECASE)
+    c = re.sub(r'<[^>]+>', '', c)
+    c = h.unescape(c)
+    text = c.strip()
+    if text:
+        print(text)
+        print()
+"
+```
+
+Genius stores lyrics in `data-lyrics-container="true"` divs — targeting those directly avoids all the surrounding JS noise. Lines starting with `[` are section headers (e.g. `[Verse 1]`, `[Chorus]`, `[Strophe 1]`, `[Refrain]`). Extract:
 - The song's full **German text** divided into labeled sections
-- The **album name** and **year** (usually in the song header)
-- Any **annotations** Genius has (useful context for vocabulary)
+- The **album name** and **year** (usually appears near the top of the page before the lyrics)
 
-### 2c. Fallback if URL fails
+If the output looks incomplete (some Genius pages have unsubmitted sections), proceed to the fallback.
 
-If the page returns an error or clearly wrong content:
-1. Try a `WebSearch` for: `genius.com {artist} {song name} lyrics`
-2. Use the first matching Genius.com result URL and fetch it
-3. If still not found, ask the user to paste the correct Genius.com URL and continue from there
+### 2c. Fallback chain if curl returns empty or wrong content
+
+1. **Wrong URL** — try a `WebSearch` for `site:genius.com {artist} "{song name}" lyrics`, take the first Genius.com hit, and retry the curl command with that URL.
+2. **Genius still fails** — try `WebFetch` on a non-Genius lyrics site from the search results (lyricstranslate.com, darklyrics.com, etc.).
+3. **All fetches fail** — ask the user to paste the lyrics directly, the same way they do for songs in this project.
 
 ---
 

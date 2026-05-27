@@ -14,6 +14,8 @@ const SONGS = [
   { icon: '⚓', title: 'Seemann',            meta: 'Herzeleid (1995)',   path: '/german/seemann' },
   { icon: '🌊', title: 'Alter Mann',         meta: 'Sehnsucht (1997)',   path: '/german/alter-mann' },
   { icon: '💉', title: 'Tattoo',             meta: 'Zeit (2022)',        path: '/german/tattoo' },
+  { icon: '😴', title: 'Keine Lust',         meta: 'Reise, Reise (2004)', path: '/german/keine-lust' },
+  { icon: '🪆', title: 'Puppe',              meta: 'Rammstein (2019)',    path: '/german/puppe' },
 ];
 
 const GermanSongsLanding = ({ onHome }) => {
