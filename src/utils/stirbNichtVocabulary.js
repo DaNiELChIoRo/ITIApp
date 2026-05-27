@@ -1,104 +1,111 @@
-// Vocabulary and lyrics for "Stirb nicht vor mir (Don't Die Before Me)"
+// Vocabulary and lyrics for "Stirb nicht vor mir (Don't Die Before I Do)"
 // Rammstein feat. Sharleen Spiteri — Rosenrot (2005)
-// Bilingual German/English duet: Till Lindemann (DE) + Sharleen Spiteri (EN)
-// English lyrics stored in line.es and displayed with 🇬🇧 flag via altFlag prop.
+// Bilingual duet: Till Lindemann (DE) + Sharleen Spiteri (EN)
+// English lines stored in line.es and displayed with 🇬🇧 flag via altFlag prop.
 
 export const STIRB_NICHT_VOCAB = [
-  // Title words
-  { id: 1,  word: "stirb",     ipa: "[ʃtɪʁp]",          en: "die! (imperative)",       es: "¡muere! (imperativo)",    type: "verb" },
-  { id: 2,  word: "sterben",   ipa: "[ˈʃtɛʁbən]",        en: "to die",                  es: "morir",                   type: "verb" },
-  { id: 3,  word: "nicht",     ipa: "[nɪçt]",            en: "not",                     es: "no",                      type: "adverb" },
-  { id: 4,  word: "vor",       ipa: "[foːɐ̯]",            en: "before / in front of",    es: "antes de / delante de",   type: "adverb" },
-  { id: 5,  word: "mir",       ipa: "[miːɐ̯]",            en: "me (dative)",             es: "me / a mí",               type: "pronoun" },
-  // Pronouns and to-be verbs
-  { id: 6,  word: "du",        ipa: "[duː]",             en: "you (informal)",          es: "tú",                      type: "pronoun" },
-  { id: 7,  word: "ich",       ipa: "[ɪç]",              en: "I",                       es: "yo",                      type: "pronoun" },
-  { id: 8,  word: "bist",      ipa: "[bɪst]",            en: "are (you are)",           es: "eres / estás",            type: "verb" },
-  { id: 9,  word: "bin",       ipa: "[bɪn]",             en: "am (I am)",               es: "soy / estoy",             type: "verb" },
-  // Nature / element nouns from the chorus
-  { id: 10, word: "Luft",      ipa: "[lʊft]",            en: "air",                     es: "aire",                    type: "noun" },
-  { id: 11, word: "atmen",     ipa: "[ˈaːtmən]",         en: "to breathe",              es: "respirar",                type: "verb" },
-  { id: 12, word: "Feuer",     ipa: "[ˈfɔɪɐ]",            en: "fire",                    es: "fuego",                   type: "noun" },
-  { id: 13, word: "Rauch",     ipa: "[ʁaʊx]",            en: "smoke",                   es: "humo",                    type: "noun" },
-  { id: 14, word: "Wasser",    ipa: "[ˈvasɐ]",           en: "water",                   es: "agua",                    type: "noun" },
-  { id: 15, word: "Boot",      ipa: "[boːt]",            en: "boat",                    es: "barca / bote",            type: "noun" },
-  { id: 16, word: "Kälte",       ipa: "[ˈkɛltə]",          en: "cold (noun) / coldness",  es: "frío / frialdad",         type: "noun" },
-  { id: 17, word: "Nacht",       ipa: "[naxt]",            en: "night",                   es: "noche",                   type: "noun" },
-  { id: 31, word: "Sommernacht", ipa: "[ˈzɔmɐˌnaxt]",     en: "summer night",            es: "noche de verano",         type: "noun" },
-  { id: 18, word: "Licht",     ipa: "[lɪçt]",            en: "light",                   es: "luz",                     type: "noun" },
-  { id: 19, word: "Dunkel",    ipa: "[ˈdʊŋkəl]",         en: "darkness",                es: "oscuridad",               type: "noun" },
-  // Emotional / abstract nouns
-  { id: 20, word: "Herz",      ipa: "[hɛʁts]",           en: "heart",                   es: "corazón",                 type: "noun" },
-  { id: 21, word: "Leben",     ipa: "[ˈleːbən]",         en: "life",                    es: "vida",                    type: "noun" },
-  { id: 22, word: "Tod",       ipa: "[toːt]",            en: "death",                   es: "muerte",                  type: "noun" },
-  { id: 23, word: "Seele",     ipa: "[ˈzeːlə]",          en: "soul",                    es: "alma",                    type: "noun" },
-  { id: 24, word: "Atem",      ipa: "[ˈaːtəm]",          en: "breath",                  es: "aliento / respiración",   type: "noun" },
-  // Adjectives / adverbs
-  { id: 25, word: "allein",    ipa: "[aˈlaɪn]",          en: "alone",                   es: "solo/a",                  type: "adjective" },
-  { id: 26, word: "warm",      ipa: "[vaʁm]",            en: "warm",                    es: "cálido/a",                type: "adjective" },
-  { id: 27, word: "kalt",      ipa: "[kalt]",            en: "cold",                    es: "frío/a",                  type: "adjective" },
+  // Nouns
+  { id: 1,  word: "Nacht",        ipa: "[naxt]",            en: "night",                      es: "noche",                     type: "noun",      songContext: "Die Nacht öffnet ihren Schoß" },
+  { id: 2,  word: "Schoß",        ipa: "[ʃoːs]",            en: "lap / bosom / womb",         es: "regazo / seno",             type: "noun",      songContext: "Die Nacht öffnet ihren Schoß" },
+  { id: 3,  word: "Kind",         ipa: "[kɪnt]",            en: "child",                      es: "niño/a",                    type: "noun",      songContext: "Das Kind heißt Einsamkeit" },
+  { id: 4,  word: "Einsamkeit",   ipa: "[ˈaɪnzamkaɪt]",    en: "loneliness / solitude",      es: "soledad",                   type: "noun",      songContext: "Das Kind heißt Einsamkeit" },
+  { id: 5,  word: "Zeit",         ipa: "[tsaɪt]",           en: "time",                       es: "tiempo",                    type: "noun",      songContext: "Ich weine leise in die Zeit" },
+  { id: 6,  word: "Häuser",       ipa: "[ˈhɔɪzɐ]",          en: "houses",                     es: "casas",                     type: "noun",      songContext: "Alle Häuser sind verschneit" },
+  { id: 7,  word: "Fenster",      ipa: "[ˈfɛnstɐ]",         en: "window",                     es: "ventana",                   type: "noun",      songContext: "Und in den Fenstern Kerzenlicht" },
+  { id: 8,  word: "Kerzenlicht",  ipa: "[ˈkɛʁtsənlɪçt]",   en: "candlelight",                es: "luz de velas",              type: "noun",      songContext: "Und in den Fenstern Kerzenlicht" },
   // Verbs
-  { id: 28, word: "schlafen",  ipa: "[ˈʃlaːfən]",        en: "to sleep",                es: "dormir",                  type: "verb" },
-  { id: 29, word: "halten",    ipa: "[ˈhaltən]",         en: "to hold / to keep",       es: "sostener / mantener",     type: "verb" },
-  { id: 30, word: "brauchen",  ipa: "[ˈbʁaʊxən]",        en: "to need",                 es: "necesitar",               type: "verb" },
-  { id: 32, word: "erwachen", ipa: "[ɛɐ̯ˈvaxən]",         en: "to wake up / awaken",     es: "despertar / despertarse", type: "verb" },
+  { id: 9,  word: "sterben",      ipa: "[ˈʃtɛʁbən]",        en: "to die",                     es: "morir",                     type: "verb",      songContext: "Stirb nicht vor mir" },
+  { id: 10, word: "warten",       ipa: "[ˈvaʁtən]",         en: "to wait",                    es: "esperar",                   type: "verb",      songContext: "Ich warte hier" },
+  { id: 11, word: "weinen",       ipa: "[ˈvaɪnən]",         en: "to cry",                     es: "llorar",                    type: "verb",      songContext: "Ich weine leise in die Zeit" },
+  { id: 12, word: "wissen",       ipa: "[ˈvɪsən]",          en: "to know",                    es: "saber",                     type: "verb",      songContext: "Ich weiß nicht, wie du heißt" },
+  { id: 13, word: "heißen",       ipa: "[ˈhaɪsən]",         en: "to be called / to be named", es: "llamarse",                  type: "verb",      songContext: "Das Kind heißt Einsamkeit" },
+  { id: 14, word: "lieben",       ipa: "[ˈliːbən]",         en: "to love",                    es: "amar",                      type: "verb",      songContext: "Irgendwer mich liebt" },
+  { id: 15, word: "liegen",       ipa: "[ˈliːɡən]",         en: "to lie / to rest",           es: "estar acostado / yacer",    type: "verb",      songContext: "Dort liegen sie zu zweit" },
+  { id: 16, word: "öffnen",       ipa: "[ˈœfnən]",          en: "to open",                    es: "abrir",                     type: "verb",      songContext: "Die Nacht öffnet ihren Schoß" },
+  // Adjectives / adverbs / phrases
+  { id: 17, word: "kalt",         ipa: "[kalt]",            en: "cold",                       es: "frío/a",                    type: "adjective", songContext: "Es ist kalt und regungslos" },
+  { id: 18, word: "regungslos",   ipa: "[ˈʁeːɡʊŋsloːs]",   en: "motionless / still",         es: "inmóvil / quieto",          type: "adjective", songContext: "Es ist kalt und regungslos" },
+  { id: 19, word: "verschneit",   ipa: "[fɛɐ̯ˈʃnaɪt]",      en: "covered in snow / snowy",    es: "nevado/a / cubierto de nieve", type: "adjective", songContext: "Alle Häuser sind verschneit" },
+  { id: 20, word: "leise",        ipa: "[ˈlaɪzə]",          en: "quietly / softly",           es: "en silencio / suavemente",  type: "adverb",    songContext: "Ich weine leise in die Zeit" },
+  { id: 21, word: "irgendwann",   ipa: "[ˈɪʁɡəntvann]",    en: "sometime / eventually",      es: "algún día / en algún momento", type: "adverb", songContext: "Ich weiß, dass irgendwann" },
+  { id: 22, word: "zu zweit",     ipa: "[tsuː tsvaɪt]",     en: "together (as two) / as a couple", es: "en pareja / de dos",   type: "phrase",    songContext: "Dort liegen sie zu zweit" },
+  { id: 23, word: "nicht",        ipa: "[nɪçt]",            en: "not",                        es: "no",                        type: "adverb",    songContext: "Stirb nicht vor mir" },
+  { id: 24, word: "vor",          ipa: "[foːɐ̯]",            en: "before / in front of",       es: "antes de / delante de",     type: "adverb",    songContext: "Stirb nicht vor mir" },
+];
+
+// Refrain lines (reused across sections)
+// Till lines: { de, en } — Sharleen lines: { es } (🇬🇧 flag rendered by altFlag prop)
+const REFRAIN = [
+  { de: "Ich warte hier",                          en: "I wait here" },
+  { es: "Don't die before I do" },
+  { de: "Ich warte hier",                          en: "I wait here" },
+  { de: "Stirb nicht vor mir",                     en: "Don't die before me" },
+  { es: "I don't know who you are" },
+  { es: "I know that you exist" },
+  { de: "Stirb nicht",                             en: "Don't die" },
+  { es: "Sometimes love seems so far" },
+  { de: "Ich warte hier",                          en: "I wait here" },
+  { es: "Your love I can't dismiss" },
 ];
 
 export const STIRB_NICHT_LYRICS = [
   {
-    label: { en: "Verse 1 — Sharleen", es: "Estrofa 1 — Sharleen" },
+    label: { en: "Verse 1 — Till", es: "Estrofa 1 — Till" },
     lines: [
-      { es: "When the light goes out" },
-      { es: "And darkness fills the room" },
-      { es: "I reach out for your hand" },
-      { es: "I know you'll be here soon" },
-    ]
-  },
-  {
-    label: { en: "Chorus — Till", es: "Coro — Till" },
-    lines: [
-      { de: "Du bist die Luft die ich zum Atmen brauch",   en: "You are the air I need to breathe" },
-      { de: "Du bist das Feuer und ich bin der Rauch",     en: "You are the fire and I am the smoke" },
-      { de: "Du bist das Wasser und ich bin das Boot",     en: "You are the water and I am the boat" },
-      { de: "Stirb nicht vor mir",                         en: "Don't die before me" },
-      { de: "Stirb nicht vor mir",                         en: "Don't die before me" },
-    ]
+      { de: "Die Nacht öffnet ihren Schoß",          en: "The night opens her womb" },
+      { de: "Das Kind heißt Einsamkeit",              en: "The child's name is loneliness" },
+      { de: "Es ist kalt und regungslos",             en: "It is cold and motionless" },
+      { de: "Ich weine leise in die Zeit",            en: "I cry softly into time" },
+      { de: "Ich weiß nicht, wie du heißt",          en: "I don't know your name" },
+      { de: "Doch ich weiß, dass es dich gibt",      en: "But I know that you exist" },
+      { de: "Ich weiß, dass irgendwann",             en: "I know that someday" },
+      { de: "Irgendwer mich liebt",                  en: "Someone will love me" },
+    ],
   },
   {
     label: { en: "Verse 2 — Sharleen", es: "Estrofa 2 — Sharleen" },
     lines: [
-      { es: "When everything seems lost" },
-      { es: "And I've nowhere left to turn" },
-      { es: "I feel your warmth beside me" },
-      { es: "A fire that still burns" },
-    ]
+      { es: "He comes to me every night" },
+      { es: "No words are left to say" },
+      { es: "With his hands around my neck" },
+      { es: "I close my eyes and pass away" },
+      { es: "I don't know who he is" },
+      { es: "In my dreams he does exist" },
+      { es: "His passion is a kiss" },
+      { es: "And I can not resist" },
+    ],
   },
   {
-    label: { en: "Chorus — Till", es: "Coro — Till" },
-    lines: [
-      { de: "Du bist die Luft die ich zum Atmen brauch",   en: "You are the air I need to breathe" },
-      { de: "Du bist das Feuer und ich bin der Rauch",     en: "You are the fire and I am the smoke" },
-      { de: "Du bist das Wasser und ich bin das Boot",     en: "You are the water and I am the boat" },
-      { de: "Stirb nicht vor mir",                         en: "Don't die before me" },
-      { de: "Stirb nicht vor mir",                         en: "Don't die before me" },
-    ]
+    label: { en: "Chorus", es: "Coro" },
+    lines: REFRAIN,
   },
   {
-    label: { en: "Bridge — Till", es: "Puente — Till" },
-    lines: [
-      { de: "Du bist die Kälte in der Sommernacht",        en: "You are the cold in the summer night" },
-      { de: "Du bist das Dunkel wenn das Licht erwacht",   en: "You are the darkness when the light awakens" },
-      { de: "Du bist mein Herz und meine Seele auch",      en: "You are my heart and my soul too" },
-      { de: "Stirb nicht vor mir",                         en: "Don't die before me" },
-      { de: "Stirb nicht vor mir",                         en: "Don't die before me" },
-    ]
+    label: { en: "Chorus", es: "Coro" },
+    lines: REFRAIN,
   },
   {
-    label: { en: "Outro — Both", es: "Outro — Ambos" },
+    label: { en: "Post-chorus — Till", es: "Post-coro — Till" },
     lines: [
-      { es: "Don't die before me",   de: "Stirb nicht vor mir",  en: "Don't die before me" },
-      { es: "Don't die before me",   de: "Stirb nicht vor mir",  en: "Don't die before me" },
-      { es: "Don't die before me",   de: "Stirb nicht vor mir",  en: "Don't die before me" },
-    ]
+      { de: "Ich warte hier",                        en: "I wait here" },
+    ],
+  },
+  {
+    label: { en: "Verse 3 — Till", es: "Estrofa 3 — Till" },
+    lines: [
+      { de: "Alle Häuser sind verschneit",           en: "All the houses are covered in snow" },
+      { de: "Und in den Fenstern Kerzenlicht",       en: "And candlelight in the windows" },
+      { de: "Dort liegen sie zu zweit",              en: "There they lie together as two" },
+      { de: "Und ich, ich warte nur auf dich",       en: "And I, I only wait for you" },
+    ],
+  },
+  {
+    label: { en: "Chorus", es: "Coro" },
+    lines: REFRAIN,
+  },
+  {
+    label: { en: "Outro — Till", es: "Outro — Till" },
+    lines: [
+      { de: "Stirb nicht vor mir",                   en: "Don't die before me" },
+    ],
   },
 ];
