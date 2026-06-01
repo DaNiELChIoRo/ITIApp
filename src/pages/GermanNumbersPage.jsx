@@ -246,6 +246,12 @@ const PronunciationMode = ({ language }) => {
     setScore(s => ({ correct: s.correct + (ok ? 1 : 0), total: s.total + 1 }));
   }, [transcript]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Handle recognition errors (common on iOS Safari) — stop timer, allow retry
+  useEffect(() => {
+    if (!error || status !== 'listening') return;
+    setStatus('idle');
+  }, [error]); // eslint-disable-line react-hooks/exhaustive-deps
+
   function handleMic() {
     if (isListening) { stop(); return; }
     processedRef.current = false;
@@ -327,8 +333,12 @@ const PronunciationMode = ({ language }) => {
           {error && (
             <p className="gn-error">
               {error === 'not-allowed'
-                ? (language === 'es' ? 'Permiso de micrófono denegado' : 'Microphone permission denied')
-                : (language === 'es' ? 'No se detectó voz. Intenta de nuevo.' : 'No speech detected. Try again.')}
+                ? (language === 'es'
+                  ? 'Permiso de micrófono denegado. En iPhone: Ajustes → Safari → Micrófono.'
+                  : 'Microphone permission denied. On iPhone: Settings → Safari → Microphone.')
+                : error === 'no-speech'
+                  ? (language === 'es' ? 'No se detectó voz. Intenta de nuevo.' : 'No speech detected. Try again.')
+                  : (language === 'es' ? `Error: ${error}. Intenta de nuevo.` : `Error: ${error}. Try again.`)}
             </p>
           )}
         </div>

@@ -21,6 +21,7 @@ import KeineLustLesson from './KeineLustLesson';
 import PuppeLesson from './PuppeLesson';
 import GermanSongsLanding from './GermanSongsLanding';
 import SeemannLesson from './SeemannLesson';
+import GermanAdjectivesPage from './GermanAdjectivesPage';
 import GermanLanding from './GermanLanding';
 
 const GermanSection = () => {
@@ -43,7 +44,8 @@ const GermanSection = () => {
       <Route path="feuer-und-wasser" element={<FeuerUndWasserLesson onHome={goSongs} />} />
       <Route path="w-fragen" element={<WFragenLesson onHome={goSection} />} />
       <Route path="compound-words" element={<GermanCompoundWords onHome={goSection} />} />
-      <Route path="verben"   element={<GermanVerbsPage    onHome={goSection} />} />
+      <Route path="verben"      element={<GermanVerbsPage      onHome={goSection} />} />
+      <Route path="adjektive"  element={<GermanAdjectivesPage onHome={goSection} />} />
       <Route path="numbers" element={<GermanNumbersPage  onHome={goSection} />} />
       <Route path="spiel-mit-mir" element={<SpielMitMirLesson onHome={goSongs} />} />
       <Route path="alter-mann" element={<AlterMannLesson onHome={goSongs} />} />

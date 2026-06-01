@@ -19,6 +19,13 @@ const TOOLS = [
     path: '/german/verben',
   },
   {
+    icon: '🏷️',
+    key: 'adjektive',
+    en: 'Adjectives',
+    es: 'Adjetivos',
+    path: '/german/adjektive',
+  },
+  {
     icon: '🔢',
     key: 'numbers',
     en: 'Numbers',

@@ -2,13 +2,58 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const section = process.env.VITE_APP_SECTION; // 'german' | 'russian' | undefined
+
+const sectionConfig = {
+  german: {
+    base: '/ITIApp/german/',
+    outDir: 'dist/german',
+    name: 'ITIApp Deutsch',
+    short_name: 'Deutsch',
+    description: 'Learn German through music and interactive exercises',
+    theme_color: '#003399',
+    background_color: '#001a4d',
+    icons: [
+      { src: 'icons/german/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { src: 'icons/german/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+      { src: 'icons/german/icon-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+    ],
+  },
+  russian: {
+    base: '/ITIApp/russian/',
+    outDir: 'dist/russian',
+    name: 'ITIApp Русский',
+    short_name: 'Русский',
+    description: 'Learn Russian through music and grammar exercises',
+    theme_color: '#CC0000',
+    background_color: '#4d0000',
+    icons: [
+      { src: 'icons/russian/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { src: 'icons/russian/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+      { src: 'icons/russian/icon-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+    ],
+  },
+};
+
+const cfg = section ? sectionConfig[section] : null;
+
 export default defineConfig({
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt', 'icons/*.png'],
-      manifest: {
+      includeAssets: ['favicon.ico', 'robots.txt', 'icons/**/*.png'],
+      manifest: cfg ? {
+        name: cfg.name,
+        short_name: cfg.short_name,
+        description: cfg.description,
+        theme_color: cfg.theme_color,
+        background_color: cfg.background_color,
+        display: 'standalone',
+        scope: cfg.base,
+        start_url: cfg.base,
+        icons: cfg.icons,
+      } : {
         name: 'ITIApp - Bible Quiz',
         short_name: 'ITIApp',
         description: 'Learn Old Testament books order through interactive quizzes',
@@ -18,23 +63,10 @@ export default defineConfig({
         scope: '/ITIApp/',
         start_url: '/ITIApp/',
         icons: [
-          {
-            src: 'icons/icon-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: 'icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          },
-          {
-            src: 'icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable'
-          }
-        ]
+          { src: 'icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'icons/icon-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+        ],
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
@@ -46,27 +78,27 @@ export default defineConfig({
               cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365
+                maxAgeSeconds: 60 * 60 * 24 * 365,
               },
               cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          }
-        ]
-      }
-    })
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
+      },
+    }),
   ],
-  base: '/ITIApp/',
+  base: cfg ? cfg.base : '/ITIApp/',
   build: {
-    outDir: 'dist',
+    outDir: cfg ? cfg.outDir : 'dist',
     sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom']
-        }
-      }
-    }
-  }
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
+  },
 });

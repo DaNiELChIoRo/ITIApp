@@ -46,16 +46,24 @@ export function useSpeechRecognition({ lang = 'de-DE' } = {}) {
     // Gather up to 5 alternatives so fuzzy matching has more to work with
     recognition.maxAlternatives = 5;
 
+    let resultReceived = false;
+
     recognition.onstart = () => setIsListening(true);
 
-    recognition.onend = () => setIsListening(false);
+    recognition.onend = () => {
+      setIsListening(false);
+      // iOS Safari often fires onend without onresult — treat as no-speech
+      if (!resultReceived) setError('no-speech');
+    };
 
     recognition.onerror = (e) => {
+      resultReceived = true; // prevent double-error from onend
       setError(e.error);
       setIsListening(false);
     };
 
     recognition.onresult = (e) => {
+      resultReceived = true;
       // Join all alternatives with | so the matcher can try each one
       const alts = Array.from(e.results[0]).map(r => r.transcript.trim());
       setTranscript(alts.join('|'));
