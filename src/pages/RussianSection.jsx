@@ -6,6 +6,7 @@ import RussianLanding from './RussianLanding';
 import KletkaLesson from './KletkaLesson';
 import ToskaLesson from './ToskaLesson';
 import VolnyLesson from './VolnyLesson';
+import RussianAdjectiveCardsPage from './RussianAdjectiveCardsPage';
 
 const RussianSection = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const RussianSection = () => {
       <Route path="kletka" element={<KletkaLesson onHome={goSection} />} />
       <Route path="toska" element={<ToskaLesson onHome={goSection} />} />
       <Route path="volny" element={<VolnyLesson onHome={goSection} />} />
+      <Route path="adjectives" element={<RussianAdjectiveCardsPage onHome={goSection} />} />
     </Routes>
   );
 };

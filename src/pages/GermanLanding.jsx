@@ -60,6 +60,13 @@ const TOOLS = [
     es: 'Juego de Pronunciación',
     path: '/german/speaking',
   },
+  {
+    icon: '🃏',
+    key: 'adjektive-karten',
+    en: 'Common Adjectives',
+    es: 'Adjetivos Comunes',
+    path: '/german/adjektive-karten',
+  },
 ];
 
 const SONG_PREVIEWS = [

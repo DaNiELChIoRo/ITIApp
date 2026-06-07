@@ -39,6 +39,14 @@ const RussianLanding = () => {
       title: t('home.studyTypes.volny.title'),
       desc: t('home.studyTypes.volny.description'),
       path: '/russian/volny'
+    },
+    {
+      icon: '🃏',
+      title: language === 'es' ? 'Adjetivos Comunes' : 'Common Adjectives',
+      desc: language === 'es'
+        ? 'Tarjetas de adjetivos esenciales con cirílico y transliteración'
+        : 'Essential adjective cards with Cyrillic and transliteration',
+      path: '/russian/adjectives'
     }
   ];
 
