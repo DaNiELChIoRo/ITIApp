@@ -17,12 +17,15 @@ import GermanVerbsPage from './GermanVerbsPage';
 import GermanNumbersPage from './GermanNumbersPage';
 import SpielMitMirLesson from './SpielMitMirLesson';
 import TattooLesson from './TattooLesson';
+import EinLiedLesson from './EinLiedLesson';
 import KeineLustLesson from './KeineLustLesson';
+import NebelLesson from './NebelLesson';
 import PuppeLesson from './PuppeLesson';
 import GermanSongsLanding from './GermanSongsLanding';
 import SeemannLesson from './SeemannLesson';
 import GermanAdjectivesPage from './GermanAdjectivesPage';
 import GermanAdjectiveCardsPage from './GermanAdjectiveCardsPage';
+import GermanPronounsPage from './GermanPronounsPage';
 import GermanLanding from './GermanLanding';
 
 const GermanSection = () => {
@@ -46,14 +49,17 @@ const GermanSection = () => {
       <Route path="w-fragen" element={<WFragenLesson onHome={goSection} />} />
       <Route path="compound-words" element={<GermanCompoundWords onHome={goSection} />} />
       <Route path="verben"      element={<GermanVerbsPage      onHome={goSection} />} />
-      <Route path="adjektive"  element={<GermanAdjectivesPage onHome={goSection} />} />
+      <Route path="adjektive"       element={<GermanAdjectivesPage    onHome={goSection} />} />
       <Route path="adjektive-karten" element={<GermanAdjectiveCardsPage onHome={goSection} />} />
+      <Route path="pronomen"         element={<GermanPronounsPage       onHome={goSection} />} />
       <Route path="numbers" element={<GermanNumbersPage  onHome={goSection} />} />
       <Route path="spiel-mit-mir" element={<SpielMitMirLesson onHome={goSongs} />} />
       <Route path="alter-mann" element={<AlterMannLesson onHome={goSongs} />} />
       <Route path="seemann" element={<SeemannLesson onHome={goSongs} />} />
       <Route path="tattoo" element={<TattooLesson onHome={goSongs} />} />
+      <Route path="ein-lied" element={<EinLiedLesson onHome={goSongs} />} />
       <Route path="keine-lust" element={<KeineLustLesson onHome={goSongs} />} />
+      <Route path="nebel" element={<NebelLesson onHome={goSongs} />} />
       <Route path="puppe" element={<PuppeLesson onHome={goSongs} />} />
       <Route path="songs" element={<GermanSongsLanding onHome={goSection} />} />
     </Routes>

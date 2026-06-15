@@ -26,6 +26,13 @@ const TOOLS = [
     path: '/german/adjektive',
   },
   {
+    icon: '👤',
+    key: 'pronomen',
+    en: 'Pronouns',
+    es: 'Pronombres',
+    path: '/german/pronomen',
+  },
+  {
     icon: '🔢',
     key: 'numbers',
     en: 'Numbers',
@@ -72,7 +79,7 @@ const TOOLS = [
 const SONG_PREVIEWS = [
   'Engel', 'Rosenrot', 'Wo bist du?', 'Amour',
   'Stirb nicht vor mir', 'Mann gegen Mann', 'Feuer und Wasser',
-  'Spiel mit mir', 'Seemann', 'Alter Mann', 'Tattoo', 'Keine Lust', 'Puppe',
+  'Spiel mit mir', 'Seemann', 'Alter Mann', 'Tattoo', 'Keine Lust', 'Ein Lied', 'Nebel', 'Puppe',
 ];
 
 const GermanLanding = () => {
