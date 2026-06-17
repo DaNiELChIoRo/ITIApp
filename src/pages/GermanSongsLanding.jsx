@@ -15,6 +15,8 @@ const SONGS = [
   { icon: '🌊', title: 'Alter Mann',         meta: 'Sehnsucht (1997)',   path: '/german/alter-mann' },
   { icon: '💉', title: 'Tattoo',             meta: 'Zeit (2022)',        path: '/german/tattoo' },
   { icon: '😴', title: 'Keine Lust',         meta: 'Reise, Reise (2004)', path: '/german/keine-lust' },
+  { icon: '🎵', title: 'Ein Lied',            meta: 'Rosenrot (2005)',     path: '/german/ein-lied' },
+  { icon: '🌫️', title: 'Nebel',              meta: 'Mutter (2001)',       path: '/german/nebel' },
   { icon: '🪆', title: 'Puppe',              meta: 'Rammstein (2019)',    path: '/german/puppe' },
 ];
 

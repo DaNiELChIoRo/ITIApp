@@ -41,6 +41,12 @@ const RussianLanding = () => {
       path: '/russian/volny'
     },
     {
+      icon: '❄️',
+      title: t('home.studyTypes.zimnyaya.title'),
+      desc: t('home.studyTypes.zimnyaya.description'),
+      path: '/russian/zimnyaya'
+    },
+    {
       icon: '🃏',
       title: language === 'es' ? 'Adjetivos Comunes' : 'Common Adjectives',
       desc: language === 'es'

@@ -23,6 +23,187 @@ function shuffleArray(arr) {
 // ending → color class
 const ENDING_COLOR = { e: 'green', en: 'blue', em: 'purple', er: 'orange', es: 'amber' };
 
+// ─── Lecture Mode ────────────────────────────────────────────────────────────
+
+const LectureMode = ({ language }) => {
+  const es = language === 'es';
+
+  const weakTriggers  = ['der/die/das', 'dieser', 'welcher', 'jeder', 'solcher', 'aller', 'mancher'];
+  const mixedTriggers = ['ein/eine', 'kein/keine', 'mein', 'dein', 'sein', 'ihr', 'unser', 'euer'];
+  const strongTriggers = es
+    ? ['sin artículo', 'después de viel/wenig', 'listas y poesía']
+    : ['no article', 'after viel/wenig', 'lists & poetry'];
+
+  return (
+    <div className="ga-lec">
+      <div className="ga-lec-intro">
+        <p className="ga-lec-intro-text">
+          {es
+            ? 'Los adjetivos alemanes cambian su terminación según el género (M/F/N/Pl), el caso (Nom/Acc/Dat/Gen) y el artículo que los precede. Existen tres tipos de declinación:'
+            : 'German adjectives change their ending based on the gender (M/F/N/Pl), the case (Nom/Acc/Dat/Gen), and the article that precedes them. There are three declension types:'}
+        </p>
+      </div>
+
+      <div className="ga-lec-cards">
+        {/* ── Weak ── */}
+        <div className="ga-lec-card ga-lec-card--weak">
+          <div className="ga-lec-card-header">
+            <span className="ga-lec-card-badge">1</span>
+            <div>
+              <div className="ga-lec-card-title">{es ? 'Débil (Schwach)' : 'Weak (Schwach)'}</div>
+              <div className="ga-lec-card-subtitle">{es ? 'Después de artículo definido' : 'After a definite article'}</div>
+            </div>
+          </div>
+          <div className="ga-lec-triggers">
+            <span className="ga-lec-trigger-label">{es ? 'Palabras clave:' : 'Trigger words:'}</span>
+            <div className="ga-lec-trigger-chips">
+              {weakTriggers.map(w => <span key={w} className="ga-lec-chip ga-lec-chip--blue">{w}</span>)}
+            </div>
+          </div>
+          <div className="ga-lec-rule">
+            <span className="ga-lec-rule-label">⚡</span>
+            <span>{es ? 'Nominativo → -e (todos los géneros + plural). Todo lo demás → -en.' : 'Nominative → -e (all genders + plural). Everything else → -en.'}</span>
+          </div>
+          <div className="ga-lec-examples">
+            <div className="ga-lec-example">
+              <span className="ga-lec-ex-de">der alt<strong>e</strong> Mann</span>
+              <span className="ga-lec-ex-sep">→</span>
+              <span className="ga-lec-ex-en">{es ? 'el hombre viejo (M.Nom)' : 'the old man (M.Nom)'}</span>
+            </div>
+            <div className="ga-lec-example">
+              <span className="ga-lec-ex-de">des alt<strong>en</strong> Mannes</span>
+              <span className="ga-lec-ex-sep">→</span>
+              <span className="ga-lec-ex-en">{es ? 'del hombre viejo (M.Gen)' : 'of the old man (M.Gen)'}</span>
+            </div>
+            <div className="ga-lec-example">
+              <span className="ga-lec-ex-de">mit der alt<strong>en</strong> Frau</span>
+              <span className="ga-lec-ex-sep">→</span>
+              <span className="ga-lec-ex-en">{es ? 'con la mujer vieja (F.Dat)' : 'with the old woman (F.Dat)'}</span>
+            </div>
+          </div>
+          <div className="ga-lec-trick">
+            💡 {es ? '"e primero, -en en todo lo demás"' : '"e first, -en for everything else"'}
+          </div>
+        </div>
+
+        {/* ── Mixed ── */}
+        <div className="ga-lec-card ga-lec-card--mixed">
+          <div className="ga-lec-card-header">
+            <span className="ga-lec-card-badge">2</span>
+            <div>
+              <div className="ga-lec-card-title">{es ? 'Mixta (Gemischt)' : 'Mixed (Gemischt)'}</div>
+              <div className="ga-lec-card-subtitle">{es ? 'Después de artículo indefinido o posesivo' : 'After an indefinite article or possessive'}</div>
+            </div>
+          </div>
+          <div className="ga-lec-triggers">
+            <span className="ga-lec-trigger-label">{es ? 'Palabras clave:' : 'Trigger words:'}</span>
+            <div className="ga-lec-trigger-chips">
+              {mixedTriggers.map(w => <span key={w} className="ga-lec-chip ga-lec-chip--orange">{w}</span>)}
+            </div>
+          </div>
+          <div className="ga-lec-rule">
+            <span className="ga-lec-rule-label">⚡</span>
+            <span>
+              {es
+                ? 'Donde ein- no tiene desinencia (M.Nom, N.Nom, N.Ac) → terminación fuerte. El resto → como débil (-e / -en).'
+                : 'Where ein- has no ending (M.Nom, N.Nom, N.Acc) → strong ending. Elsewhere → like weak (-e / -en).'}
+            </span>
+          </div>
+          <div className="ga-lec-examples">
+            <div className="ga-lec-example">
+              <span className="ga-lec-ex-de">ein alt<strong>er</strong> Mann</span>
+              <span className="ga-lec-ex-sep">→</span>
+              <span className="ga-lec-ex-en">{es ? 'un hombre viejo (M.Nom — fuerte)' : 'an old man (M.Nom — strong)'}</span>
+            </div>
+            <div className="ga-lec-example">
+              <span className="ga-lec-ex-de">ein alt<strong>es</strong> Kind</span>
+              <span className="ga-lec-ex-sep">→</span>
+              <span className="ga-lec-ex-en">{es ? 'un niño viejo (N.Nom/Ac — fuerte)' : 'an old child (N.Nom/Acc — strong)'}</span>
+            </div>
+            <div className="ga-lec-example">
+              <span className="ga-lec-ex-de">eines alt<strong>en</strong> Mannes</span>
+              <span className="ga-lec-ex-sep">→</span>
+              <span className="ga-lec-ex-en">{es ? 'de un hombre viejo (M.Gen — débil)' : 'of an old man (M.Gen — weak)'}</span>
+            </div>
+          </div>
+          <div className="ga-lec-trick">
+            💡 {es ? '"Donde ein- está vacío, el adjetivo llena el hueco"' : '"Where ein- is empty, the adjective fills the gap"'}
+          </div>
+        </div>
+
+        {/* ── Strong ── */}
+        <div className="ga-lec-card ga-lec-card--strong">
+          <div className="ga-lec-card-header">
+            <span className="ga-lec-card-badge">3</span>
+            <div>
+              <div className="ga-lec-card-title">{es ? 'Fuerte (Stark)' : 'Strong (Stark)'}</div>
+              <div className="ga-lec-card-subtitle">{es ? 'Sin artículo delante del adjetivo' : 'No article before the adjective'}</div>
+            </div>
+          </div>
+          <div className="ga-lec-triggers">
+            <span className="ga-lec-trigger-label">{es ? 'Contextos:' : 'Contexts:'}</span>
+            <div className="ga-lec-trigger-chips">
+              {strongTriggers.map(w => <span key={w} className="ga-lec-chip ga-lec-chip--green">{w}</span>)}
+            </div>
+          </div>
+          <div className="ga-lec-rule">
+            <span className="ga-lec-rule-label">⚡</span>
+            <span>
+              {es
+                ? 'El adjetivo lleva toda la señal de caso/género (como der/die/das), excepto Gen M/N: usa -en en lugar de -es.'
+                : 'Adjective carries the full case/gender signal (like der/die/das), except Gen M/N: uses -en instead of -es.'}
+            </span>
+          </div>
+          <div className="ga-lec-examples">
+            <div className="ga-lec-example">
+              <span className="ga-lec-ex-de">alt<strong>er</strong> Wein</span>
+              <span className="ga-lec-ex-sep">→</span>
+              <span className="ga-lec-ex-en">{es ? 'vino viejo (M.Nom)' : 'old wine (M.Nom)'}</span>
+            </div>
+            <div className="ga-lec-example">
+              <span className="ga-lec-ex-de">alt<strong>es</strong> Bier</span>
+              <span className="ga-lec-ex-sep">→</span>
+              <span className="ga-lec-ex-en">{es ? 'cerveza vieja (N.Nom)' : 'old beer (N.Nom)'}</span>
+            </div>
+            <div className="ga-lec-example">
+              <span className="ga-lec-ex-de">alt<strong>e</strong> Musik</span>
+              <span className="ga-lec-ex-sep">→</span>
+              <span className="ga-lec-ex-en">{es ? 'música vieja (F.Nom)' : 'old music (F.Nom)'}</span>
+            </div>
+          </div>
+          <div className="ga-lec-trick">
+            💡 {es ? '"El adjetivo se convierte en el artículo — actúa como der/die/das"' : '"The adjective becomes the article — it acts like der/die/das"'}
+          </div>
+        </div>
+      </div>
+
+      {/* Key insight */}
+      <div className="ga-lec-insight">
+        <div className="ga-lec-insight-title">🔑 {es ? 'La idea clave' : 'The key insight'}</div>
+        <p className="ga-lec-insight-text">
+          {es
+            ? 'En cada frase nominal, alguien debe mostrar la señal de caso y género. Si el artículo la muestra (débil), el adjetivo puede relajarse con -e / -en. Si no hay artículo (fuerte), el adjetivo carga con todo el peso. La declinación mixta alterna según si ein- ya lleva desinencia o no.'
+            : 'In each noun phrase, someone must show the case and gender signal. If the article shows it (weak), the adjective relaxes with -e / -en. If there\'s no article (strong), the adjective carries the full load. Mixed alternates depending on whether ein- already has an ending.'}
+        </p>
+        <div className="ga-lec-signal-row">
+          <div className="ga-lec-signal-item ga-lec-signal--blue">
+            <span className="ga-lec-signal-type">{es ? 'Débil' : 'Weak'}</span>
+            <span className="ga-lec-signal-desc">{es ? 'Artículo lleva la señal → adj. relajado (-e / -en)' : 'Article carries signal → adj. relaxes (-e / -en)'}</span>
+          </div>
+          <div className="ga-lec-signal-item ga-lec-signal--orange">
+            <span className="ga-lec-signal-type">{es ? 'Mixta' : 'Mixed'}</span>
+            <span className="ga-lec-signal-desc">{es ? 'A veces sí, a veces no — depende de ein-' : 'Sometimes yes, sometimes no — depends on ein-'}</span>
+          </div>
+          <div className="ga-lec-signal-item ga-lec-signal--green">
+            <span className="ga-lec-signal-type">{es ? 'Fuerte' : 'Strong'}</span>
+            <span className="ga-lec-signal-desc">{es ? 'Sin artículo → adj. lleva toda la señal' : 'No article → adj. carries the full signal'}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ─── Tables Mode ─────────────────────────────────────────────────────────────
 
 const TablesMode = ({ language }) => {
@@ -461,7 +642,7 @@ const DrillMode = ({ language }) => {
 
 const GermanAdjectivesPage = ({ onHome }) => {
   const { language } = useI18n();
-  const [tab, setTab] = useState('tables');
+  const [tab, setTab] = useState('lesson');
 
   return (
     <div className="ga-container">
@@ -478,6 +659,12 @@ const GermanAdjectivesPage = ({ onHome }) => {
         </div>
 
         <div className="ga-tabs">
+          <button
+            className={`ga-tab ${tab === 'lesson' ? 'active' : ''}`}
+            onClick={() => setTab('lesson')}
+          >
+            📖 {language === 'es' ? 'Lección' : 'Lesson'}
+          </button>
           <button
             className={`ga-tab ${tab === 'tables' ? 'active' : ''}`}
             onClick={() => setTab('tables')}
@@ -498,7 +685,8 @@ const GermanAdjectivesPage = ({ onHome }) => {
           </button>
         </div>
 
-        {tab === 'tables' ? <TablesMode language={language} />
+        {tab === 'lesson' ? <LectureMode language={language} />
+          : tab === 'tables' ? <TablesMode language={language} />
           : tab === 'quiz' ? <QuizMode key={tab} language={language} />
           : <DrillMode key={tab} language={language} />}
 

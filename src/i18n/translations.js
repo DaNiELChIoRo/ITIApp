@@ -97,6 +97,10 @@ export const translations = {
         volny: {
           title: 'Волны — Molchat Doma',
           description: 'Russian vocabulary + lyrics about waves and nature'
+        },
+        zimnyaya: {
+          title: 'Зимняя — Molchat Doma',
+          description: 'Russian post-punk vocabulary + full lyrics from Belaya Polosa (2023)'
         }
       },
       german: 'German',
@@ -340,6 +344,10 @@ export const translations = {
         volny: {
           title: 'Волны — Molchat Doma',
           description: 'Vocabulario ruso + letra sobre olas y naturaleza'
+        },
+        zimnyaya: {
+          title: 'Зимняя — Molchat Doma',
+          description: 'Vocabulario de post-punk ruso + letra completa de Belaya Polosa (2023)'
         }
       },
       german: 'Alemán',
