@@ -21,8 +21,8 @@ const TOOLS = [
   {
     icon: '🏷️',
     key: 'adjektive',
-    en: 'Adjectives',
-    es: 'Adjetivos',
+    en: 'Adjective Declension',
+    es: 'Declinación de Adjetivos',
     path: '/german/adjektive',
   },
   {

@@ -4,6 +4,7 @@ import {
   CASES, GENDERS,
   DECLENSION_TYPES, DECLINED_ARTICLES,
   SAMPLE_NOUNS, DRILL_ADJECTIVES,
+  SENTENCE_EXERCISES,
 } from '../utils/germanAdjectivesData';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
 import '../styles/GermanAdjectivesPage.css';
@@ -638,6 +639,160 @@ const DrillMode = ({ language }) => {
   );
 };
 
+// ─── Sentences Mode ──────────────────────────────────────────────────────────
+
+const typeLabel = (id) => DECLENSION_TYPES.find(t => t.id === id) || DECLENSION_TYPES[0];
+const genderLabel = (g) =>
+  g === 'pl' ? 'Plural' : g === 'm' ? 'Maskulinum' : g === 'f' ? 'Femininum' : 'Neutrum';
+
+const SentencesMode = ({ language }) => {
+  const es = language === 'es';
+  const [items]                  = useState(() => shuffleArray(SENTENCE_EXERCISES));
+  const [index, setIndex]        = useState(0);
+  const [status, setStatus]      = useState(QSTATUS.IDLE);
+  const [selected, setSelected]  = useState(null);
+  const [correct, setCorrect]    = useState(0);
+  const [showHint, setShowHint]  = useState(false);
+
+  const q     = items[index];
+  const total = items.length;
+
+  const { options, correctIdx } = useMemo(() => {
+    if (!q) return { options: [], correctIdx: 0 };
+    const distractors = shuffleArray(ALL_ENDINGS.filter(e => e !== q.answer)).slice(0, 3);
+    const opts = shuffleArray([q.answer, ...distractors]);
+    return { options: opts, correctIdx: opts.indexOf(q.answer) };
+  }, [q]);
+
+  const handleSelect = useCallback((i) => {
+    if (status !== QSTATUS.IDLE) return;
+    setSelected(i);
+    setStatus(QSTATUS.ANSWERED);
+    if (i === correctIdx) setCorrect(c => c + 1);
+  }, [status, correctIdx]);
+
+  const handleNext = useCallback(() => {
+    if (index + 1 >= total) {
+      setStatus(QSTATUS.DONE);
+    } else {
+      setIndex(i => i + 1);
+      setSelected(null);
+      setStatus(QSTATUS.IDLE);
+      setShowHint(false);
+    }
+  }, [index, total]);
+
+  useEffect(() => {
+    if (status === QSTATUS.ANSWERED && selected === correctIdx) {
+      const t = setTimeout(handleNext, 1100);
+      return () => clearTimeout(t);
+    }
+  }, [status, selected, correctIdx, handleNext]);
+
+  const restart = useCallback(() => {
+    setIndex(0);
+    setSelected(null);
+    setStatus(QSTATUS.IDLE);
+    setCorrect(0);
+    setShowHint(false);
+  }, []);
+
+  if (status === QSTATUS.DONE) {
+    const pct   = Math.round((correct / total) * 100);
+    const stars = pct >= 90 ? 3 : pct >= 65 ? 2 : 1;
+    return (
+      <div className="ga-quiz-done">
+        <div className="ga-quiz-done-stars">{'⭐'.repeat(stars)}</div>
+        <h2 className="ga-quiz-done-title">
+          {es ? '¡Frases terminadas!' : 'Sentences complete!'}
+        </h2>
+        <p className="ga-quiz-done-score">{correct} / {total} — {pct}%</p>
+        <button className="ga-quiz-done-btn" onClick={restart}>
+          {es ? '🔀 Empezar de nuevo' : '🔀 Start over'}
+        </button>
+      </div>
+    );
+  }
+
+  const typeInfo = typeLabel(q.type);
+
+  return (
+    <div className="ga-quiz ga-sent">
+      <div className="ga-quiz-progress-row">
+        <span className="ga-quiz-counter">{index + 1} / {total}</span>
+        <span className="ga-quiz-score-text">✓ {correct}</span>
+      </div>
+      <div className="ga-quiz-track">
+        <div className="ga-quiz-fill" style={{ width: `${((index + 1) / total) * 100}%` }} />
+      </div>
+
+      <div className="ga-quiz-card ga-sent-card">
+        <div className="ga-quiz-meta">
+          <span className="ga-quiz-type-tag">
+            {es ? typeInfo.label.es : typeInfo.label.en}
+          </span>
+          <span className="ga-quiz-case-tag">{q.caseKey}</span>
+          <span className="ga-quiz-gender-tag">{genderLabel(q.gender)}</span>
+        </div>
+
+        <p className="ga-sent-sentence">
+          <span className="ga-sent-before">{q.before}</span>
+          <span className="ga-sent-blank">
+            {status === QSTATUS.ANSWERED ? (
+              <span className="ga-sent-reveal">{q.answer}</span>
+            ) : '___'}
+          </span>
+          <span className="ga-sent-after">{q.after}</span>
+        </p>
+
+        <button
+          className="ga-sent-hint-btn"
+          onClick={() => setShowHint(s => !s)}
+          type="button"
+        >
+          {showHint
+            ? (es ? '🙈 Ocultar traducción' : '🙈 Hide translation')
+            : (es ? '💡 Mostrar traducción' : '💡 Show translation')}
+        </button>
+
+        {showHint && (
+          <p className="ga-sent-translation">
+            {es ? q.es : q.en}
+          </p>
+        )}
+      </div>
+
+      <div className="ga-quiz-options">
+        {options.map((opt, i) => {
+          let cls = 'ga-quiz-opt';
+          if (status === QSTATUS.ANSWERED) {
+            if (i === correctIdx) cls += ' correct';
+            else if (i === selected) cls += ' wrong';
+          }
+          return (
+            <button
+              key={i}
+              className={cls}
+              onClick={() => handleSelect(i)}
+              disabled={status === QSTATUS.ANSWERED}
+            >
+              -{opt}
+            </button>
+          );
+        })}
+      </div>
+
+      {status === QSTATUS.ANSWERED && selected !== correctIdx && (
+        <button className="ga-quiz-next-btn" onClick={handleNext}>
+          {index + 1 >= total
+            ? (es ? 'Ver resultados →' : 'See results →')
+            : (es ? 'Siguiente →' : 'Next →')}
+        </button>
+      )}
+    </div>
+  );
+};
+
 // ─── Root Page ────────────────────────────────────────────────────────────────
 
 const GermanAdjectivesPage = ({ onHome }) => {
@@ -678,6 +833,12 @@ const GermanAdjectivesPage = ({ onHome }) => {
             🧠 Quiz
           </button>
           <button
+            className={`ga-tab ${tab === 'sentences' ? 'active' : ''}`}
+            onClick={() => setTab('sentences')}
+          >
+            📝 {language === 'es' ? 'Frases' : 'Sentences'}
+          </button>
+          <button
             className={`ga-tab ${tab === 'drill' ? 'active' : ''}`}
             onClick={() => setTab('drill')}
           >
@@ -688,6 +849,7 @@ const GermanAdjectivesPage = ({ onHome }) => {
         {tab === 'lesson' ? <LectureMode language={language} />
           : tab === 'tables' ? <TablesMode language={language} />
           : tab === 'quiz' ? <QuizMode key={tab} language={language} />
+          : tab === 'sentences' ? <SentencesMode key={tab} language={language} />
           : <DrillMode key={tab} language={language} />}
 
       </div>

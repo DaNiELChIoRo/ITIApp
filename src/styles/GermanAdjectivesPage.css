@@ -402,6 +402,71 @@
 }
 .ga-quiz-done-btn:hover { background: rgba(76,175,80,0.35); }
 
+/* ── Sentences mode ──────────────────────────────────────────────────────── */
+.ga-sent-card {
+  padding: var(--spacing-lg);
+  align-items: stretch;
+  min-height: 0;
+}
+
+.ga-sent-sentence {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  margin: 4px 0 6px;
+  font-weight: 500;
+}
+
+.ga-sent-before,
+.ga-sent-after { color: rgba(255,255,255,0.85); }
+
+.ga-sent-blank {
+  display: inline-block;
+  min-width: 2.4ch;
+  padding: 0 4px;
+  margin: 0 2px;
+  color: #ffb74d;
+  font-weight: 800;
+  border-bottom: 2px solid #ffb74d;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+}
+
+.ga-sent-reveal {
+  color: #81c784;
+  border-color: #81c784;
+  animation: correctPop 0.4s ease-out;
+}
+
+.ga-sent-hint-btn {
+  align-self: center;
+  padding: 6px 14px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.75);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+.ga-sent-hint-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: white;
+}
+
+.ga-sent-translation {
+  font-size: var(--font-size-sm);
+  color: rgba(255,220,120,0.85);
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+  animation: fadeInUp 0.25s ease-out;
+}
+
 /* ── Drill mode ──────────────────────────────────────────────────────────── */
 .ga-drill {
   display: flex;
