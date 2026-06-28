@@ -18,6 +18,7 @@ const SONGS = [
   { icon: '🎵', title: 'Ein Lied',            meta: 'Rosenrot (2005)',     path: '/german/ein-lied' },
   { icon: '🌫️', title: 'Nebel',              meta: 'Mutter (2001)',       path: '/german/nebel' },
   { icon: '🪆', title: 'Puppe',              meta: 'Rammstein (2019)',    path: '/german/puppe' },
+  { icon: '🐚', title: 'Hallomann',          meta: 'Rammstein (2019)',    path: '/german/hallomann' },
 ];
 
 const GermanSongsLanding = ({ onHome }) => {

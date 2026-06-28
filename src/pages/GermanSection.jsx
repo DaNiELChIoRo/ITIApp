@@ -21,6 +21,7 @@ import EinLiedLesson from './EinLiedLesson';
 import KeineLustLesson from './KeineLustLesson';
 import NebelLesson from './NebelLesson';
 import PuppeLesson from './PuppeLesson';
+import HallomannLesson from './HallomannLesson';
 import GermanSongsLanding from './GermanSongsLanding';
 import SeemannLesson from './SeemannLesson';
 import GermanAdjectivesPage from './GermanAdjectivesPage';
@@ -61,6 +62,7 @@ const GermanSection = () => {
       <Route path="keine-lust" element={<KeineLustLesson onHome={goSongs} />} />
       <Route path="nebel" element={<NebelLesson onHome={goSongs} />} />
       <Route path="puppe" element={<PuppeLesson onHome={goSongs} />} />
+      <Route path="hallomann" element={<HallomannLesson onHome={goSongs} />} />
       <Route path="songs" element={<GermanSongsLanding onHome={goSection} />} />
     </Routes>
   );
