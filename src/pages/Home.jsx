@@ -5,7 +5,7 @@ import { useI18n } from '../i18n/I18nContext';
 import { useData } from '../contexts/DataContext';
 import '../styles/Home.css';
 
-const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onStartFlashCards, onNavigateAdmin, onGermanyMap, onSpeakingGame, onRussianGrammar, onGermanSection, onRussianSection, onWoBistDu, onAmour, onStirNicht, onKletka, onToska, onVolny }) => {
+const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, onStartFlashCards, onNavigateAdmin, onRussianGrammar, onRussianSection, onKletka, onToska, onVolny }) => {
   const { stats } = useStats();
   const { t, language } = useI18n();
   const { quizzes } = useData();
@@ -156,61 +156,6 @@ const Home = ({ onStartOrder, onStartComplete, onStartCovenants, onStartQuiz, on
             </div>
           </div>
 
-          <div className="quiz-category">
-            <h4 className="quiz-category-title section-category-title" onClick={() => onGermanSection?.()}>
-              {t('home.german')} <span className="section-title-arrow">&#8594;</span>
-            </h4>
-            <div className="quiz-types">
-              <button
-                className="quiz-type-card"
-                onClick={() => onStartFlashCards?.('german-vocabulary')}
-              >
-                <span className="quiz-type-icon">🇩🇪</span>
-                <span className="quiz-type-name">{t('home.studyTypes.germanFlashCards.title')}</span>
-                <span className="quiz-type-desc">{t('home.studyTypes.germanFlashCards.description')}</span>
-              </button>
-              <button
-                className="quiz-type-card"
-                onClick={() => onGermanyMap?.()}
-              >
-                <span className="quiz-type-icon">🗺️</span>
-                <span className="quiz-type-name">{t('home.studyTypes.germanyMap.title')}</span>
-                <span className="quiz-type-desc">{t('home.studyTypes.germanyMap.description')}</span>
-              </button>
-              <button
-                className="quiz-type-card"
-                onClick={() => onSpeakingGame?.()}
-              >
-                <span className="quiz-type-icon">🎙️</span>
-                <span className="quiz-type-name">{t('home.studyTypes.speakingGame.title')}</span>
-                <span className="quiz-type-desc">{t('home.studyTypes.speakingGame.description')}</span>
-              </button>
-              <button
-                className="quiz-type-card"
-                onClick={() => onWoBistDu?.()}
-              >
-                <span className="quiz-type-icon">🎸</span>
-                <span className="quiz-type-name">{t('home.studyTypes.woBistDu.title')}</span>
-                <span className="quiz-type-desc">{t('home.studyTypes.woBistDu.description')}</span>
-              </button>
-              <button
-                className="quiz-type-card"
-                onClick={() => onAmour?.()}
-              >
-                <span className="quiz-type-icon">🎶</span>
-                <span className="quiz-type-name">{t('home.studyTypes.amour.title')}</span>
-                <span className="quiz-type-desc">{t('home.studyTypes.amour.description')}</span>
-              </button>
-              <button
-                className="quiz-type-card"
-                onClick={() => onStirNicht?.()}
-              >
-                <span className="quiz-type-icon">🥀</span>
-                <span className="quiz-type-name">{t('home.studyTypes.stirbNicht.title')}</span>
-                <span className="quiz-type-desc">{t('home.studyTypes.stirbNicht.description')}</span>
-              </button>
-            </div>
-          </div>
         </Card>
 
         {stats.totalAttempts > 0 && (

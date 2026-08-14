@@ -2,23 +2,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
-const section = process.env.VITE_APP_SECTION; // 'german' | 'russian' | undefined
+// German split out into its own repo: https://github.com/DaNiELChIoRo/deutsch
+const section = process.env.VITE_APP_SECTION; // 'russian' | undefined
 
 const sectionConfig = {
-  german: {
-    base: '/ITIApp/german/',
-    outDir: 'dist/german',
-    name: 'ITIApp Deutsch',
-    short_name: 'Deutsch',
-    description: 'Learn German through music and interactive exercises',
-    theme_color: '#003399',
-    background_color: '#001a4d',
-    icons: [
-      { src: 'icons/german/icon-192x192.png', sizes: '192x192', type: 'image/png' },
-      { src: 'icons/german/icon-512x512.png', sizes: '512x512', type: 'image/png' },
-      { src: 'icons/german/icon-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
-    ],
-  },
   russian: {
     base: '/ITIApp/russian/',
     outDir: 'dist/russian',

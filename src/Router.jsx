@@ -5,7 +5,6 @@ import { DataProvider } from './contexts/DataContext';
 import { I18nProvider } from './i18n/I18nContext';
 import LanguageSelector from './components/common/LanguageSelector';
 import App from './App';
-import GermanSection from './pages/GermanSection';
 import RussianSection from './pages/RussianSection';
 import './styles/App.css';
 
@@ -19,7 +18,7 @@ const Router = () => (
               <LanguageSelector />
             </div>
             <Routes>
-              <Route path="/german/*" element={<GermanSection />} />
+              {/* German moved to its own app: https://danielchioro.github.io/deutsch/ */}
               <Route path="/russian/*" element={<RussianSection />} />
               <Route path="/*" element={<App />} />
             </Routes>

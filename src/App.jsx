@@ -52,10 +52,7 @@ function App() {
     setQuizScore(null);
   };
 
-  const navigateToStirNicht = () => navigate('/german/stirb-nicht');
-
   const navigateToFlashCards = (quizId) => {
-    if (quizId === 'german-vocabulary') { navigate('/german/flashcards'); return; }
     if (quizId === 'russian-vocabulary') { navigate('/russian/flashcards'); return; }
     setActiveQuizId(quizId);
     setCurrentScreen('flashcards');
@@ -85,16 +82,10 @@ function App() {
           onStartQuiz={navigateToMultipleChoiceQuiz}
           onStartFlashCards={navigateToFlashCards}
           onNavigateAdmin={navigateToAdmin}
-          onGermanyMap={() => navigate('/german/map')}
-          onSpeakingGame={() => navigate('/german/speaking')}
           onRussianGrammar={() => navigate('/russian/grammar')}
-          onWoBistDu={() => navigate('/german/wo-bist-du')}
-          onAmour={() => navigate('/german/amour')}
-          onStirNicht={navigateToStirNicht}
           onKletka={() => navigate('/russian/kletka')}
           onToska={() => navigate('/russian/toska')}
           onVolny={() => navigate('/russian/volny')}
-          onGermanSection={() => navigate('/german')}
           onRussianSection={() => navigate('/russian')}
         />
       )}
